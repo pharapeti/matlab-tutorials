@@ -1,0 +1,160 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="19,1" id="srcline1">  1</a></span><span class="line"><span class="keyword">classdef</span> my_laneKF_CLS</span></span>
+<span class="srcline"><span class="lineno"><a href="19,2" id="srcline2">  2</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,3" id="srcline3">  3</a></span><span class="line"><span class="comment">% ATTENTION:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,4" id="srcline4">  4</a></span><span class="line"><span class="comment">% I want this class to be MATLAB CODER friendly, hence I have prepopulated</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,5" id="srcline5">  5</a></span><span class="line"><span class="comment">% some properties with NaNs</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,6" id="srcline6">  6</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,7" id="srcline7">  7</a></span><span class="line"><span class="keyword">properties</span> (SetAccess = protected)</span></span>
+<span class="srcline"><span class="lineno"><a href="19,8" id="srcline8">  8</a></span><span class="line">   Initial_mc_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,9" id="srcline9">  9</a></span><span class="line">   Initial_mc_var_mat;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,10" id="srcline10"> 10</a></span><span class="line">   Noise_proc_var_mat;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,11" id="srcline11"> 11</a></span><span class="line">   Noise_meas_var_mat;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,12" id="srcline12"> 12</a></span><span class="line">   <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,13" id="srcline13"> 13</a></span><span class="line">   KF;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,14" id="srcline14"> 14</a></span><span class="line">   <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,15" id="srcline15"> 15</a></span><span class="line">   missed_detect_count = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,16" id="srcline16"> 16</a></span><span class="line">   <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,17" id="srcline17"> 17</a></span><span class="line">   mc_col = [0;0];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,18" id="srcline18"> 18</a></span><span class="line">   <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,19" id="srcline19"> 19</a></span><span class="line">   <span class="comment">%x_col_mat = [];</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,20" id="srcline20"> 20</a></span><span class="line">   <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,21" id="srcline21"> 21</a></span><span class="line">   img_num_rows = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,22" id="srcline22"> 22</a></span><span class="line">   img_num_cols = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,23" id="srcline23"> 23</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,24" id="srcline24"> 24</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,25" id="srcline25"> 25</a></span><span class="line"><span class="keyword">properties</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,26" id="srcline26"> 26</a></span><span class="line">   plot_TAG = <span class="string">'TAG_PLOT_KF'</span>; <span class="comment">% used in plot() </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,27" id="srcline27"> 27</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,28" id="srcline28"> 28</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,29" id="srcline29"> 29</a></span><span class="line"><span class="keyword">methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,30" id="srcline30"> 30</a></span><span class="line"><span class="keyword">function</span> OBJ = my_laneKF_CLS( Initial_mc_col,     <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,31" id="srcline31"> 31</a></span><span class="line">                              Initial_mc_var_mat, <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,32" id="srcline32"> 32</a></span><span class="line">                              Noise_proc_var_mat, <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,33" id="srcline33"> 33</a></span><span class="line">                              Noise_meas_var_mat )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,34" id="srcline34"> 34</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,35" id="srcline35"> 35</a></span><span class="line">       validateattributes(Initial_mc_col,     {<span class="string">'double'</span>}, {<span class="string">'column'</span>,<span class="string">'numel'</span>,2});                         </span></span>
+<span class="srcline"><span class="lineno"><a href="19,36" id="srcline36"> 36</a></span><span class="line">       validateattributes(Initial_mc_var_mat, {<span class="string">'double'</span>}, {<span class="string">'size'</span>,[2,2]});                         </span></span>
+<span class="srcline"><span class="lineno"><a href="19,37" id="srcline37"> 37</a></span><span class="line">       validateattributes(Noise_proc_var_mat, {<span class="string">'double'</span>}, {<span class="string">'size'</span>,[2,2]});                         </span></span>
+<span class="srcline"><span class="lineno"><a href="19,38" id="srcline38"> 38</a></span><span class="line">       validateattributes(Noise_meas_var_mat, {<span class="string">'double'</span>}, {<span class="string">'size'</span>,[2,2]});                         </span></span>
+<span class="srcline"><span class="lineno"><a href="19,39" id="srcline39"> 39</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,40" id="srcline40"> 40</a></span><span class="line">    <span class="comment">%  x = [m,c]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,41" id="srcline41"> 41</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,42" id="srcline42"> 42</a></span><span class="line">    <span class="comment">% KF = my_KF_general_CLS( A, B, C, Q, R, x0, P0 );</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,43" id="srcline43"> 43</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,44" id="srcline44"> 44</a></span><span class="line">    A  = [1,0;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,45" id="srcline45"> 45</a></span><span class="line">          0,1;];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,46" id="srcline46"> 46</a></span><span class="line">    B  = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,47" id="srcline47"> 47</a></span><span class="line">    C  = [1,0;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,48" id="srcline48"> 48</a></span><span class="line">          0,1];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,49" id="srcline49"> 49</a></span><span class="line">    Q  = Noise_proc_var_mat;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,50" id="srcline50"> 50</a></span><span class="line">    R  = Noise_meas_var_mat;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,51" id="srcline51"> 51</a></span><span class="line">    x0 = Initial_mc_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,52" id="srcline52"> 52</a></span><span class="line">    P0 = Initial_mc_var_mat;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,53" id="srcline53"> 53</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,54" id="srcline54"> 54</a></span><span class="line">    OBJ.KF = my_KF_general_CLS( A, B, C, Q, R, x0, P0 );  </span></span>
+<span class="srcline"><span class="lineno"><a href="19,55" id="srcline55"> 55</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% my_laneKF_CLS()</span></span></span>
+</pre>
+</div>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="19,56" id="srcline56"> 56</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,57" id="srcline57"> 57</a></span><span class="line"><span class="keyword">function</span>  <span class="var type1" id="S29T6U170">OBJ</span> = pred_and_correct(<span class="var type1" id="S29T6U173">OBJ</span>, <span class="var type1" id="S30T3U174">BW</span>, <span class="var type1" id="S31T5U175">tf_found</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="19,58" id="srcline58"> 58</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,59" id="srcline59"> 59</a></span><span class="line">    <span class="comment">% use KF to PREDICT</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,60" id="srcline60"> 60</a></span><span class="line">    <span class="mxinfo " id="T7:U5"><span class="mxinfo " id="T7:U6"><span class="var type1" id="S29T6U179">OBJ</span>.KF</span>     = <span class="mxinfo " id="T7:U8"><span class="mxinfo " id="T7:U9"><span class="var type1" id="S29T6U184">OBJ</span>.KF</span>.<span class="fcn" id="F81N24:B186">predict</span>()</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,61" id="srcline61"> 61</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,62" id="srcline62"> 62</a></span><span class="line">    <span class="comment">% now do we have a measurement to allow a CORRECT</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,63" id="srcline63"> 63</a></span><span class="line">    <span class="mxinfo " id="T23:U11"><span class="var type1" id="S32T23U189">lane_O</span> = <span class="mxinfo " id="T23:U13"><span class="fcn" id="F631N21:B191">lane_info_CLS</span>(<span class="var type1" id="S30T3U192">BW</span>, <span class="var type1" id="S31T5U193">tf_found</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,64" id="srcline64"> 64</a></span><span class="line">    <span class="keyword">if</span>( <span class="mxinfo " id="T5:U16"><span class="var type1" id="S32T23U199">lane_O</span>.<span class="fcn" id="F82N20:B200">is_detected</span>()</span> )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,65" id="srcline65"> 65</a></span><span class="line">        <span class="mxinfo " id="T23:U18"><span class="var type1" id="S32T23U203">lane_O</span> = <span class="mxinfo " id="T23:U20"><span class="var type1" id="S32T23U206">lane_O</span>.<span class="fcn" id="F630N18:B207">calc_info</span>()</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,66" id="srcline66"> 66</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,67" id="srcline67"> 67</a></span><span class="line">        [<span class="var type1" id="S34T120U211">m</span>,<span class="var type1" id="S35T120U212">c</span>]  = <span class="var type1" id="S32T23U215">lane_O</span>.<span class="fcn" id="F632N19:B216">get_mc</span>();</span></span>
+<span class="srcline"><span class="lineno"><a href="19,68" id="srcline68"> 68</a></span><span class="line">        </span></span>
+<span class="srcline"><span class="lineno"><a href="19,69" id="srcline69"> 69</a></span><span class="line">        <span class="mxinfo " id="T124:U25"><span class="var type1" id="S36T124U219">y_meas</span> = <span class="mxinfo " id="T124:U27">[<span class="var type1" id="S34T120U222">m</span>;<span class="var type1" id="S35T120U224">c</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,70" id="srcline70"> 70</a></span><span class="line">        </span></span>
+<span class="srcline"><span class="lineno"><a href="19,71" id="srcline71"> 71</a></span><span class="line">        <span class="mxinfo " id="T7:U30"><span class="mxinfo " id="T7:U31"><span class="var type1" id="S29T6U228">OBJ</span>.KF</span> = <span class="mxinfo " id="T7:U33"><span class="mxinfo " id="T7:U34"><span class="var type1" id="S29T6U233">OBJ</span>.KF</span>.<span class="fcn" id="F674N22:B235">correct</span>(<span class="var type1" id="S36T124U236">y_meas</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,72" id="srcline72"> 72</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,73" id="srcline73"> 73</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="19,74" id="srcline74"> 74</a></span><span class="line">    <span class="mxinfo " id="T1:U37"><span class="mxinfo " id="T1:U38"><span class="var type1" id="S29T6U240">OBJ</span>.mc_col</span>    = <span class="mxinfo " id="T1:U40"><span class="mxinfo " id="T7:U41"><span class="var type1" id="S29T6U244">OBJ</span>.KF</span>.x</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,75" id="srcline75"> 75</a></span><span class="line">    <span class="comment">%OBJ.x_col_mat = [OBJ.x_col_mat, OBJ.mc_col];</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,76" id="srcline76"> 76</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,77" id="srcline77"> 77</a></span><span class="line">    <span class="comment">% and store the size of the image we're processing</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,78" id="srcline78"> 78</a></span><span class="line">    <span class="var type1" id="S29T6U250">OBJ</span>.img_num_rows = <span class="mxinfo " id="T4:U44">size(<span class="var type1" id="S30T3U254">BW</span>,1)</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,79" id="srcline79"> 79</a></span><span class="line">    <span class="var type1" id="S29T6U259">OBJ</span>.img_num_cols = <span class="mxinfo " id="T4:U47">size(<span class="var type1" id="S30T3U263">BW</span>,2)</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,80" id="srcline80"> 80</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% pred_and_correct()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,81" id="srcline81"> 81</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+</pre>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="19,82" id="srcline82"> 82</a></span><span class="line"><span class="keyword">function</span>  mc_col = get_mc_col(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="19,83" id="srcline83"> 83</a></span><span class="line">          mc_col = OBJ.mc_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,84" id="srcline84"> 84</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,85" id="srcline85"> 85</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,86" id="srcline86"> 86</a></span><span class="line"><span class="keyword">function</span> plot(OBJ, hax, linspec)</span></span>
+<span class="srcline"><span class="lineno"><a href="19,87" id="srcline87"> 87</a></span><span class="line"><span class="comment">% ALLOWED usage:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,88" id="srcline88"> 88</a></span><span class="line"><span class="comment">%  &gt;&gt; OBJ.plot(hax)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,89" id="srcline89"> 89</a></span><span class="line"><span class="comment">%  &gt;&gt; OBJ.plot(hax,'.r')</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,90" id="srcline90"> 90</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,91" id="srcline91"> 91</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,92" id="srcline92"> 92</a></span><span class="line">        <span class="keyword">if</span>( 2==nargin )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,93" id="srcline93"> 93</a></span><span class="line">            linspec = <span class="string">'.r-'</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,94" id="srcline94"> 94</a></span><span class="line">        <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,95" id="srcline95"> 95</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,96" id="srcline96"> 96</a></span><span class="line">        mc_col = OBJ.mc_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,97" id="srcline97"> 97</a></span><span class="line">        <span class="keyword">if</span>( isempty(mc_col) )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,98" id="srcline98"> 98</a></span><span class="line">            <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,99" id="srcline99"> 99</a></span><span class="line">        <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,100" id="srcline100">100</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,101" id="srcline101">101</a></span><span class="line">        m = mc_col(1);</span></span>
+<span class="srcline"><span class="lineno"><a href="19,102" id="srcline102">102</a></span><span class="line">        c = mc_col(2);</span></span>
+<span class="srcline"><span class="lineno"><a href="19,103" id="srcline103">103</a></span><span class="line">        <span class="comment">% OK: we have some m,c data</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,104" id="srcline104">104</a></span><span class="line">        <span class="comment">%  y = m.x + c ---&gt;  x = (y-c)/m</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,105" id="srcline105">105</a></span><span class="line">        <span class="comment">% I'm interested in 2 data points:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,106" id="srcline106">106</a></span><span class="line">        <span class="comment">%  a.) when y = 120, what is x ?</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,107" id="srcline107">107</a></span><span class="line">        <span class="comment">%  b.) when y = 240, what is x ?</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,108" id="srcline108">108</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,109" id="srcline109">109</a></span><span class="line">        y_HALF = OBJ.img_num_rows/2;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,110" id="srcline110">110</a></span><span class="line">        y_MAX  = OBJ.img_num_rows;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,111" id="srcline111">111</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,112" id="srcline112">112</a></span><span class="line">        P1 = [(y_HALF-c)/m ; y_HALF];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,113" id="srcline113">113</a></span><span class="line">        P2 = [(y_MAX-c)/m ;  y_MAX];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,114" id="srcline114">114</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,115" id="srcline115">115</a></span><span class="line">        x  = [P1(1); P2(1)];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,116" id="srcline116">116</a></span><span class="line">        y  = [P1(2); P2(2)];</span></span>
+<span class="srcline"><span class="lineno"><a href="19,117" id="srcline117">117</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,118" id="srcline118">118</a></span><span class="line">        TAG = OBJ.plot_TAG;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,119" id="srcline119">119</a></span><span class="line">        hL = findall(hax,<span class="string">'Tag'</span>,TAG);</span></span>
+<span class="srcline"><span class="lineno"><a href="19,120" id="srcline120">120</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,121" id="srcline121">121</a></span><span class="line">        <span class="keyword">if</span>( isempty(hL) )</span></span>
+<span class="srcline"><span class="lineno"><a href="19,122" id="srcline122">122</a></span><span class="line">           hold(hax,<span class="string">'on'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="19,123" id="srcline123">123</a></span><span class="line">           plot(hax,x,y,linspec,<span class="string">'MarkerSize'</span>,22, <span class="string">'Tag'</span>,TAG);</span></span>
+<span class="srcline"><span class="lineno"><a href="19,124" id="srcline124">124</a></span><span class="line">        <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,125" id="srcline125">125</a></span><span class="line">           hL.XData = x;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,126" id="srcline126">126</a></span><span class="line">           hL.YData = y;</span></span>
+<span class="srcline"><span class="lineno"><a href="19,127" id="srcline127">127</a></span><span class="line">        <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,128" id="srcline128">128</a></span><span class="line">    <span class="keyword">end</span> <span class="comment">% if(1 ==coder.target('MATLAB') )</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,129" id="srcline129">129</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="19,130" id="srcline130">130</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% plot()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,131" id="srcline131">131</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,132" id="srcline132">132</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,133" id="srcline133">133</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,134" id="srcline134">134</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="19,135" id="srcline135">135</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,136" id="srcline136">136</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,137" id="srcline137">137</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,138" id="srcline138">138</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,139" id="srcline139">139</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,140" id="srcline140">140</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% classdef</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,141" id="srcline141">141</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,142" id="srcline142">142</a></span><span class="line"><span class="comment">% END CLASSDEF</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,143" id="srcline143">143</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="19,144" id="srcline144">144</a></span><span class="line"> </span></span>
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DependencyReport Version="1.1">
+   <FileList ProjectRoot="C:\bh\users_EV\DEMO_Concepts\SL_MODEL_REF\bh_data_dictionary">
+      <FileState>
+         <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slx</FileName>
+         <Size>28379</Size>
+         <LastModifiedDate>2018-09-13 08:40:20</LastModifiedDate>
+         <Exportable>true</Exportable>
+      </FileState>
+      <FileState>
+         <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slxc</FileName>
+         <Size>5199</Size>
+         <LastModifiedDate>2018-09-13 08:52:43</LastModifiedDate>
+         <Exportable>true</Exportable>
+      </FileState>
+      <FileState>
+         <FileName RelativeTo="projectroot">bh_smd_MAIN_simple.slx</FileName>
+         <Size>67106</Size>
+         <LastModifiedDate>2018-09-13 08:52:42</LastModifiedDate>
+         <Exportable>true</Exportable>
+      </FileState>
+      <FileState>
+         <FileName RelativeTo="projectroot">bh_smd_params.m</FileName>
+         <Size>101</Size>
+         <LastModifiedDate>2018-09-13 08:01:11</LastModifiedDate>
+         <Exportable>true</Exportable>
+      </FileState>
+      <FileState>
+         <FileName RelativeTo="projectroot">MY_SMD_DATA_DICT.sldd</FileName>
+         <Size>1178</Size>
+         <LastModifiedDate>2018-09-13 08:51:21</LastModifiedDate>
+         <Exportable>true</Exportable>
+      </FileState>
+      <FileState>
+         <FileName RelativeTo="projectroot">MY_SMD_ICs.sldd</FileName>
+         <Size>1104</Size>
+         <LastModifiedDate>2018-09-13 08:49:14</LastModifiedDate>
+         <Exportable>true</Exportable>
+      </FileState>
+   </FileList>
+   <MDLDepSet>
+      <MDLName IsLibrary="false">bh_smd_MAIN_simple</MDLName>
+      <FileName RelativeTo="projectroot">bh_smd_MAIN_simple.slx</FileName>
+      <AnalysisDate>13-Sep-2018 10:34:05</AnalysisDate>
+      <AnalysisOptions>
+         <AnalyzeMathWorksFiles>false</AnalyzeMathWorksFiles>
+         <AnalyzeUserToolboxFiles>true</AnalyzeUserToolboxFiles>
+         <StoreReferences>true</StoreReferences>
+         <FindLibraryLinks>true</FindLibraryLinks>
+         <FindModelRefs>true</FindModelRefs>
+         <FindSFunctions>true</FindSFunctions>
+         <FindCallbackFiles>true</FindCallbackFiles>
+         <FindCodeGenFiles>true</FindCodeGenFiles>
+         <FindUserDependencies>true</FindUserDependencies>
+         <FindDataFiles>true</FindDataFiles>
+         <FindRequirementsDocs>false</FindRequirementsDocs>
+         <AnalyzeStateflow>true</AnalyzeStateflow>
+         <AnalyzeEML>true</AnalyzeEML>
+         <AnalyzeMFiles>true</AnalyzeMFiles>
+         <FindSimscapeFiles>true</FindSimscapeFiles>
+         <AllowUnsavedChanges>false</AllowUnsavedChanges>
+         <StoreMathWorksReferences>false</StoreMathWorksReferences>
+         <StoreWarnings>true</StoreWarnings>
+         <CloseModels>false</CloseModels>
+         <FindWorkspaceVars>false</FindWorkspaceVars>
+         <OptimizedMode>false</OptimizedMode>
+         <FindEnums>false</FindEnums>
+         <AnalyzeTestHarnesses>true</AnalyzeTestHarnesses>
+      </AnalysisOptions>
+      <ReferencedModels>
+         <MDLFile>
+            <MDLName>bh_smd_COMP_MDL</MDLName>
+            <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slx</FileName>
+         </MDLFile>
+      </ReferencedModels>
+      <LinkedLibraries/>
+      <Toolboxes>
+         <ToolboxDetails>
+            <DirectoryName>matlab</DirectoryName>
+            <Name>MATLAB</Name>
+            <Version>9.4</Version>
+            <Release>(R2018a)</Release>
+            <Date>06-Feb-2018</Date>
+         </ToolboxDetails>
+         <ToolboxDetails>
+            <DirectoryName>simulink</DirectoryName>
+            <Name>Simulink</Name>
+            <Version>9.1</Version>
+            <Release>(R2018a)</Release>
+            <Date>06-Feb-2018</Date>
+         </ToolboxDetails>
+         <ToolboxDetails>
+            <DirectoryName>simulinkcoder</DirectoryName>
+            <Name>Simulink Coder</Name>
+            <Version>8.14</Version>
+            <Release>(R2018a)</Release>
+            <Date>06-Feb-2018</Date>
+         </ToolboxDetails>
+      </Toolboxes>
+      <AllFiles>
+         <FileName RelativeTo="projectroot">bh_smd_MAIN_simple.slx</FileName>
+         <FileName RelativeTo="projectroot">MY_SMD_DATA_DICT.sldd</FileName>
+         <FileName RelativeTo="projectroot">MY_SMD_ICs.sldd</FileName>
+         <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slxc</FileName>
+         <FileName RelativeTo="projectroot">bh_smd_params.m</FileName>
+      </AllFiles>
+      <AllIncludeDirs/>
+      <AllReferences>
+         <FileReference>
+            <FileName RelativeTo="projectroot">MY_SMD_DATA_DICT.sldd</FileName>
+            <ReferenceType>DataDictionary</ReferenceType>
+            <ReferenceLocation>bh_smd_MAIN_simple</ReferenceLocation>
+            <Resolved>true</Resolved>
+            <ToolboxDetails/>
+         </FileReference>
+         <FileReference>
+            <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slx</FileName>
+            <ReferenceType>ModelReference</ReferenceType>
+            <ReferenceLocation>bh_smd_MAIN_simple/Model</ReferenceLocation>
+            <Resolved>true</Resolved>
+            <ToolboxDetails/>
+         </FileReference>
+         <FileReference>
+            <FileName RelativeTo="projectroot">MY_SMD_ICs.sldd</FileName>
+            <ReferenceType>DataDictionary</ReferenceType>
+            <ReferenceLocation>C:\bh\users_EV\DEMO_Concepts\SL_MODEL_REF\bh_data_dictionary\MY_SMD_DATA_DICT.sldd</ReferenceLocation>
+            <Resolved>true</Resolved>
+            <ToolboxDetails/>
+         </FileReference>
+         <FileReference>
+            <FileName RelativeTo="projectroot">MY_SMD_DATA_DICT.sldd</FileName>
+            <ReferenceType>DataDictionary</ReferenceType>
+            <ReferenceLocation>bh_smd_COMP_MDL</ReferenceLocation>
+            <Resolved>true</Resolved>
+            <ToolboxDetails/>
+         </FileReference>
+         <FileReference>
+            <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slxc</FileName>
+            <ReferenceType>SimulinkCache</ReferenceType>
+            <ReferenceLocation>bh_smd_COMP_MDL</ReferenceLocation>
+            <Resolved>true</Resolved>
+            <ToolboxDetails/>
+         </FileReference>
+         <FileReference>
+            <FileName RelativeTo="projectroot">bh_smd_params.m</FileName>
+            <ReferenceType>ModelWorkspace</ReferenceType>
+            <ReferenceLocation>bh_smd_COMP_MDL</ReferenceLocation>
+            <Resolved>true</Resolved>
+            <ToolboxDetails/>
+         </FileReference>
+      </AllReferences>
+   </MDLDepSet>
+   <MDLDepSet>
+      <MDLName IsLibrary="false">bh_smd_COMP_MDL</MDLName>
+      <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slx</FileName>
+      <AnalysisDate>13-Sep-2018 10:34:05</AnalysisDate>
+      <AnalysisOptions>
+         <AnalyzeMathWorksFiles>false</AnalyzeMathWorksFiles>
+         <AnalyzeUserToolboxFiles>true</AnalyzeUserToolboxFiles>
+         <StoreReferences>true</StoreReferences>
+         <FindLibraryLinks>true</FindLibraryLinks>
+         <FindModelRefs>true</FindModelRefs>
+         <FindSFunctions>true</FindSFunctions>
+         <FindCallbackFiles>true</FindCallbackFiles>
+         <FindCodeGenFiles>true</FindCodeGenFiles>
+         <FindUserDependencies>true</FindUserDependencies>
+         <FindDataFiles>true</FindDataFiles>
+         <FindRequirementsDocs>false</FindRequirementsDocs>
+         <AnalyzeStateflow>true</AnalyzeStateflow>
+         <AnalyzeEML>true</AnalyzeEML>
+         <AnalyzeMFiles>true</AnalyzeMFiles>
+         <FindSimscapeFiles>true</FindSimscapeFiles>
+         <AllowUnsavedChanges>false</AllowUnsavedChanges>
+         <StoreMathWorksReferences>false</StoreMathWorksReferences>
+         <StoreWarnings>true</StoreWarnings>
+         <CloseModels>false</CloseModels>
+         <FindWorkspaceVars>false</FindWorkspaceVars>
+         <OptimizedMode>false</OptimizedMode>
+         <FindEnums>false</FindEnums>
+         <AnalyzeTestHarnesses>true</AnalyzeTestHarnesses>
+      </AnalysisOptions>
+      <ReferencedModels/>
+      <LinkedLibraries/>
+      <Toolboxes/>
+      <AllFiles>
+         <FileName RelativeTo="projectroot">bh_smd_COMP_MDL.slx</FileName>
+      </AllFiles>
+      <AllIncludeDirs/>
+      <AllReferences/>
+   </MDLDepSet>
+</DependencyReport>

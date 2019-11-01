@@ -1,0 +1,38 @@
+component bh_var_L 
+    
+inputs
+    y    = { 1.0, 'm' };  % Y:left
+    ydot = { 1.0, 'm/s'}; % Y_DOT:left
+end
+
+nodes
+    p = foundation.electrical.electrical; % +:left
+    n = foundation.electrical.electrical; % -:right
+end
+
+parameters    
+    C1 = {1,'H*(m^5)'}; 
+    C2 = {1,'m^2'}; 
+    C3 = {1,'m^3'}; 
+end
+
+variables
+    i = { 0, 'A' }; % Current
+    v = { 0, 'V' }; % Voltage
+end
+
+branches
+    i : p.i -> n.i;
+end
+
+equations    
+    let
+       L    =           (C1/C2) /   (C2*y + C3)    ;    
+       dLdy = -1 * C2 * (C1/C2) / ( (C2*y + C3)^2 );    
+    in
+       v == L*i.der  +  i*dLdy*ydot;
+       v == p.v - n.v;
+    end
+end
+
+end

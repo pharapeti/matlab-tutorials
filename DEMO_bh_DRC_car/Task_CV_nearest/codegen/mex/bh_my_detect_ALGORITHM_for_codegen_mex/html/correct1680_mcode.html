@@ -1,0 +1,313 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="210,1" id="srcline1">  1</a></span><span class="line"><span class="keyword">classdef</span> my_KF_general_CLS</span></span>
+<span class="srcline"><span class="lineno"><a href="210,2" id="srcline2">  2</a></span><span class="line"><span class="comment">% MY_KF_GENERAL_CLS - a vanilla implementation of a Kalman Filter</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,3" id="srcline3">  3</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,4" id="srcline4">  4</a></span><span class="line"><span class="comment">% REF: </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,5" id="srcline5">  5</a></span><span class="line"><span class="comment">%  1.) https://cse.sc.edu/~terejanu/files/tutorialKF.pdf</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,6" id="srcline6">  6</a></span><span class="line"><span class="comment">%      - "Discrete Time Kalman Filter tutorial" - Gabriel A. Terejanu</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,7" id="srcline7">  7</a></span><span class="line"><span class="comment">%  2.) https://au.mathworks.com/videos/series/understanding-kalman-filters.html</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,8" id="srcline8">  8</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,9" id="srcline9">  9</a></span><span class="line"><span class="comment">% Discrete plant:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,10" id="srcline10"> 10</a></span><span class="line"><span class="comment">%     x[k] = A.x[k-1]  +  B.u[k-1]   +  w[k-1]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,11" id="srcline11"> 11</a></span><span class="line"><span class="comment">%     y[k] = C.x[k]                  +  v[k]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,12" id="srcline12"> 12</a></span><span class="line"><span class="comment">%</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,13" id="srcline13"> 13</a></span><span class="line"><span class="comment">%   where:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,14" id="srcline14"> 14</a></span><span class="line"><span class="comment">%           Q = cov(w) ==PROCESS_NOISE covariance matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,15" id="srcline15"> 15</a></span><span class="line"><span class="comment">%           R = cov(v) ==MEASUREMENT_NOISE covariance matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,16" id="srcline16"> 16</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,17" id="srcline17"> 17</a></span><span class="line"><span class="comment">% PREDICT:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,18" id="srcline18"> 18</a></span><span class="line"><span class="comment">%    xhat[k|k-1] = A.x[k-1|k-l]       +  B.u[k-1]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,19" id="srcline19"> 19</a></span><span class="line"><span class="comment">%       P[k|k-1] = A.P[k-1|k-1].(A')  +  Q</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,20" id="srcline20"> 20</a></span><span class="line"><span class="comment">% CORRECT:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,21" id="srcline21"> 21</a></span><span class="line"><span class="comment">%       K[k]     = P[k|k-1].(C'). inv(  C.P[k|k-1].(C') + R  )</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,22" id="srcline22"> 22</a></span><span class="line"><span class="comment">%    xhat[k|k]   = xhat[k|k-1]  +  K[k]*( y[k] - C.xhat[k|k-1]  )</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,23" id="srcline23"> 23</a></span><span class="line"><span class="comment">%       P[k|k]   = (I-K[k].C). P[k|k-1] . (I-K[k].C)'   +  K[k]R.(K[k]')</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,24" id="srcline24"> 24</a></span><span class="line"><span class="comment">%                = (I-K[k].C). P[k|k-1]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,25" id="srcline25"> 25</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,26" id="srcline26"> 26</a></span><span class="line"><span class="comment">% INITIAL conditions:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,27" id="srcline27"> 27</a></span><span class="line"><span class="comment">%     x[0] - state value at time ZERO</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,28" id="srcline28"> 28</a></span><span class="line"><span class="comment">%     P[0] - covariance matrix of the state estimate</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,29" id="srcline29"> 29</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,30" id="srcline30"> 30</a></span><span class="line"><span class="comment">% VECTOR description:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,31" id="srcline31"> 31</a></span><span class="line"><span class="comment">%     x[k] - Nx_x_1 , STATE  vector at time k</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,32" id="srcline32"> 32</a></span><span class="line"><span class="comment">%     u[k] - Nu_x_1 , INPUT  vector at time k</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,33" id="srcline33"> 33</a></span><span class="line"><span class="comment">%     y[k] - Ny_x_1 , OUTPUT vector at time k</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,34" id="srcline34"> 34</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,35" id="srcline35"> 35</a></span><span class="line"><span class="comment">%     w[k] - Nx_x_1 , PROCESS_NOISE     vector at time k</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,36" id="srcline36"> 36</a></span><span class="line"><span class="comment">%     v[k] - Ny_x_1 , MEASUREMENT_NOISE vector at time k</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,37" id="srcline37"> 37</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,38" id="srcline38"> 38</a></span><span class="line"><span class="comment">% MATRIX description:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,39" id="srcline39"> 39</a></span><span class="line"><span class="comment">%     A    - Nx_x_Nx</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,40" id="srcline40"> 40</a></span><span class="line"><span class="comment">%     B    - Nx_x_Nu</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,41" id="srcline41"> 41</a></span><span class="line"><span class="comment">%     C    - Ny_x_Nx</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,42" id="srcline42"> 42</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,43" id="srcline43"> 43</a></span><span class="line"><span class="comment">%     Q    - Nx_x_Nx, PROCESS_NOISE     covariance matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,44" id="srcline44"> 44</a></span><span class="line"><span class="comment">%     R    - Ny_x_Ny, MEASUREMENT_NOISE covariance matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,45" id="srcline45"> 45</a></span><span class="line"><span class="comment">%     P    - Nx_x_Nx, covariance matrix of the state estimate</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,46" id="srcline46"> 46</a></span><span class="line"><span class="comment">%     K    - Nx_x_Ny, Kalman gain matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,47" id="srcline47"> 47</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,48" id="srcline48"> 48</a></span><span class="line"><span class="comment">% EXPECTED_USAGE_#1:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,49" id="srcline49"> 49</a></span><span class="line"><span class="comment">%   &gt;&gt; OBJ = my_KF_general_CLS( A, B, C, Q, R, x0, P0 );</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,50" id="srcline50"> 50</a></span><span class="line"><span class="comment">%   &gt;&gt; OBJ = OBJ.predict(u_k_minus_1);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,51" id="srcline51"> 51</a></span><span class="line"><span class="comment">%   &gt;&gt; OBJ = OBJ.correct(y_k);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,52" id="srcline52"> 52</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,53" id="srcline53"> 53</a></span><span class="line"><span class="comment">% EXPECTED_USAGE_#2:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,54" id="srcline54"> 54</a></span><span class="line"><span class="comment">%   &gt;&gt; OBJ = my_KF_general_CLS( A, B, C, Q, R, x0, P0 );</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,55" id="srcline55"> 55</a></span><span class="line"><span class="comment">%   &gt;&gt; [xo_mat, yo_mat] = OBJ.batch_step(u_mat, y_meas_mat, do_plots);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,56" id="srcline56"> 56</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,57" id="srcline57"> 57</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="210,58" id="srcline58"> 58</a></span><span class="line"><span class="keyword">properties</span> (SetAccess = protected)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,59" id="srcline59"> 59</a></span><span class="line">    A  = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,60" id="srcline60"> 60</a></span><span class="line">    B  = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,61" id="srcline61"> 61</a></span><span class="line">    C  = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,62" id="srcline62"> 62</a></span><span class="line">    Q  = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,63" id="srcline63"> 63</a></span><span class="line">    R  = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,64" id="srcline64"> 64</a></span><span class="line">    x0 = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,65" id="srcline65"> 65</a></span><span class="line">    P0 = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,66" id="srcline66"> 66</a></span><span class="line">    <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,67" id="srcline67"> 67</a></span><span class="line">    Nx = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,68" id="srcline68"> 68</a></span><span class="line">    Nu = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,69" id="srcline69"> 69</a></span><span class="line">    Ny = 0;  </span></span>
+<span class="srcline"><span class="lineno"><a href="210,70" id="srcline70"> 70</a></span><span class="line">    <span class="comment">%------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,71" id="srcline71"> 71</a></span><span class="line">    x</span></span>
+<span class="srcline"><span class="lineno"><a href="210,72" id="srcline72"> 72</a></span><span class="line">    P</span></span>
+<span class="srcline"><span class="lineno"><a href="210,73" id="srcline73"> 73</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,74" id="srcline74"> 74</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,75" id="srcline75"> 75</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,76" id="srcline76"> 76</a></span><span class="line"><span class="keyword">methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,77" id="srcline77"> 77</a></span><span class="line"><span class="keyword">function</span> OBJ = my_KF_general_CLS( A, B, C, Q, R, x0, P0 )</span></span>
+<span class="srcline"><span class="lineno"><a href="210,78" id="srcline78"> 78</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="210,79" id="srcline79"> 79</a></span><span class="line">       validateattributes(A,{<span class="string">'numeric'</span>},{<span class="string">'square'</span>})</span></span>
+<span class="srcline"><span class="lineno"><a href="210,80" id="srcline80"> 80</a></span><span class="line">       validateattributes(Q,{<span class="string">'numeric'</span>},{<span class="string">'square'</span>})</span></span>
+<span class="srcline"><span class="lineno"><a href="210,81" id="srcline81"> 81</a></span><span class="line">       validateattributes(R,{<span class="string">'numeric'</span>},{<span class="string">'square'</span>})</span></span>
+<span class="srcline"><span class="lineno"><a href="210,82" id="srcline82"> 82</a></span><span class="line">       validateattributes(P0,{<span class="string">'numeric'</span>},{<span class="string">'square'</span>})</span></span>
+<span class="srcline"><span class="lineno"><a href="210,83" id="srcline83"> 83</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,84" id="srcline84"> 84</a></span><span class="line">    Nx     = size(A,1);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,85" id="srcline85"> 85</a></span><span class="line">    Nu     = size(B,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,86" id="srcline86"> 86</a></span><span class="line">    Ny     = size(C,1);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,87" id="srcline87"> 87</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,88" id="srcline88"> 88</a></span><span class="line">    OBJ.A  = A;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,89" id="srcline89"> 89</a></span><span class="line">    OBJ.B  = B;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,90" id="srcline90"> 90</a></span><span class="line">    OBJ.C  = C;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,91" id="srcline91"> 91</a></span><span class="line">    OBJ.Q  = Q;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,92" id="srcline92"> 92</a></span><span class="line">    OBJ.R  = R;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,93" id="srcline93"> 93</a></span><span class="line">    OBJ.x0 = x0(:);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,94" id="srcline94"> 94</a></span><span class="line">    OBJ.P0 = P0;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,95" id="srcline95"> 95</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,96" id="srcline96"> 96</a></span><span class="line">    OBJ.Nx = Nx;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,97" id="srcline97"> 97</a></span><span class="line">    OBJ.Ny = Ny;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,98" id="srcline98"> 98</a></span><span class="line">    OBJ.Nu = Nu;  </span></span>
+<span class="srcline"><span class="lineno"><a href="210,99" id="srcline99"> 99</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,100" id="srcline100">100</a></span><span class="line">    OBJ.x  = OBJ.x0;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,101" id="srcline101">101</a></span><span class="line">    OBJ.P  = P0;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,102" id="srcline102">102</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% my_KF_general_CLS()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,103" id="srcline103">103</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,104" id="srcline104">104</a></span><span class="line"><span class="keyword">function</span>  OBJ = predict(OBJ, varargin)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,105" id="srcline105">105</a></span><span class="line">    <span class="comment">% ALLOWED USAGE:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,106" id="srcline106">106</a></span><span class="line">    <span class="comment">% &gt;&gt; OBJ = OBJ.predict()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,107" id="srcline107">107</a></span><span class="line">    <span class="comment">% &gt;&gt; OBJ = OBJ.predict(u)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,108" id="srcline108">108</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,109" id="srcline109">109</a></span><span class="line">    <span class="keyword">if</span>(2==nargin)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,110" id="srcline110">110</a></span><span class="line">      u = varargin{1};</span></span>
+<span class="srcline"><span class="lineno"><a href="210,111" id="srcline111">111</a></span><span class="line">      u = u(:);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,112" id="srcline112">112</a></span><span class="line">      assert( ~isempty(OBJ.B),  <span class="string">'###ERROR:  hey! you gave me a U, but your B is empty !'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,113" id="srcline113">113</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="210,114" id="srcline114">114</a></span><span class="line">      assert(length(u)==size(OBJ.B,2), <span class="string">'###_ERROR:  hey your u and B have a dimension INconsistency !'</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,115" id="srcline115">115</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,116" id="srcline116">116</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,117" id="srcline117">117</a></span><span class="line">    <span class="comment">%    xhat[k|k-1] = A.x[k-1]  +  B.u[k-1]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,118" id="srcline118">118</a></span><span class="line">    <span class="comment">%       P[k|k-1] = A.P[k-1|k-1].(A')  +  Q</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,119" id="srcline119">119</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,120" id="srcline120">120</a></span><span class="line">    x = OBJ.x;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,121" id="srcline121">121</a></span><span class="line">    A = OBJ.A;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,122" id="srcline122">122</a></span><span class="line">    P = OBJ.P;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,123" id="srcline123">123</a></span><span class="line">    Q = OBJ.Q;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,124" id="srcline124">124</a></span><span class="line">    <span class="keyword">if</span>(isempty(OBJ.B))</span></span>
+<span class="srcline"><span class="lineno"><a href="210,125" id="srcline125">125</a></span><span class="line">        x = A*x;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,126" id="srcline126">126</a></span><span class="line">    <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,127" id="srcline127">127</a></span><span class="line">        B = OBJ.B;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,128" id="srcline128">128</a></span><span class="line">        x = A*x  +  B*u;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,129" id="srcline129">129</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,130" id="srcline130">130</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,131" id="srcline131">131</a></span><span class="line">    OBJ.x = x;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,132" id="srcline132">132</a></span><span class="line">    OBJ.P = A*P*(A.') + Q;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,133" id="srcline133">133</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% predict()</span></span></span>
+</pre>
+</div>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="210,134" id="srcline134">134</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,135" id="srcline135">135</a></span><span class="line"><span class="keyword">function</span>  <span class="var type1" id="S44T374U337">OBJ</span> = correct(<span class="var type1" id="S44T374U340">OBJ</span>, <span class="var type1" id="S45T378U341">y</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,136" id="srcline136">136</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="210,137" id="srcline137">137</a></span><span class="line">       validateattributes(<span class="var type0" id="S45T0U355">y</span>,{<span class="string">'numeric'</span>},{<span class="string">'vector'</span>});</span></span>
+<span class="srcline"><span class="lineno"><a href="210,138" id="srcline138">138</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,139" id="srcline139">139</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,140" id="srcline140">140</a></span><span class="line">    <span class="mxinfo " id="T382:U4"><span class="var type1" id="S45T382U364">y</span> = <span class="mxinfo " id="T382:U6"><span class="var type1" id="S45T378U366">y</span>(:)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,141" id="srcline141">141</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,142" id="srcline142">142</a></span><span class="line">    <span class="extrinsicFcn" id="F1719N24:B370">assert</span>(<span class="mxinfo " id="T5:U8"><span class="mxinfo " id="T3:U9">length(<span class="var type1" id="S45T382U374">y</span>)</span>==<span class="mxinfo " id="T3:U11">size(<span class="var type1" id="S44T374U378">OBJ</span>.C,1)</span></span>, <span class="mxinfo " id="T383:U13"><span class="string">'###_ERROR:  hey your y and C have a dimension INconsistency !'</span></span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,143" id="srcline143">143</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="210,144" id="srcline144">144</a></span><span class="line">    <span class="mxinfo " id="T4:U14"><span class="var type1" id="S51T4U384">x</span> = <span class="mxinfo " id="T4:U16"><span class="var type1" id="S44T374U386">OBJ</span>.x</span></span>; <span class="comment">%#ok&lt;*PROPLC&gt;</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,145" id="srcline145">145</a></span><span class="line">    <span class="mxinfo " id="T375:U18"><span class="var type1" id="S52T375U390">A</span> = <span class="mxinfo " id="T375:U20"><span class="var type1" id="S44T374U392">OBJ</span>.A</span></span>; <span class="comment">%#ok&lt;*NASGU&gt;</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,146" id="srcline146">146</a></span><span class="line">    <span class="mxinfo " id="T375:U22"><span class="var type1" id="S53T375U396">C</span> = <span class="mxinfo " id="T375:U24"><span class="var type1" id="S44T374U398">OBJ</span>.C</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,147" id="srcline147">147</a></span><span class="line">    <span class="mxinfo " id="T375:U26"><span class="var type1" id="S54T375U402">P</span> = <span class="mxinfo " id="T375:U28"><span class="var type1" id="S44T374U404">OBJ</span>.P</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,148" id="srcline148">148</a></span><span class="line">    <span class="mxinfo " id="T375:U30"><span class="var type1" id="S55T375U408">Q</span> = <span class="mxinfo " id="T375:U32"><span class="var type1" id="S44T374U410">OBJ</span>.Q</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,149" id="srcline149">149</a></span><span class="line">    <span class="mxinfo " id="T375:U34"><span class="var type1" id="S56T375U414">R</span> = <span class="mxinfo " id="T375:U36"><span class="var type1" id="S44T374U416">OBJ</span>.R</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,150" id="srcline150">150</a></span><span class="line">    <span class="mxinfo " id="T381:U38"><span class="var type1" id="S57T381U420">I</span> = <span class="mxinfo " id="T381:U40">eye(<span class="mxinfo " id="T3:U41"><span class="var type1" id="S44T374U424">OBJ</span>.Nx</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,151" id="srcline151">151</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,152" id="srcline152">152</a></span><span class="line">    <span class="comment">% Recall the BACK and FORWARD slash operators</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,153" id="srcline153">153</a></span><span class="line">    <span class="comment">%  A.X=B ---&gt; X=inv(A)*B ---&gt; X = A\B</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,154" id="srcline154">154</a></span><span class="line">    <span class="comment">%  X.A=B ---&gt; X=B*inv(A) ---&gt; X = B/A</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,155" id="srcline155">155</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,156" id="srcline156">156</a></span><span class="line">    <span class="comment">%     K[k]     = P[k|k-1].(C'). inv(  C.P[k|k-1].(C') + R  )</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,157" id="srcline157">157</a></span><span class="line">    <span class="comment">%  xhat[k|k]   = xhat[k|k-1]  +  K[k]*( y[k] - C.xhat[k|k-1]  )</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,158" id="srcline158">158</a></span><span class="line">    <span class="comment">%     P[k|k]   = (I-K[k].C). P[k|k-1] . (I-K[k].C)'   +  K[k]R.(K[k]')</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,159" id="srcline159">159</a></span><span class="line">    <span class="comment">%                = (I-K[k].C). P[k|k-1]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,160" id="srcline160">160</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,161" id="srcline161">161</a></span><span class="line">    <span class="mxinfo " id="T375:U43"><span class="var type1" id="S59T375U428">K</span> = <span class="mxinfo " id="T375:U45">(<span class="mxinfo " id="T375:U46"><span class="var type1" id="S54T375U432">P</span>* (<span class="mxinfo " id="T375:U48"><span class="var type1" id="S53T375U435">C</span>.'</span>)</span>) / (<span class="mxinfo " id="T375:U50"><span class="mxinfo " id="T375:U51"><span class="mxinfo " id="T375:U52"><span class="var type1" id="S53T375U440">C</span>*<span class="var type1" id="S54T375U441">P</span></span>*(<span class="mxinfo " id="T375:U55"><span class="var type1" id="S53T375U444">C</span>.'</span>)</span> + <span class="var type1" id="S56T375U445">R</span></span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,162" id="srcline162">162</a></span><span class="line">    <span class="mxinfo " id="T4:U58"><span class="var type1" id="S51T4U448">x</span> = <span class="mxinfo " id="T4:U60"><span class="var type1" id="S51T4U450">x</span> + <span class="mxinfo " id="T4:U62"><span class="var type1" id="S59T375U452">K</span>*(<span class="mxinfo " id="T4:U64"><span class="potentialdiff PD5"><span class="var type1" id="S45T382U455">y</span> - <span class="mxinfo " id="T4:U66"><span class="var type1" id="S53T375U457">C</span>*<span class="var type1" id="S51T4U458">x</span></span></span></span>)</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,163" id="srcline163">163</a></span><span class="line">    <span class="mxinfo " id="T375:U69"><span class="var type1" id="S54T375U461">P</span> = <span class="mxinfo " id="T375:U71">(<span class="mxinfo " id="T375:U72"><span class="var type1" id="S57T381U465">I</span> - <span class="mxinfo " id="T375:U74"><span class="var type1" id="S59T375U467">K</span>*<span class="var type1" id="S53T375U468">C</span></span></span>)*<span class="var type1" id="S54T375U469">P</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,164" id="srcline164">164</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,165" id="srcline165">165</a></span><span class="line">    <span class="mxinfo " id="T4:U78"><span class="mxinfo " id="T4:U79"><span class="var type1" id="S44T374U473">OBJ</span>.x</span> = <span class="var type1" id="S51T4U475">x</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,166" id="srcline166">166</a></span><span class="line">    <span class="mxinfo " id="T375:U82"><span class="mxinfo " id="T375:U83"><span class="var type1" id="S44T374U479">OBJ</span>.P</span> = <span class="var type1" id="S54T375U481">P</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,167" id="srcline167">167</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% correct()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,168" id="srcline168">168</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+</pre>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="210,169" id="srcline169">169</a></span><span class="line"><span class="keyword">function</span> x = get_state(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,170" id="srcline170">170</a></span><span class="line">         x = OBJ.x;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,171" id="srcline171">171</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% get_state()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,172" id="srcline172">172</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,173" id="srcline173">173</a></span><span class="line"><span class="keyword">function</span> [xo_mat, yo_mat, varargout] = batch_step(OBJ, u_mat, y_mat, tf_do_plots)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,174" id="srcline174">174</a></span><span class="line"><span class="comment">% ALLOWED_USAGE:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,175" id="srcline175">175</a></span><span class="line"><span class="comment">%  &gt;&gt; [xo_mat, yo_mat]      = batch_step(OBJ, u_mat, y_mat)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,176" id="srcline176">176</a></span><span class="line"><span class="comment">%  &gt;&gt; [xo_mat, yo_mat]      = batch_step(OBJ, u_mat, y_mat, true)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,177" id="srcline177">177</a></span><span class="line"><span class="comment">%  &gt;&gt; [xo_mat, yo_mat, hax] = batch_step(OBJ, u_mat, y_mat, true)    </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,178" id="srcline178">178</a></span><span class="line"><span class="comment">%</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,179" id="srcline179">179</a></span><span class="line"><span class="comment">% EXPECTED INPUTS: (please see ATTENTION note below)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,180" id="srcline180">180</a></span><span class="line"><span class="comment">%   y_mat = Ny_x_Nsteps</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,181" id="srcline181">181</a></span><span class="line"><span class="comment">%   u_mat = Nu_x_(Nsteps-1) or EMPTY</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,182" id="srcline182">182</a></span><span class="line"><span class="comment">%-----------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,183" id="srcline183">183</a></span><span class="line"><span class="comment">%   ***ATTENTION***:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,184" id="srcline184">184</a></span><span class="line"><span class="comment">%                    ycol_at_time_k         = y_mat(:,k)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,185" id="srcline185">185</a></span><span class="line"><span class="comment">%                    ucol_at_time_k_minus_1 = u_mat(:,k)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,186" id="srcline186">186</a></span><span class="line"><span class="comment">%</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,187" id="srcline187">187</a></span><span class="line"><span class="comment">% By packing y_mat and u_mat in this fashion it makes it pretty easy to</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,188" id="srcline188">188</a></span><span class="line"><span class="comment">% cycle through each time step within a FOR loop (see below)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,189" id="srcline189">189</a></span><span class="line"><span class="comment">%-----------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,190" id="srcline190">190</a></span><span class="line"><span class="comment">% OUTPUTS:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,191" id="srcline191">191</a></span><span class="line"><span class="comment">%   xo_mat =  Nx_x_Nsteps</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,192" id="srcline192">192</a></span><span class="line"><span class="comment">%   yo_mat =  Ny_x_Nsteps</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,193" id="srcline193">193</a></span><span class="line"><span class="comment">%-----------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,194" id="srcline194">194</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="210,195" id="srcline195">195</a></span><span class="line">    <span class="comment">% check the inputs</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,196" id="srcline196">196</a></span><span class="line">    assert(size(y_mat,1)==OBJ.Ny, <span class="string">'ERR: your y_mat has INcompatable dimensions'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,197" id="srcline197">197</a></span><span class="line">    assert(size(u_mat,1)==OBJ.Nu, <span class="string">'ERR: your u_mat has INcompatable dimensions'</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,198" id="srcline198">198</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="210,199" id="srcline199">199</a></span><span class="line">    N_steps  = size(y_mat,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,200" id="srcline200">200</a></span><span class="line">    Nx       = OBJ.Nx;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,201" id="srcline201">201</a></span><span class="line">    Ny       = OBJ.Ny;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,202" id="srcline202">202</a></span><span class="line">    xo_mat   = zeros(Nx, N_steps);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,203" id="srcline203">203</a></span><span class="line">    yo_mat   = zeros(Ny, N_steps);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,204" id="srcline204">204</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,205" id="srcline205">205</a></span><span class="line">    <span class="comment">% step through each time instance</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,206" id="srcline206">206</a></span><span class="line">    <span class="keyword">for</span> k=1:N_steps</span></span>
+<span class="srcline"><span class="lineno"><a href="210,207" id="srcline207">207</a></span><span class="line">       <span class="keyword">if</span>(isempty(u_mat))</span></span>
+<span class="srcline"><span class="lineno"><a href="210,208" id="srcline208">208</a></span><span class="line">           u = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,209" id="srcline209">209</a></span><span class="line">       <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,210" id="srcline210">210</a></span><span class="line">           <span class="comment">% this is u_at_k_minus_1</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,211" id="srcline211">211</a></span><span class="line">           u = u_mat(:,k);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,212" id="srcline212">212</a></span><span class="line">       <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,213" id="srcline213">213</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,214" id="srcline214">214</a></span><span class="line">       <span class="comment">% this is y_at_k</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,215" id="srcline215">215</a></span><span class="line">       y   = y_mat(:,k);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,216" id="srcline216">216</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,217" id="srcline217">217</a></span><span class="line">       OBJ = OBJ.predict(u);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,218" id="srcline218">218</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,219" id="srcline219">219</a></span><span class="line">       <span class="keyword">if</span>(any(isnan(y)))</span></span>
+<span class="srcline"><span class="lineno"><a href="210,220" id="srcline220">220</a></span><span class="line">           <span class="comment">% do NOT correct</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,221" id="srcline221">221</a></span><span class="line">       <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,222" id="srcline222">222</a></span><span class="line">          OBJ = OBJ.correct(y);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,223" id="srcline223">223</a></span><span class="line">       <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,224" id="srcline224">224</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,225" id="srcline225">225</a></span><span class="line">       xo_mat(:,k) = OBJ.x;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,226" id="srcline226">226</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,227" id="srcline227">227</a></span><span class="line">       yo_mat(:,k) = OBJ.C*OBJ.x;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,228" id="srcline228">228</a></span><span class="line">    <span class="keyword">end</span> <span class="comment">% for loop</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,229" id="srcline229">229</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,230" id="srcline230">230</a></span><span class="line">    <span class="comment">% should we do any plots ?</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,231" id="srcline231">231</a></span><span class="line">    <span class="keyword">if</span>(nargin==3)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,232" id="srcline232">232</a></span><span class="line">        <span class="comment">% NOPE: do NOT do any plotting</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,233" id="srcline233">233</a></span><span class="line">      <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,234" id="srcline234">234</a></span><span class="line">    <span class="keyword">elseif</span>( 4==nargin &amp;&amp; false==tf_do_plots)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,235" id="srcline235">235</a></span><span class="line">        <span class="comment">% NOPE: do NOT do any plotting</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,236" id="srcline236">236</a></span><span class="line">        <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,237" id="srcline237">237</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,238" id="srcline238">238</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,239" id="srcline239">239</a></span><span class="line">    <span class="comment">% OK: if we made it to here then PLOT stuff</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,240" id="srcline240">240</a></span><span class="line">    hax = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,241" id="srcline241">241</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,242" id="srcline242">242</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="210,243" id="srcline243">243</a></span><span class="line">        hax = OBJ.plot(y_mat, yo_mat, xo_mat);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,244" id="srcline244">244</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,245" id="srcline245">245</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,246" id="srcline246">246</a></span><span class="line">    <span class="comment">% take care of any OPTIONAL outputs</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,247" id="srcline247">247</a></span><span class="line">    <span class="keyword">if</span>(3==nargout)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,248" id="srcline248">248</a></span><span class="line">       varargout{1} = hax; </span></span>
+<span class="srcline"><span class="lineno"><a href="210,249" id="srcline249">249</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,250" id="srcline250">250</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,251" id="srcline251">251</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% batch_step()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,252" id="srcline252">252</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,253" id="srcline253">253</a></span><span class="line"><span class="keyword">function</span> hax = plot(OBJ, y_mat, yo_mat, xo_mat)</span></span>
+<span class="srcline"><span class="lineno"><a href="210,254" id="srcline254">254</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,255" id="srcline255">255</a></span><span class="line">    <span class="comment">% check the inputs</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,256" id="srcline256">256</a></span><span class="line">    assert(size(y_mat,1)==OBJ.Ny, <span class="string">'ERR: your y_mat has INcompatable dimensions'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,257" id="srcline257">257</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="210,258" id="srcline258">258</a></span><span class="line">    hax      = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,259" id="srcline259">259</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="210,260" id="srcline260">260</a></span><span class="line">    Nx       = OBJ.Nx;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,261" id="srcline261">261</a></span><span class="line">    Ny       = OBJ.Ny;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,262" id="srcline262">262</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="210,263" id="srcline263">263</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="210,264" id="srcline264">264</a></span><span class="line">           <span class="comment">% plot the STATES </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,265" id="srcline265">265</a></span><span class="line">           figure;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,266" id="srcline266">266</a></span><span class="line">           hax = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="210,267" id="srcline267">267</a></span><span class="line">           <span class="keyword">for</span> kx=1:OBJ.Nx</span></span>
+<span class="srcline"><span class="lineno"><a href="210,268" id="srcline268">268</a></span><span class="line">                hax(kx) = subplot(Nx,1,kx); </span></span>
+<span class="srcline"><span class="lineno"><a href="210,269" id="srcline269">269</a></span><span class="line">                plot(xo_mat(kx,:),<span class="string">'-k'</span>,<span class="string">'LineWidth'</span>,2); grid(<span class="string">'on'</span>); axis(<span class="string">'tight'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,270" id="srcline270">270</a></span><span class="line">                tmpstr = sprintf(<span class="string">'X(%d) EST'</span>,kx);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,271" id="srcline271">271</a></span><span class="line">                legend({tmpstr},<span class="string">'Location'</span>,<span class="string">'Best'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,272" id="srcline272">272</a></span><span class="line">           <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,273" id="srcline273">273</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="210,274" id="srcline274">274</a></span><span class="line">           <span class="comment">% plot the OUTPUTS</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,275" id="srcline275">275</a></span><span class="line">           figure;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,276" id="srcline276">276</a></span><span class="line">           Ny = OBJ.Ny;</span></span>
+<span class="srcline"><span class="lineno"><a href="210,277" id="srcline277">277</a></span><span class="line">           <span class="keyword">for</span> ky=1:Ny</span></span>
+<span class="srcline"><span class="lineno"><a href="210,278" id="srcline278">278</a></span><span class="line">              subplot(Ny,1,ky); </span></span>
+<span class="srcline"><span class="lineno"><a href="210,279" id="srcline279">279</a></span><span class="line">                plot( y_mat(ky,:),<span class="string">'-r'</span>);  hold <span class="string">on</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,280" id="srcline280">280</a></span><span class="line">                plot(yo_mat(ky,:),<span class="string">'-k'</span>,<span class="string">'LineWidth'</span>,2); </span></span>
+<span class="srcline"><span class="lineno"><a href="210,281" id="srcline281">281</a></span><span class="line">                  grid(<span class="string">'on'</span>); axis(<span class="string">'tight'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,282" id="srcline282">282</a></span><span class="line">                  tmpCSE{1} = sprintf(<span class="string">'Y meas'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,283" id="srcline283">283</a></span><span class="line">                  tmpCSE{2} = sprintf(<span class="string">'Y(%d) EST'</span>,ky);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,284" id="srcline284">284</a></span><span class="line">                  legend(tmpCSE,<span class="string">'Location'</span>,<span class="string">'Best'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="210,285" id="srcline285">285</a></span><span class="line">           <span class="keyword">end</span>       </span></span>
+<span class="srcline"><span class="lineno"><a href="210,286" id="srcline286">286</a></span><span class="line">    <span class="keyword">end</span> <span class="comment">% if(1 ==coder.target('MATLAB') )</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,287" id="srcline287">287</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,288" id="srcline288">288</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,289" id="srcline289">289</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,290" id="srcline290">290</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,291" id="srcline291">291</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="210,292" id="srcline292">292</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,293" id="srcline293">293</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% classdef</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,294" id="srcline294">294</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,295" id="srcline295">295</a></span><span class="line"><span class="comment">% END CLASSDEF</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,296" id="srcline296">296</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="210,297" id="srcline297">297</a></span><span class="line"> </span></span>
+</pre>
+</div>
+</body>
+</html>

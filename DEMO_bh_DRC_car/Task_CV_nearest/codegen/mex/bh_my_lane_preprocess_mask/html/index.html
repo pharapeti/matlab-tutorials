@@ -1,0 +1,924 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Code Generation Report</title>
+<link rel="stylesheet" type="text/css" href="resources/eml_report.css" />
+<link rel="stylesheet" type="text/css" href="resources/jQuery/ui.resizable.css" />
+<link rel="stylesheet" type="text/css" href="index.css" />
+<style>
+	pre.code{
+		-moz-tab-size: 4; /* For Firefox */
+		-o-tab-size: 4; /* For Opera 10.6-12.1 */
+		tab-size: 4; /* For Chrome */
+	}
+</style>
+<script type="text/javascript" src="resources/jQuery/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="resources/jQuery/jquery-ui-1.7.custom.min.js"></script>
+<script type="text/javascript" src="resources/jQuery/jquery.tablesorter.mod.js"></script>
+<script type="text/javascript" src="resources/jQuery/jquery.hotkeys-0.7.8.js"></script>
+<script type="text/javascript" src="resources/eml_report_interactions.js"></script>
+<script type="text/javascript" src="resources/eml_report_layout.js"></script>
+<script type="text/javascript" src="rtwshrink.js"></script>
+<script type="text/javascript">
+var localizedMessages = {
+    callSelectPrompt: "Select a function call:",
+    callSelectSource: "Calls from this function",
+    callSelectTarget: "Calls to this function",
+    infoForExpression: "Information for the selected expression:",
+    infoForVarType: "Information for the selected variable:",
+    infoForVarConst: "Information for the selected compile-time constant:",
+    infoForVarNone: "This variable does not have information associated with it.",
+    infoForFilter: "Matched {0}/{1} functions, {2}/{3} methods",
+    autoExtrinsicCall: "Only supported within the MATLAB environment."
+};
+var keyBindings = {
+        selectMCodeTab: "Ctrl+m",
+    selectCallStackTab: "Ctrl+k",
+        selectCCodeTab: "Ctrl+c",
+       selectReportTab: "Ctrl+r",
+     selectCenterPanel: "Ctrl+w",
+      selectSummaryTab: "Ctrl+s",
+     selectMessagesTab: "Ctrl+a",
+    selectWatchListTab: "Ctrl+v",
+     selectBuildLogTab: "Ctrl+t",
+    clearAllHighlights: "Esc"
+};
+var functionInfoTable = {
+ MATLABcode1: "bh_my_lane_preprocess_mask1_mcode.html",
+ fpath1: "C:/bh/users_EV/sandpit/bh_car_models/devel/Task_CV_nearest/bh_my_lane_preprocess_mask.m",
+ lines1: [1, 1, 49],
+ watch1: "bh_my_lane_preprocess_mask1_watch.html",
+ title1: "Function: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\Task_CV_nearest\\bh_my_lane_preprocess_mask.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\Task_CV_nearest\\bh_my_lane_preprocess_mask.m')\">bh_my_lane_preprocess_mask</a></span>",
+ tcall1: [  ],
+ scall1: [ [ "From line 4 to bh_mask_fraction_of_BW_image > 1", "15#srcline1" ], [ "From line 5 to bh_mask_fraction_of_BW_image > 2", "16#srcline1" ], [ "From line 32 to lane_info_CLS/lane_info_CLS", "608#srcline22" ], [ "From line 33 to lane_info_CLS/lane_info_CLS", "608#srcline22" ], [ "From line 38 to lane_info_CLS/calc_info > 2", "609#srcline37" ], [ "From line 39 to lane_info_CLS/calc_info > 2", "609#srcline37" ], [ "From line 41 to lane_info_CLS/convert_to_struct", "610#srcline96" ], [ "From line 42 to lane_info_CLS/convert_to_struct", "610#srcline96" ] ],
+ MATLABcode15: "bh_mask_fraction_of_BW_image15_mcode.html",
+ fpath15: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_funcs/bh_mask_fraction_of_BW_image.m",
+ lines15: [1, 1, 55],
+ watch15: "bh_mask_fraction_of_BW_image15_watch.html",
+ title15: "Function: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_funcs\\bh_mask_fraction_of_BW_image.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_funcs\\bh_mask_fraction_of_BW_image.m')\">bh_mask_fraction_of_BW_image &gt; 1</a></span>",
+ tcall15: [ [ "From bh_my_lane_preprocess_mask line 4", "1#F15N13:B17" ] ],
+ scall15: [  ],
+ MATLABcode16: "bh_mask_fraction_of_BW_image16_mcode.html",
+ fpath16: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_funcs/bh_mask_fraction_of_BW_image.m",
+ lines16: [1, 1, 55],
+ watch16: "bh_mask_fraction_of_BW_image16_watch.html",
+ title16: "Function: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_funcs\\bh_mask_fraction_of_BW_image.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_funcs\\bh_mask_fraction_of_BW_image.m')\">bh_mask_fraction_of_BW_image &gt; 2</a></span>",
+ tcall16: [ [ "From bh_my_lane_preprocess_mask line 5", "1#F16N13:B26" ] ],
+ scall16: [  ],
+ MATLABcode110: "is_detected110_mcode.html",
+ fpath110: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/lane_info_CLS.m",
+ lines110: [32, 33, 37],
+ watch110: "is_detected110_watch.html",
+ title110: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m')\">lane_info_CLS/is_detected</a></span>",
+ tcall110: [ [ "From lane_info_CLS/calc_info > 1 line 38", "607#F110N21:B117" ], [ "From lane_info_CLS/calc_info > 2 line 38", "609#F110N21:B117" ] ],
+ scall110: [  ],
+ MATLABcode500: "LOC_classify_line_type500_mcode.html",
+ fpath500: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines500: [191, 195, 242],
+ watch500: "LOC_classify_line_type500_watch.html",
+ title500: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/LOC_classify_line_type</a></span>",
+ tcall500: [ [ "From bh_line_homog_CLS/bh_line_homog_CLS line 51", "537#F500N6:B130" ] ],
+ scall500: [  ],
+ MATLABcode537: "bh_line_homog_CLS537_mcode.html",
+ fpath537: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines537: [31, 31, 70],
+ watch537: "bh_line_homog_CLS537_watch.html",
+ title537: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/bh_line_homog_CLS</a></span>",
+ tcall537: [ [ "From lane_info_CLS/calc_info > 1 line 53", "607#F537N9:B176" ], [ "From lane_info_CLS/calc_info > 2 line 53", "609#F537N9:B176" ] ],
+ scall537: [ [ "From line 51 to bh_line_homog_CLS/LOC_classify_line_type", "500#srcline195" ] ],
+ MATLABcode587: "_anonymousFunction1_587_mcode.html",
+ fpath587: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines587: [0, 0, 0],
+ watch587: "_anonymousFunction1_587_watch.html",
+ title587: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)</a></span>",
+ tcall587: [ [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 1 line 357", "591#F587N3:B82" ], [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 2 line 363", "593#F587N3:B82" ] ],
+ scall587: [  ],
+ MATLABcode589: "_anonymousFunction2_589_mcode.html",
+ fpath589: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines589: [0, 0, 0],
+ watch589: "_anonymousFunction2_589_watch.html",
+ title589: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )</a></span>",
+ tcall589: [ [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 1 line 359", "591#F589N4:B94" ], [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 2 line 365", "593#F589N4:B94" ] ],
+ scall589: [  ],
+ MATLABcode591: "LOC_get_side_intersect_point591_mcode.html",
+ fpath591: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines591: [324, 325, 385],
+ watch591: "LOC_get_side_intersect_point591_watch.html",
+ title591: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 1</a></span>",
+ tcall591: [ [ "From bh_line_homog_CLS/LOC_get_roi_intersection_co_ords line 279", "603#F591N8:B1175" ] ],
+ scall591: [ [ "From line 357 to bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)", "587#srcline0" ], [ "From line 359 to bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )", "589#srcline0" ] ],
+ MATLABcode593: "LOC_get_side_intersect_point593_mcode.html",
+ fpath593: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines593: [324, 325, 385],
+ watch593: "LOC_get_side_intersect_point593_watch.html",
+ title593: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 2</a></span>",
+ tcall593: [ [ "From bh_line_homog_CLS/LOC_get_roi_intersection_co_ords line 280", "603#F593N8:B1187" ] ],
+ scall593: [ [ "From line 363 to bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)", "587#srcline0" ], [ "From line 365 to bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )", "589#srcline0" ] ],
+ MATLABcode594: "_anonymousFunction3_594_mcode.html",
+ fpath594: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines594: [0, 0, 0],
+ watch594: "_anonymousFunction3_594_watch.html",
+ title594: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)</a></span>",
+ tcall594: [ [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 3 line 369", "598#F594N5:B89" ], [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 4 line 375", "600#F594N5:B89" ] ],
+ scall594: [  ],
+ MATLABcode596: "_anonymousFunction4_596_mcode.html",
+ fpath596: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines596: [0, 0, 0],
+ watch596: "_anonymousFunction4_596_watch.html",
+ title596: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )</a></span>",
+ tcall596: [ [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 3 line 371", "598#F596N2:B98" ], [ "From bh_line_homog_CLS/LOC_get_side_intersect_point > 4 line 377", "600#F596N2:B98" ] ],
+ scall596: [  ],
+ MATLABcode598: "LOC_get_side_intersect_point598_mcode.html",
+ fpath598: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines598: [324, 325, 385],
+ watch598: "LOC_get_side_intersect_point598_watch.html",
+ title598: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 3</a></span>",
+ tcall598: [ [ "From bh_line_homog_CLS/LOC_get_roi_intersection_co_ords line 281", "603#F598N8:B1199" ] ],
+ scall598: [ [ "From line 369 to bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)", "594#srcline0" ], [ "From line 371 to bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )", "596#srcline0" ] ],
+ MATLABcode600: "LOC_get_side_intersect_point600_mcode.html",
+ fpath600: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines600: [324, 325, 385],
+ watch600: "LOC_get_side_intersect_point600_watch.html",
+ title600: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 4</a></span>",
+ tcall600: [ [ "From bh_line_homog_CLS/LOC_get_roi_intersection_co_ords line 282", "603#F600N8:B1211" ] ],
+ scall600: [ [ "From line 375 to bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)", "594#srcline0" ], [ "From line 377 to bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )", "596#srcline0" ] ],
+ MATLABcode603: "LOC_get_roi_intersection_co_ords603_mcode.html",
+ fpath603: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines603: [241, 242, 309],
+ watch603: "LOC_get_roi_intersection_co_ords603_watch.html",
+ title603: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/LOC_get_roi_intersection_co_ords</a></span>",
+ tcall603: [ [ "From bh_line_homog_CLS/get_roi_intersection_co_ords line 128", "604#F603N7:B487" ] ],
+ scall603: [ [ "From line 279 to bh_line_homog_CLS/LOC_get_side_intersect_point > 1", "591#srcline325" ], [ "From line 280 to bh_line_homog_CLS/LOC_get_side_intersect_point > 2", "593#srcline325" ], [ "From line 281 to bh_line_homog_CLS/LOC_get_side_intersect_point > 3", "598#srcline325" ], [ "From line 282 to bh_line_homog_CLS/LOC_get_side_intersect_point > 4", "600#srcline325" ] ],
+ MATLABcode604: "get_roi_intersection_co_ords604_mcode.html",
+ fpath604: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines604: [126, 127, 131],
+ watch604: "get_roi_intersection_co_ords604_watch.html",
+ title604: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/get_roi_intersection_co_ords</a></span>",
+ tcall604: [ [ "From lane_info_CLS/calc_info > 1 line 55", "607#F604N11:B188" ], [ "From lane_info_CLS/calc_info > 2 line 55", "609#F604N11:B188" ] ],
+ scall604: [ [ "From line 128 to bh_line_homog_CLS/LOC_get_roi_intersection_co_ords", "603#srcline242" ] ],
+ MATLABcode605: "isSlopey605_mcode.html",
+ fpath605: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines605: [77, 78, 82],
+ watch605: "isSlopey605_watch.html",
+ title605: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/isSlopey</a></span>",
+ tcall605: [ [ "From bh_line_homog_CLS/get_mc line 176", "606#F605N12:B721" ] ],
+ scall605: [  ],
+ MATLABcode606: "get_mc606_mcode.html",
+ fpath606: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ lines606: [171, 172, 187],
+ watch606: "get_mc606_watch.html",
+ title606: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\bh_line_homog_CLS.m')\">bh_line_homog_CLS/get_mc</a></span>",
+ tcall606: [ [ "From lane_info_CLS/calc_info > 1 line 63", "607#F606N10:B209" ], [ "From lane_info_CLS/calc_info > 2 line 63", "609#F606N10:B209" ] ],
+ scall606: [ [ "From line 176 to bh_line_homog_CLS/isSlopey", "605#srcline78" ] ],
+ MATLABcode607: "calc_info607_mcode.html",
+ fpath607: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/lane_info_CLS.m",
+ lines607: [36, 37, 70],
+ watch607: "calc_info607_watch.html",
+ title607: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m')\">lane_info_CLS/calc_info &gt; 1</a></span>",
+ tcall607: [ [ "From lane_info_CLS/lane_info_CLS line 30", "608#F607N19:B89" ] ],
+ scall607: [ [ "From line 38 to lane_info_CLS/is_detected", "110#srcline33" ], [ "From line 53 to bh_line_homog_CLS/bh_line_homog_CLS", "537#srcline31" ], [ "From line 55 to bh_line_homog_CLS/get_roi_intersection_co_ords", "604#srcline127" ], [ "From line 63 to bh_line_homog_CLS/get_mc", "606#srcline172" ] ],
+ MATLABcode608: "lane_info_CLS608_mcode.html",
+ fpath608: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/lane_info_CLS.m",
+ lines608: [22, 22, 33],
+ watch608: "lane_info_CLS608_watch.html",
+ title608: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m')\">lane_info_CLS/lane_info_CLS</a></span>",
+ tcall608: [ [ "From bh_my_lane_preprocess_mask line 32", "1#F608N22:B151" ], [ "From bh_my_lane_preprocess_mask line 33", "1#F608N22:B158" ] ],
+ scall608: [ [ "From line 30 to lane_info_CLS/calc_info > 1", "607#srcline37" ] ],
+ MATLABcode609: "calc_info609_mcode.html",
+ fpath609: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/lane_info_CLS.m",
+ lines609: [36, 37, 70],
+ watch609: "calc_info609_watch.html",
+ title609: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m')\">lane_info_CLS/calc_info &gt; 2</a></span>",
+ tcall609: [ [ "From bh_my_lane_preprocess_mask line 38", "1#F609N19:B188" ], [ "From bh_my_lane_preprocess_mask line 39", "1#F609N19:B197" ] ],
+ scall609: [ [ "From line 38 to lane_info_CLS/is_detected", "110#srcline33" ], [ "From line 53 to bh_line_homog_CLS/bh_line_homog_CLS", "537#srcline31" ], [ "From line 55 to bh_line_homog_CLS/get_roi_intersection_co_ords", "604#srcline127" ], [ "From line 63 to bh_line_homog_CLS/get_mc", "606#srcline172" ] ],
+ MATLABcode610: "convert_to_struct610_mcode.html",
+ fpath610: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/lane_info_CLS.m",
+ lines610: [95, 96, 112],
+ watch610: "convert_to_struct610_watch.html",
+ title610: "Method: <span class='functionname'><a title='C:&nbsp;\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m' class='functionlink' href=\"matlab: open('C:\\bh\\users_EV\\sandpit\\bh_car_models\\devel\\THE_LIBRARY\\my_cv_classes\\lane_info_CLS.m')\">lane_info_CLS/convert_to_struct</a></span>",
+ tcall610: [ [ "From bh_my_lane_preprocess_mask line 41", "1#F610N20:B206" ], [ "From bh_my_lane_preprocess_mask line 42", "1#F610N20:B213" ] ],
+ scall610: [  ],
+ rootFcnID: "1",
+ firstPage: "1",
+ htmlRoot: "C:/bh/users_EV/sandpit/bh_car_models/devel/Task_CV_nearest/codegen/mex/bh_my_lane_preprocess_mask/html/"
+};
+var scriptInfoTable = {
+ fpath1: "C:/bh/users_EV/sandpit/bh_car_models/devel/Task_CV_nearest/bh_my_lane_preprocess_mask.m",
+ fpath2: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/isBuiltInNumeric.m",
+ fpath3: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/round.m",
+ fpath4: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/applyScalarFunctionInPlace.m",
+ fpath5: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/round.m",
+ fpath6: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/isnan.m",
+ fpath7: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/ops/colon.m",
+ fpath8: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/nan.m",
+ fpath9: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/isinf.m",
+ fpath10: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/floor.m",
+ fpath11: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/floor.m",
+ fpath12: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_funcs/bh_mask_fraction_of_BW_image.m",
+ fpath13: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/scalarEg.m",
+ fpath14: "C:/MATLAB/R2017b/toolbox/eml/lib/fixedpoint/isnumerictype.m",
+ fpath15: "C:/MATLAB/R2017b/toolbox/eml/lib/fixedpoint/isfimath.m",
+ fpath16: "C:/MATLAB/R2017b/toolbox/eml/lib/fixedpoint/isfi.m",
+ fpath17: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/intmax.m",
+ fpath18: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/intmin.m",
+ fpath19: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/eml/eml_int_forloop_overflow_check.m",
+ fpath20: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/indexPlus.m",
+ fpath21: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/indexShapeCheck.m",
+ fpath22: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/find.m",
+ fpath23: "C:/MATLAB/R2017b/toolbox/shared/coder/coder/+coder/+internal/narginchk.m",
+ fpath24: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/scalexpAllocNoCheck.m",
+ fpath25: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/scalexpAlloc.m",
+ fpath26: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/minOrMax.m",
+ fpath27: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/datafun/min.m",
+ fpath28: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/ind2sub.m",
+ fpath29: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/indexTimes.m",
+ fpath30: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/private/eml_index_prod.m",
+ fpath31: "C:/MATLAB/R2017b/toolbox/shared/coder/coder/+coder/+internal/indexIntRelop.m",
+ fpath32: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/floatModel.m",
+ fpath33: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/indexDivide.m",
+ fpath34: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/ops/eml_mtimes_helper.m",
+ fpath35: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/constNonSingletonDim.m",
+ fpath36: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/relop.m",
+ fpath37: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/datafun/max.m",
+ fpath38: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/sparfun/nnz.m",
+ fpath39: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/lane_info_CLS.m",
+ fpath40: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/cat.m",
+ fpath41: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/inline.m",
+ fpath42: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/use_refblas.m",
+ fpath43: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/threshold.m",
+ fpath44: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/xgemm.m",
+ fpath45: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/indexMinus.m",
+ fpath46: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+refblas/xgemm.m",
+ fpath47: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/BLASApi.m",
+ fpath48: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/int.m",
+ fpath49: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/size_ptr.m",
+ fpath50: "C:/MATLAB/R2017b/toolbox/coder/coder/+coder/+internal/c_cast.p",
+ fpath51: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/length.m",
+ fpath52: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/matfun/eig.m",
+ fpath53: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/ismatrix.m",
+ fpath54: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+lapack/info_t.m",
+ fpath55: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/sparfun/issparse.m",
+ fpath56: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/isfinite.m",
+ fpath57: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/vAllOrAny.m",
+ fpath58: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/anyNonFinite.m",
+ fpath59: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+lapack/use_lapack.m",
+ fpath60: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+lapack/threshold.m",
+ fpath61: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+lapack/xggev.m",
+ fpath62: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/private/eml_realmin.m",
+ fpath63: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/realmin.m",
+ fpath64: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/isDomainError.m",
+ fpath65: "C:/MATLAB/R2017b/toolbox/shared/coder/coder/+coder/+internal/error.m",
+ fpath66: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/sqrt.m",
+ fpath67: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/sqrt.m",
+ fpath68: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/isFloatClass.m",
+ fpath69: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/private/eml_eps.m",
+ fpath70: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/eps.m",
+ fpath71: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/xdlapy2.m",
+ fpath72: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/abs.m",
+ fpath73: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/applyScalarFunction.m",
+ fpath74: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/abs.m",
+ fpath75: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzlangeM.m",
+ fpath76: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzlascl.m",
+ fpath77: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzggbal.m",
+ fpath78: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/xnrm2.m",
+ fpath79: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+refblas/xnrm2.m",
+ fpath80: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/xdlapy3.m",
+ fpath81: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/xscal.m",
+ fpath82: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+refblas/xscal.m",
+ fpath83: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/div.m",
+ fpath84: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/recip.m",
+ fpath85: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzlarfg.m",
+ fpath86: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/private/eml_isequal_core.m",
+ fpath87: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/isequal.m",
+ fpath88: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzlarf.m",
+ fpath89: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/xgemv.m",
+ fpath90: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/isNullEmpty.m",
+ fpath91: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/conjtimes.m",
+ fpath92: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+refblas/xgemv.m",
+ fpath93: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+blas/xgerc.m",
+ fpath94: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+refblas/xgerx.m",
+ fpath95: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+refblas/xgerc.m",
+ fpath96: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzgeqr2.m",
+ fpath97: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzunmqr.m",
+ fpath98: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/checkAndSaturateExpandSize.m",
+ fpath99: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/eye.m",
+ fpath100: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/fix.m",
+ fpath101: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/fix.m",
+ fpath102: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/ops/power.m",
+ fpath103: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/applyBinaryScalarFunction.m",
+ fpath104: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/ops/mpower.m",
+ fpath105: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzlartg.m",
+ fpath106: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzrot_rows.m",
+ fpath107: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzrot_cols.m",
+ fpath108: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzgghrd.m",
+ fpath109: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzlanhs.m",
+ fpath110: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzhgeqz.m",
+ fpath111: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/scalexpCompatible.m",
+ fpath112: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/ops/rdivide.m",
+ fpath113: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/ops/mrdivide.p",
+ fpath114: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/mod.m",
+ fpath115: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/mod.m",
+ fpath116: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/private/eml_realmax.m",
+ fpath117: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/realmax.m",
+ fpath118: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/hypot.m",
+ fpath119: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xztgevc.m",
+ fpath120: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzggbak.m",
+ fpath121: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+reflapack/xzggev.m",
+ fpath122: "C:/MATLAB/R2017b/toolbox/shared/coder/coder/+coder/+internal/warning.m",
+ fpath123: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/diag.m",
+ fpath124: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/codingForGPU.m",
+ fpath125: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/useParforConst.m",
+ fpath126: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/matfun/norm.m",
+ fpath127: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/+scalar/atan2.m",
+ fpath128: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elfun/atan2.m",
+ fpath129: "C:/bh/users_EV/sandpit/bh_car_models/devel/THE_LIBRARY/my_cv_classes/bh_line_homog_CLS.m",
+ fpath130: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/eml/eml_switch_helper.m",
+ fpath131: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/strcmp.m",
+ fpath132: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/strfun/isstring.m",
+ fpath133: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/lang/error.m",
+ fpath134: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/DisableDotParen.m",
+ fpath135: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/function_handle.m",
+ fpath136: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/datafun/private/process_sumprod_inputs.m",
+ fpath137: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/elmat/isrow.m",
+ fpath138: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/strfun/strlength.m",
+ fpath139: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/prodsize.m",
+ fpath140: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/datafun/private/combineVectorElements.m",
+ fpath141: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/datafun/private/sumprod.m",
+ fpath142: "C:/MATLAB/R2017b/toolbox/eml/lib/matlab/datafun/sum.m",
+ fpath143: "C:/MATLAB/R2017b/toolbox/eml/eml/+coder/+internal/nested_function.m"
+};
+</script>
+</head>
+<body>
+
+<div class="west">
+<ul class="ui-tabs-nav">
+<li class="ui-tabs-nav-item ui-tabs-selected"><span class="tab-link" id="MATLABcode"><span>MATLAB code</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="callstack"><span>Call stack</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="ccode"><span>C code</span></span></li>
+</ul>
+<div id="MATLABcodebody" class="ui-tabs-panel">
+<!-- Begin Filter -->
+<div class="grayline methodset" onclick="filterClick(event);">
+<a class="collapsed">Filter</a>
+</div>
+<div id="filterbody" class="hidden">
+<table class="myfunc-filter-tbl">
+<tr>
+<td title="Use this filter to display only functions and methods that contain variables or expressions with the specified attributes." colspan="2" class="checkbox">
+<div class="myfunc-filterby-chk"><input type="checkbox" class="filterenable" />
+<div class="filter-enable-lbl">Filter functions and methods</div></div></td></tr><tr>
+<td class="label"><div class="myfunc-filterby-lbl">Filter by:</div></td>
+<td class="select">
+<div class="filters">
+<select class="myfunc-filterby">
+<option id="size">Size</option>
+<option id="complex">Complexity</option>
+<option id="class">Class</option>
+</select>
+</div>
+</td>
+</tr>
+
+<tr>
+<td class="label"><div class="myfunc-filterstr-lbl">Filter:</div></td>
+<td class="input"><div>
+
+<div class="size">
+<select class="myfunc-filter size">
+<option value="591 593 598 600 603">1 x 0</option>
+<option value="1 15 16 110 500 537 587 591 593 594 598 600 603 604 605 606 607 608 609 610">1 x 1</option>
+<option value="1 589 591 593 596 598 600 603 604 607 609">1 x 2</option>
+<option value="591 593 603">1 x 4</option>
+<option value="598 600">1 x 5</option>
+<option value="500 537 587 591 593 594 598 600 603 604 605 606 607 609">1 x <b>:</b>6</option>
+<option value="15 16">1 x <b>:</b>?</option>
+<option value="1 110 500 537 591 593 598 600 603 604 606 607 608 609 610">2 x 1</option>
+<option value="537">2 x 3</option>
+<option value="603">2 x 4</option>
+<option value="603">2 x <b>:</b>4</option>
+<option value="1 15 16 110 607 608 609 610">240 x 320</option>
+<option value="537">3 x 1</option>
+<option value="537">3 x 3</option>
+<option value="1 537 607 609"><b>:</b>76800 x 1</option>
+<option value="537"><b>:</b>76800 x 3</option>
+</select>
+</div>
+
+<div class="complex">
+<select class="myfunc-filter complex">
+<option value="537">Complex values</option>
+<option value="1 15 16 110 500 537 587 589 591 593 594 596 598 600 603 604 605 606 607 608 609 610">Real values</option>
+</select>
+</div>
+<!-- Begin Class Filter -->
+<div class="class">
+<select class="myfunc-filter class">
+<option value="537 587 591 593 594 598 600 603 604 605 606 607 609">bh_line_homog_CLS</option>
+<option value="591 593 598 600 603">cell</option>
+<option value="500 537 587 591 593 594 598 600 603 604 605 606 607 609">char</option>
+<option value="1 15 16 110 500 537 587 589 591 593 594 596 598 600 603 604 605 606 607 608 609 610">double</option>
+<option value="591 593 598 600 603">function_handle</option>
+<option value="1 110 607 608 609 610">lane_info_CLS</option>
+<option value="1 15 16 110 500 591 593 598 600 603 604 605 607 608 609 610">logical</option>
+<option value="1 610">struct</option>
+</select>
+</div>
+<!-- End Class Filter -->
+</div>
+</td>
+</tr>
+</table>
+<div class="myfunc-count"></div>
+</div>
+<!-- End Filter -->
+<div class="grayline methodset" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="functionSetClick(event);">
+<a class="expanded">Functions</a>
+</div>
+<!-- Begin Function Tree -->
+<div id="functiontreebody">
+<div class="functionwrapper" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="functionTreeClick(event);">
+<ol class="tree">
+<!-- Begin Function Tree Roots -->
+<li class="leaf  passed"><a href="#" class="fcn  " id="F15N13:F1">bh_mask_fraction_of_BW_image &gt; 1</a></li>
+<li class="leaf  passed"><a href="#" class="fcn  " id="F16N13:F2">bh_mask_fraction_of_BW_image &gt; 2</a></li>
+<li class="leaf  passed"><a href="#" class="fcn  " id="F1N14:F3">bh_my_lane_preprocess_mask</a></li>
+<!-- End Function Tree Roots -->
+</ol>
+<!-- Function Tree Nodes -->
+<div class="functiontreenodes hidden">
+</div>
+<!-- End Function Tree Nodes -->
+</div>
+</div>
+<!-- End Function Tree -->
+<!-- Begin Class Tree -->
+<div class="grayline methodset" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="methodSetClick(event);">
+<a class="expanded">Classes</a>
+</div>
+<div id="classlistbody">
+<div class="classwrapper" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="classTreeClick(event);">
+<ol class="tree">
+<!-- Begin Class Tree Roots -->
+<li class="node collapsed passed"><a class="classroot" id="F596N2:M20" title="bh_line_homog_CLS">bh_line_homog_CLS</a></li>
+<li class="node collapsed passed"><a class="classroot" id="F607N19:M21" title="lane_info_CLS">lane_info_CLS</a></li>
+<!-- End Class Tree Roots -->
+</ol>
+<!-- Class Tree Nodes -->
+<div class="classlistnodes hidden">
+<ol class="callstacknode" id="callstacknode596">
+<li class="node collapsed"><a>bh_line_homog_CLS</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F596N2:m1" title="bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )"><span class="default">@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F587N3:m2" title="bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)"><span class="default">@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F589N4:m3" title="bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )"><span class="default">@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F594N5:m4" title="bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)"><span class="default">@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  PD1 " id="F500N6:m5" title="bh_line_homog_CLS/LOC_classify_line_type">LOC_classify_line_type</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F603N7:m6" title="bh_line_homog_CLS/LOC_get_roi_intersection_co_ords">LOC_get_roi_intersection_co_ords</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F591N8:m7" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;1">LOC_get_side_intersect_point &gt; 1</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F593N8:m8" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;2">LOC_get_side_intersect_point &gt; 2</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F598N8:m9" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;3">LOC_get_side_intersect_point &gt; 3</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F600N8:m10" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;4">LOC_get_side_intersect_point &gt; 4</a></li>
+<li class="leaf passed"><a href="#" class="fcn  PD1 " id="F537N9:m11" title="bh_line_homog_CLS/bh_line_homog_CLS">bh_line_homog_CLS</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F606N10:m12" title="bh_line_homog_CLS/get_mc">get_mc</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F604N11:m13" title="bh_line_homog_CLS/get_roi_intersection_co_ords">get_roi_intersection_co_ords</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F605N12:m14" title="bh_line_homog_CLS/isSlopey">isSlopey</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode607">
+<li class="node collapsed"><a>lane_info_CLS</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F607N19:m15" title="lane_info_CLS/calc_info&nbsp;>&nbsp;1">calc_info &gt; 1</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F609N19:m16" title="lane_info_CLS/calc_info&nbsp;>&nbsp;2">calc_info &gt; 2</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F610N20:m17" title="lane_info_CLS/convert_to_struct">convert_to_struct</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F110N21:m18" title="lane_info_CLS/is_detected">is_detected</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F608N22:m19" title="lane_info_CLS/lane_info_CLS">lane_info_CLS</a></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<!-- End Class Tree -->
+</div>
+<!-- Begin Call Tree -->
+<div id="callstackbody" class="ui-tabs-panel hidden">
+<div class="treewrapper" onmouseover="callTreeMouseOver(event);" onmouseout="callTreeMouseOut(event);" onclick="callTreeClick(event);">
+<ol class="tree">
+<!-- Call Tree Root -->
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F1N14:L1">bh_my_lane_preprocess_mask</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F15N13:L2">bh_mask_fraction_of_BW_image &gt; 1</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F16N13:L3">bh_mask_fraction_of_BW_image &gt; 2</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F608N22:L4" title="lane_info_CLS/lane_info_CLS">lane_info_CLS/lane_info_CLS</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F609N19:L5" title="lane_info_CLS/calc_info&nbsp;>&nbsp;2">lane_info_CLS/calc_info &gt; 2</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F610N20:L6" title="lane_info_CLS/convert_to_struct">lane_info_CLS/convert_to_struct</a></li>
+</ul>
+</li>
+</ol>
+<!-- Call Tree Nodes -->
+<div class="callstacknodes hidden">
+<ol class="callstacknode" id="callstacknode1">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F1N14:l1">bh_my_lane_preprocess_mask</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F15N13:l2">bh_mask_fraction_of_BW_image &gt; 1</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F16N13:l3">bh_mask_fraction_of_BW_image &gt; 2</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F608N22:l4" title="lane_info_CLS/lane_info_CLS">lane_info_CLS/lane_info_CLS</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F609N19:l5" title="lane_info_CLS/calc_info&nbsp;>&nbsp;2">lane_info_CLS/calc_info &gt; 2</a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F610N20:l6" title="lane_info_CLS/convert_to_struct">lane_info_CLS/convert_to_struct</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode15">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F15N13:l7">bh_mask_fraction_of_BW_image &gt; 1</a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode16">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F16N13:l8">bh_mask_fraction_of_BW_image &gt; 2</a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode110">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F110N21:l9" title="lane_info_CLS/is_detected">lane_info_CLS/is_detected</a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode500">
+
+<li class="leaf passed"><a href="#" class="fcn  PD1 " id="F500N6:l10" title="bh_line_homog_CLS/LOC_classify_line_type">bh_line_homog_CLS/LOC_classify_line_type</a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode537">
+
+<li class="node collapsed passed"><a href="#" class="fcn  PD1 " id="F537N9:l11" title="bh_line_homog_CLS/bh_line_homog_CLS">bh_line_homog_CLS/bh_line_homog_CLS</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  PD1 " id="F500N6:l12" title="bh_line_homog_CLS/LOC_classify_line_type">bh_line_homog_CLS/LOC_classify_line_type</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode587">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F587N3:l13" title="bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)"><span class="default">bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)</span></a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode589">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F589N4:l14" title="bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )"><span class="default">bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )</span></a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode591">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F591N8:l15" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;1">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 1</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F587N3:l16" title="bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)"><span class="default">bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F589N4:l17" title="bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )"><span class="default">bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )</span></a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode593">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F593N8:l18" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;2">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 2</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F587N3:l19" title="bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)"><span class="default">bh_line_homog_CLS/@(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b)</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F589N4:l20" title="bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )"><span class="default">bh_line_homog_CLS/@(V) ( (V <= vlim(2)) & (V >= vlim(1)) )</span></a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode594">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F594N5:l21" title="bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)"><span class="default">bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)</span></a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode596">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F596N2:l22" title="bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )"><span class="default">bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )</span></a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode598">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F598N8:l23" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;3">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 3</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F594N5:l24" title="bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)"><span class="default">bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F596N2:l25" title="bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )"><span class="default">bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )</span></a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode600">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F600N8:l26" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;4">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 4</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F594N5:l27" title="bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)"><span class="default">bh_line_homog_CLS/@(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a)</span></a></li>
+<li class="leaf passed"><a href="#" class="fcn  " id="F596N2:l28" title="bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )"><span class="default">bh_line_homog_CLS/@(U) ( (U <= ulim(2)) & (U >= ulim(1)) )</span></a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode603">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F603N7:l29" title="bh_line_homog_CLS/LOC_get_roi_intersection_co_ords">bh_line_homog_CLS/LOC_get_roi_intersection_co_ords</a>
+<ul>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F591N8:l30" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;1">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 1</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F593N8:l31" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;2">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 2</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F598N8:l32" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;3">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 3</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F600N8:l33" title="bh_line_homog_CLS/LOC_get_side_intersect_point&nbsp;>&nbsp;4">bh_line_homog_CLS/LOC_get_side_intersect_point &gt; 4</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode604">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F604N11:l34" title="bh_line_homog_CLS/get_roi_intersection_co_ords">bh_line_homog_CLS/get_roi_intersection_co_ords</a>
+<ul>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F603N7:l35" title="bh_line_homog_CLS/LOC_get_roi_intersection_co_ords">bh_line_homog_CLS/LOC_get_roi_intersection_co_ords</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode605">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F605N12:l36" title="bh_line_homog_CLS/isSlopey">bh_line_homog_CLS/isSlopey</a>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode606">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F606N10:l37" title="bh_line_homog_CLS/get_mc">bh_line_homog_CLS/get_mc</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F605N12:l38" title="bh_line_homog_CLS/isSlopey">bh_line_homog_CLS/isSlopey</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode607">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F607N19:l39" title="lane_info_CLS/calc_info&nbsp;>&nbsp;1">lane_info_CLS/calc_info &gt; 1</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F110N21:l40" title="lane_info_CLS/is_detected">lane_info_CLS/is_detected</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  PD1 " id="F537N9:l41" title="bh_line_homog_CLS/bh_line_homog_CLS">bh_line_homog_CLS/bh_line_homog_CLS</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F604N11:l42" title="bh_line_homog_CLS/get_roi_intersection_co_ords">bh_line_homog_CLS/get_roi_intersection_co_ords</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F606N10:l43" title="bh_line_homog_CLS/get_mc">bh_line_homog_CLS/get_mc</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode608">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F608N22:l44" title="lane_info_CLS/lane_info_CLS">lane_info_CLS/lane_info_CLS</a>
+<ul>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F607N19:l45" title="lane_info_CLS/calc_info&nbsp;>&nbsp;1">lane_info_CLS/calc_info &gt; 1</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode609">
+
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F609N19:l46" title="lane_info_CLS/calc_info&nbsp;>&nbsp;2">lane_info_CLS/calc_info &gt; 2</a>
+<ul>
+<li class="leaf passed"><a href="#" class="fcn  " id="F110N21:l47" title="lane_info_CLS/is_detected">lane_info_CLS/is_detected</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  PD1 " id="F537N9:l48" title="bh_line_homog_CLS/bh_line_homog_CLS">bh_line_homog_CLS/bh_line_homog_CLS</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F604N11:l49" title="bh_line_homog_CLS/get_roi_intersection_co_ords">bh_line_homog_CLS/get_roi_intersection_co_ords</a></li>
+<li class="node collapsed passed"><a href="#" class="fcn  " id="F606N10:l50" title="bh_line_homog_CLS/get_mc">bh_line_homog_CLS/get_mc</a></li>
+</ul>
+</li>
+</ol>
+<ol class="callstacknode" id="callstacknode610">
+
+<li class="leaf passed"><a href="#" class="fcn  " id="F610N20:l51" title="lane_info_CLS/convert_to_struct">lane_info_CLS/convert_to_struct</a>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<!-- End Call Tree -->
+<!-- Begin C Code -->
+<div id="ccodebody" class="ui-tabs-panel hidden">
+<p>No C/C++ source files were generated because JIT compilation was used.</p></div>
+<!-- End C Code -->
+</div>
+<!-- Tooltips -->
+<div class="aux hidden">
+<div class="tooltips">
+<div class="tooltip" id="TT1"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>struct</td></tr></table></div>
+<div class="tooltip" id="TT2"><table class="tooltip"><tr><th>Size</th><td>240 x 320</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT3"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT4"><table class="tooltip"><tr><th>Size</th><td>2 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT5"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT6"><table class="tooltip"><tr><th>Size</th><td><b>:</b>76800 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT7"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>lane_info_CLS</td></tr></table></div>
+<div class="tooltip" id="TT8"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT9"><table class="tooltip"><tr><th>Size</th><td>1 x 5</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT10"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT11"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT12"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT13"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT14"><table class="tooltip"><tr><th>Size</th><td>1 x <b>:</b>?</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT15"><table class="tooltip"><tr><th>Size</th><td>1 x 6</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT16"><table class="tooltip"><tr><th>Size</th><td><b>:</b>? x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT17"><table class="tooltip"><tr><th>Size</th><td><b>:</b>240 x 320</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT18"><table class="tooltip"><tr><th>Size</th><td>1 x <b>:</b>240</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT19"><table class="tooltip"><tr><th>Size</th><td>320 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT20"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT21"><table class="tooltip"><tr><th>Size</th><td>1 x 7</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT22"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT23"><table class="tooltip"><tr><th>Size</th><td>1 x 23</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT24"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>int32</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT25"><table class="tooltip"><tr><th>Size</th><td>0 x 1</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT26"><table class="tooltip"><tr><th>Size</th><td>0 x 0</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT27"><table class="tooltip"><tr><th>Size</th><td>0 x 0</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT28"><table class="tooltip"><tr><th>Size</th><td>0 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT29"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT30"><table class="tooltip"><tr><th>Size</th><td><b>:</b>76800 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT31"><table class="tooltip"><tr><th>Size</th><td>76800 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT32"><table class="tooltip"><tr><th>Size</th><td>76800 x 1 *</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT33"><table class="tooltip"><tr><th>Size</th><td>1 x <b>:</b>76800</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT34"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT35"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT36"><table class="tooltip"><tr><th>Size</th><td>1 x 3</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT37"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>uint8</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT38"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT39"><table class="tooltip"><tr><th>Size</th><td>1 x 4</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT40"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT41"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT42"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT43"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT44"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT45"><table class="tooltip"><tr><th>Size</th><td><b>:</b>76800 x 3</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT46"><table class="tooltip"><tr><th>Size</th><td>2 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT47"><table class="tooltip"><tr><th>Size</th><td>3 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT48"><table class="tooltip"><tr><th>Size</th><td>3 x <b>:</b>?</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT49"><table class="tooltip"><tr><th>Size</th><td><b>:</b>? x 3</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT50"><table class="tooltip"><tr><th>Size</th><td>3 x <b>:</b>76800</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT51"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT52"><table class="tooltip"><tr><th>Size</th><td>3 x 3</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT53"><table class="tooltip"><tr><th>Size</th><td>1 x 9</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT54"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>coder.opaque</td></tr></table></div>
+<div class="tooltip" id="TT55"><table class="tooltip"><tr><th>Size</th><td>3 x 2</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT56"><table class="tooltip"><tr><th>Size</th><td>2 x 3</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT57"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT58"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>Yes</td></tr></table></div>
+<div class="tooltip" id="TT59"><table class="tooltip"><tr><th>Size</th><td>3 x 3</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>Yes</td></tr></table></div>
+<div class="tooltip" id="TT60"><table class="tooltip"><tr><th>Size</th><td>1 x 30</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT61"><table class="tooltip"><tr><th>Size</th><td>1 x 4</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT62"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT63"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT64"><table class="tooltip"><tr><th>Size</th><td>3 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT65"><table class="tooltip"><tr><th>Size</th><td>3 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>Yes</td></tr></table></div>
+<div class="tooltip" id="TT66"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT67"><table class="tooltip"><tr><th>Size</th><td>1 x 14</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT68"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT69"><table class="tooltip"><tr><th>Size</th><td>1 x 31</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT70"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT71"><table class="tooltip"><tr><th>Size</th><td>3 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT72"><table class="tooltip"><tr><th>Size</th><td>1 x 24</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT73"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>mxArray</td></tr></table></div>
+<div class="tooltip" id="TT74"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT75"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT76"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT77"><table class="tooltip"><tr><th>Size</th><td>1 x <b>:</b>6</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT78"><table class="tooltip"><tr><th>Size</th><td>1 x <b>:</b>?</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT79"><table class="tooltip"><tr><th>Size</th><td>1 x 29</td></tr><tr><th>Class</th><td>char</td></tr></table></div>
+<div class="tooltip" id="TT80"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>bh_line_homog_CLS</td></tr></table></div>
+<div class="tooltip" id="TT81"><table class="tooltip"><tr><th>Size</th><td>1 x 2</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT82"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT83"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT84"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT85"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT86"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>int8</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT87"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT88"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT89"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT90"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT91"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT92"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT93"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT94"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT95"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT96"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT97"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT98"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT99"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT100"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT101"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT102"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT103"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT104"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT105"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT106"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT107"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT108"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT109"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT110"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT111"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT112"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT113"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT114"><table class="tooltip"><tr><th>Size</th><td>1 x 1</td></tr><tr><th>Class</th><td>function_handle</td></tr></table></div>
+<div class="tooltip" id="TT115"><table class="tooltip"><tr><th>Size</th><td>1 x 0</td></tr><tr><th>Class</th><td>cell</td></tr></table></div>
+<div class="tooltip" id="TT116"><table class="tooltip"><tr><th>Size</th><td>1 x 4</td></tr><tr><th>Class</th><td>logical</td></tr></table></div>
+<div class="tooltip" id="TT117"><table class="tooltip"><tr><th>Size</th><td>2 x 4</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT118"><table class="tooltip"><tr><th>Size</th><td>2 x <b>:</b>4</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="TT119"><table class="tooltip"><tr><th>Size</th><td>2 x 1</td></tr><tr><th>Class</th><td>double</td></tr><tr><th>Complex</th><td>No</td></tr></table></div>
+<div class="tooltip" id="V1"><table class="tooltip"><tr><th>Value</th><td>WEST</br></td></tr></table></div>
+<div class="tooltip" id="V2"><table class="tooltip"><tr><th>Value</th><td>EAST</br></td></tr></table></div>
+<div class="tooltip" id="V3"><table class="tooltip"><tr><th>Value</th><td>NORTH</br></td></tr></table></div>
+<div class="tooltip" id="V4"><table class="tooltip"><tr><th>Value</th><td>SOUTH</br></td></tr></table></div>
+<div class="tooltip" id="V5"><table class="tooltip"><tr><th>Value</th><td>   0</br></td></tr></table></div>
+<div class="tooltip" id="V6"><table class="tooltip"><tr><th>Value</th><td></td></tr></table></div>
+</div>
+</div>
+<!-- End Tooltips -->
+
+<div class="south">
+<ul class="ui-tabs-nav">
+<li class="ui-tabs-nav-item ui-tabs-selected"><span class="tab-link" id="summary"><span>Summary</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="messages"><span>All Messages (0)</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="potentialDifferences"><span>Potential Differences</span></span></li>
+<li class="ui-tabs-nav-item"><span class="tab-link" id="watchlist"><span>Variables</span></span></li>
+<li class="ui-tabs-nav-item hidden"><span class="tab-link" id="watchload"><span>Variables</span></span></li>
+</ul>
+
+<!-- Compilation Summary -->
+<div id="summarybody" class="ui-tabs-panel">
+<table cellpadding="1" cellspacing="4">
+<tr><td>C source code generated on:</td><td>23-Jan-2018 09:41:04</td></tr>
+<tr><td>Coding target:</td><td>MEX Function</td></tr>
+<tr><td>Number of errors:</td><td><a href="javascript:selectMessagesTab();">0</a></td></tr>
+<tr><td>Number of warnings:</td><td><a href="javascript:selectMessagesTab();">0</a></td></tr>
+<tr><td>Number of notices:</td><td><a href="javascript:selectMessagesTab();">0</a></td></tr>
+<tr><td>Number of potential differences:</td><td><a href="javascript:selectPotentialDifferencesTab();">1</a></td></tr>
+</table>
+<p/><p/><table>
+<tr><td><b>Tell Us What You Think</b></td></tr>
+<tr><td>We value your feedback. Please take a few minutes to answer this short questionnaire regarding the Code Generation Report.</td></tr>
+<tr><td><a href="matlab: emlcprivate('launchReportSurvey');">&gt;&gt;Provide Feedback</a></td></tr>
+</table>
+</div>
+
+<!-- Message Table -->
+<div id="messagesbody" class="ui-tabs-panel hidden">
+<table class="grid" summary="This table lists the messages produced during code generation." cellspacing="0" cellpadding="6">
+<thead>
+<tr>
+<th id="msgorder" scope="col"><div class="d1"><div class="d2"><a href="#">Order</a></div></div></th>
+<th id="msgtype" scope="col"><div class="d1"><div class="d2"><a href="#">Type</a></div></div></th>
+<th id="function" scope="col"><div class="d1"><div class="d2"><a href="#">Function</a></div></div></th>
+<th id="location" scope="col"><div class="d1"><div class="d2"><a href="#">Line</a></div></div></th>
+<th id="text" scope="col"><div class="d1"><div class="d2"><a href="#">Description</a></div></div></th>
+</tr>
+</thead>
+<tbody onmouseover="messagesMouseOver(event);" onmouseout="messagesMouseOut(event);" onclick="messagesClick(event);">
+</tbody>
+</table>
+</div>
+<!-- Watchlist Table -->
+<div id="watchlistbody" class="ui-tabs-panel hidden">
+</div>
+<div id="watchloadbody" class="ui-tabs-panel hidden">
+Loading Variables table ...
+</div>
+
+
+<!-- Potential Differences -->
+<div id="potentialDifferencesBody" class="ui-tabs-panel hidden">
+<div id="potentialDifferencesBanner">The following differences from MATLAB may be encountered while executing the generated code.
+<a href="matlab:helpview('C:/MATLAB/R2017b/help/coder/helptargets.map','msginfo_Coder_reportGen_potentialDifferencesBannerText');">More information</a></div>
+<table class="grid" summary="This table lists the messages produced during code generation." cellspacing="0" cellpadding="6">
+<thead>
+<tr>
+<th id="msgorder" scope="col"><div class="d1"><div class="d2"><a href="#">Order</a></div></div></th>
+<th id="text" scope="col"><div class="d1"><div class="d2"><a href="#">Description</a></div></div></th>
+</tr>
+</thead>
+<tbody onmouseover="messagesMouseOver(event);" onmouseout="messagesMouseOut(event);" onclick="clickPotentialDifferenceMessage(event);">
+<tr class="message potentialdiff" id="PD1">
+<td class="msgorder" headers="msgorder"><a href="#">1</a></td>
+<td class="text" headers="text"><div>The generated code assumes that real input values result in real outputs. If complex outputs are expected, use the 'complex' function to give the input a zero imaginary part.</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+<!-- Begin MATLAB Code Panel -->
+<div class="center">
+<div class="center-title">
+<div class="ui-tabs-nav-item ui-tabs-selected">
+<span class="functiontitle">
+</span>
+<!-- Begin Call Sites -->
+<span id="callsiteselecttable" class="call-sites-tbl">
+<span id="callsiteselectlabel" class="filtered">Calls:</span>
+<select id="callsiteselect" onchange="callSiteChange(event)">
+<option value="callsiteprompt">Select a function call:</option>
+</select>
+</span>
+<!-- End Call Sites -->
+</div>
+</div>
+<div class="ui-tabs-panel">
+<iframe id="hiddenCodeFrame"></iframe>
+<div class="code" onmouseover="mcodeMouseOver(event);" onmouseout="mcodeMouseOut(event);"onclick="mcodeClick(event);">
+</div>
+</div>
+</div>
+<!-- End MATLAB Code Panel -->
+</body>
+</html>

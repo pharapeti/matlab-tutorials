@@ -1,0 +1,107 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RTW Report - my_laneKF_CLS.c</title>
+<script language="JavaScript" type="text/javascript" src="rtwreport_utils.js"></script>
+<script src="resources/eml_report_loadable_data.js"></script>
+</head>
+<body bgcolor="#eeeeee" onload="try {if (top) { if (top.rtwFileOnLoad) top.rtwFileOnLoad(window.document); else local_onload();}} catch(err) {};">
+<p>
+<table border="0" cellspacing="0" cellpadding="6" width="100%%" height="100%%"><tr><td width="100%%" valign="top" bgcolor="#ffffff">
+<h4>File: <a href="../my_laneKF_CLS.c" target="rtwreport_document_frame" id="linkToText_plain">my_laneKF_CLS.c</a></h4>
+<pre id="RTWcode">
+<a name="1"><font color="#888888 "><i>    1   </i></font></a><font color="#117755"><i>/*</i></font>
+<a name="2"><font color="#888888 "><i>    2   </i></font></a><font color="#117755"><I> * File: my_laneKF_CLS.c</i></font>
+<a name="3"><font color="#888888 "><i>    3   </i></font></a><font color="#117755"><I> *</i></font>
+<a name="4"><font color="#888888 "><i>    4   </i></font></a><font color="#117755"><I> * MATLAB Coder version            : 3.4</i></font>
+<a name="5"><font color="#888888 "><i>    5   </i></font></a><font color="#117755"><I> * C/C++ source code generated on  : 29-Jan-2018 09:25:29</i></font>
+<a name="6"><font color="#888888 "><i>    6   </i></font></a><font color="#117755"><I> */</i></font>
+<a name="7"><font color="#888888 "><i>    7   </i></font></a>
+<a name="8"><font color="#888888 "><i>    8   </i></font></a><font color="#117755"><i>/* Include Files */</i></font>
+<a name="9"><font color="#888888 "><i>    9   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;rt_nonfinite.h&quot;</font>
+<a name="10"><font color="#888888 "><i>   10   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;bh_my_detect_ALGORITHM_for_codegen.h&quot;</font>
+<a name="11"><font color="#888888 "><i>   11   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;bh_my_lane_preprocess_mask.h&quot;</font>
+<a name="12"><font color="#888888 "><i>   12   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;bh_my_track_ALGORITHM_for_codegen.h&quot;</font>
+<a name="13"><font color="#888888 "><i>   13   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;my_laneKF_CLS.h&quot;</font>
+<a name="14"><font color="#888888 "><i>   14   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;my_KF_general_CLS.h&quot;</font>
+<a name="15"><font color="#888888 "><i>   15   </i></font></a><font color="#992211">#</font><font color="#992211"><b>include</b></font> <font color="#992211">&quot;lane_info_CLS.h&quot;</font>
+<a name="16"><font color="#888888 "><i>   16   </i></font></a>
+<a name="17"><font color="#888888 "><i>   17   </i></font></a><font color="#117755"><i>/* Function Definitions */</i></font>
+<a name="18"><font color="#888888 "><i>   18   </i></font></a>
+<a name="19"><font color="#888888 "><i>   19   </i></font></a><font color="#117755"><i>/*</i></font>
+<a name="20"><font color="#888888 "><i>   20   </i></font></a><font color="#117755"><I> * function  OBJ = pred_and_correct(OBJ, BW, tf_found)</i></font>
+<a name="21"><font color="#888888 "><i>   21   </i></font></a><font color="#117755"><I> * use KF to PREDICT</i></font>
+<a name="22"><font color="#888888 "><i>   22   </i></font></a><font color="#117755"><I> * Arguments    : my_laneKF_CLS *OBJ</i></font>
+<a name="23"><font color="#888888 "><i>   23   </i></font></a><font color="#117755"><I> *                const boolean_T BW[76800]</i></font>
+<a name="24"><font color="#888888 "><i>   24   </i></font></a><font color="#117755"><I> *                boolean_T tf_found</i></font>
+<a name="25"><font color="#888888 "><i>   25   </i></font></a><font color="#117755"><I> * Return Type  : void</i></font>
+<a name="26"><font color="#888888 "><i>   26   </i></font></a><font color="#117755"><I> */</i></font>
+<a name="27"><font color="#888888 "><i>   27   </i></font></a><font color="#112266"><b>void</b></font> <a name="fcn_my_laneKF_CLS_pred_and_correct">my_laneKF_CLS_pred_and_correct</a>(<a href="bh_MY_CV_ALGORITHMS_types_h.html#type_my_laneKF_CLS" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_my_laneKF_CLS');" target="_self"><font color="#1122aa">my_laneKF_CLS</font></a> *OBJ, <font color="#112266"><b>const</b></font> <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> BW[76800],
+<a name="28"><font color="#888888 "><i>   28   </i></font></a>  <a href="rtwtypes_h.html#type_boolean_T" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_boolean_T');" target="_self"><font color="#1122aa">boolean_T</font></a> tf_found)
+<a name="29"><font color="#888888 "><i>   29   </i></font></a><b>{</b>
+<a name="30"><font color="#888888 "><i>   30   </i></font></a>  <a href="bh_MY_CV_ALGORITHMS_types_h.html#type_lane_info_CLS_1" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'type_lane_info_CLS_1');" target="_self"><font color="#1122aa">lane_info_CLS_1</font></a> lane_O;
+<a name="31"><font color="#888888 "><i>   31   </i></font></a>  <font color="#112266"><b>int</b></font> i27;
+<a name="32"><font color="#888888 "><i>   32   </i></font></a>  <font color="#112266"><b>double</b></font> m_data[1];
+<a name="33"><font color="#888888 "><i>   33   </i></font></a>  <font color="#112266"><b>int</b></font> m_size[2];
+<a name="34"><font color="#888888 "><i>   34   </i></font></a>  <font color="#112266"><b>double</b></font> c_data[1];
+<a name="35"><font color="#888888 "><i>   35   </i></font></a>  <font color="#112266"><b>int</b></font> c_size[2];
+<a name="36"><font color="#888888 "><i>   36   </i></font></a>  <font color="#112266"><b>int</b></font> loop_ub;
+<a name="37"><font color="#888888 "><i>   37   </i></font></a>  <font color="#112266"><b>double</b></font> b_m_data[2];
+<a name="38"><font color="#888888 "><i>   38   </i></font></a>
+<a name="39"><font color="#888888 "><i>   39   </i></font></a>  <font color="#117755"><i>/*  my_laneKF_CLS() */</i></font>
+<a name="40"><font color="#888888 "><i>   40   </i></font></a>  <font color="#117755"><i>/* --------------------------------------------------------------------------  */</i></font>
+<a name="41"><font color="#888888 "><i>   41   </i></font></a>  <font color="#117755"><i>/* <span><a href="205,60">'my_laneKF_CLS:60'</a></span> OBJ.KF     = OBJ.KF.predict(); */</i></font>
+<a name="42"><font color="#888888 "><i>   42   </i></font></a>  <a href="my_KF_general_CLS_c.html#fcn_my_KF_general_CLS_predict" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_my_KF_general_CLS_predict');" target="_self"><font color="#1122aa">my_KF_general_CLS_predict</font></a>(&amp;OBJ-&gt;KF);
+<a name="43"><font color="#888888 "><i>   43   </i></font></a>
+<a name="44"><font color="#888888 "><i>   44   </i></font></a>  <font color="#117755"><i>/*  now do we have a measurement to allow a CORRECT */</i></font>
+<a name="45"><font color="#888888 "><i>   45   </i></font></a>  <font color="#117755"><i>/* <span><a href="205,63">'my_laneKF_CLS:63'</a></span> lane_O = lane_info_CLS(BW, tf_found); */</i></font>
+<a name="46"><font color="#888888 "><i>   46   </i></font></a>  <a href="lane_info_CLS_c.html#fcn_b_lane_info_CLS_lane_info_CLS" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_b_lane_info_CLS_lane_info_CLS');" target="_self"><font color="#1122aa">b_lane_info_CLS_lane_info_CLS</font></a>(BW, tf_found, &amp;lane_O);
+<a name="47"><font color="#888888 "><i>   47   </i></font></a>
+<a name="48"><font color="#888888 "><i>   48   </i></font></a>  <font color="#117755"><i>/* <span><a href="205,64">'my_laneKF_CLS:64'</a></span> if( lane_O.is_detected() ) */</i></font>
+<a name="49"><font color="#888888 "><i>   49   </i></font></a>  <font color="#117755"><i>/* --------------------------------------------------------------------------   */</i></font>
+<a name="50"><font color="#888888 "><i>   50   </i></font></a>  <font color="#117755"><i>/* <span><a href="142,34">'lane_info_CLS:34'</a></span> tf_detected = OBJ.tf_is_detected; */</i></font>
+<a name="51"><font color="#888888 "><i>   51   </i></font></a>  <font color="#112266"><b>if</b></font> (lane_O.tf_is_detected) <b>{</b>
+<a name="52"><font color="#888888 "><i>   52   </i></font></a>    <font color="#117755"><i>/* <span><a href="205,65">'my_laneKF_CLS:65'</a></span> lane_O = lane_O.calc_info(); */</i></font>
+<a name="53"><font color="#888888 "><i>   53   </i></font></a>    <a href="lane_info_CLS_c.html#fcn_lane_info_CLS_calc_info" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_lane_info_CLS_calc_info');" target="_self"><font color="#1122aa">lane_info_CLS_calc_info</font></a>(&amp;lane_O);
+<a name="54"><font color="#888888 "><i>   54   </i></font></a>
+<a name="55"><font color="#888888 "><i>   55   </i></font></a>    <font color="#117755"><i>/* <span><a href="205,67">'my_laneKF_CLS:67'</a></span> [m,c]  = lane_O.get_mc(); */</i></font>
+<a name="56"><font color="#888888 "><i>   56   </i></font></a>    <a href="lane_info_CLS_c.html#fcn_lane_info_CLS_get_mc" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_lane_info_CLS_get_mc');" target="_self"><font color="#1122aa">lane_info_CLS_get_mc</font></a>(lane_O.m, lane_O.c, lane_O.tf_is_detected, m_data,
+<a name="57"><font color="#888888 "><i>   57   </i></font></a>                         m_size, c_data, c_size);
+<a name="58"><font color="#888888 "><i>   58   </i></font></a>
+<a name="59"><font color="#888888 "><i>   59   </i></font></a>    <font color="#117755"><i>/* <span><a href="205,69">'my_laneKF_CLS:69'</a></span> y_meas = [m;c]; */</i></font>
+<a name="60"><font color="#888888 "><i>   60   </i></font></a>    <font color="#117755"><i>/* <span><a href="205,71">'my_laneKF_CLS:71'</a></span> OBJ.KF = OBJ.KF.correct(y_meas); */</i></font>
+<a name="61"><font color="#888888 "><i>   61   </i></font></a>    loop_ub = m_size[1];
+<a name="62"><font color="#888888 "><i>   62   </i></font></a>    <font color="#112266"><b>for</b></font> (i27 = 0; i27 &lt; loop_ub; i27++) <b>{</b>
+<a name="63"><font color="#888888 "><i>   63   </i></font></a>      b_m_data[i27 &lt;&lt; 1] = m_data[m_size[0] * i27];
+<a name="64"><font color="#888888 "><i>   64   </i></font></a>    <b>}</b>
+<a name="65"><font color="#888888 "><i>   65   </i></font></a>
+<a name="66"><font color="#888888 "><i>   66   </i></font></a>    loop_ub = c_size[1];
+<a name="67"><font color="#888888 "><i>   67   </i></font></a>    <font color="#112266"><b>for</b></font> (i27 = 0; i27 &lt; loop_ub; i27++) <b>{</b>
+<a name="68"><font color="#888888 "><i>   68   </i></font></a>      b_m_data[1 + (i27 &lt;&lt; 1)] = c_data[c_size[0] * i27];
+<a name="69"><font color="#888888 "><i>   69   </i></font></a>    <b>}</b>
+<a name="70"><font color="#888888 "><i>   70   </i></font></a>
+<a name="71"><font color="#888888 "><i>   71   </i></font></a>    <a href="my_KF_general_CLS_c.html#fcn_my_KF_general_CLS_correct" onclick="if (top) if (top.docHiliteMe) top.docHiliteMe(window, 'fcn_my_KF_general_CLS_correct');" target="_self"><font color="#1122aa">my_KF_general_CLS_correct</font></a>(&amp;OBJ-&gt;KF, b_m_data);
+<a name="72"><font color="#888888 "><i>   72   </i></font></a>  <b>}</b>
+<a name="73"><font color="#888888 "><i>   73   </i></font></a>
+<a name="74"><font color="#888888 "><i>   74   </i></font></a>  <font color="#117755"><i>/* <span><a href="205,74">'my_laneKF_CLS:74'</a></span> OBJ.mc_col    = OBJ.KF.x; */</i></font>
+<a name="75"><font color="#888888 "><i>   75   </i></font></a>  <font color="#112266"><b>for</b></font> (i27 = 0; i27 &lt; 2; i27++) <b>{</b>
+<a name="76"><font color="#888888 "><i>   76   </i></font></a>    OBJ-&gt;mc_col[i27] = OBJ-&gt;KF.x[i27];
+<a name="77"><font color="#888888 "><i>   77   </i></font></a>  <b>}</b>
+<a name="78"><font color="#888888 "><i>   78   </i></font></a>
+<a name="79"><font color="#888888 "><i>   79   </i></font></a>  <font color="#117755"><i>/* OBJ.x_col_mat = [OBJ.x_col_mat, OBJ.mc_col]; */</i></font>
+<a name="80"><font color="#888888 "><i>   80   </i></font></a>  <font color="#117755"><i>/*  and store the size of the image we're processing */</i></font>
+<a name="81"><font color="#888888 "><i>   81   </i></font></a>  <font color="#117755"><i>/* <span><a href="205,78">'my_laneKF_CLS:78'</a></span> OBJ.img_num_rows = size(BW,1); */</i></font>
+<a name="82"><font color="#888888 "><i>   82   </i></font></a>  <font color="#117755"><i>/* <span><a href="205,79">'my_laneKF_CLS:79'</a></span> OBJ.img_num_cols = size(BW,2); */</i></font>
+<a name="83"><font color="#888888 "><i>   83   </i></font></a><b>}</b>
+<a name="84"><font color="#888888 "><i>   84   </i></font></a>
+<a name="85"><font color="#888888 "><i>   85   </i></font></a><font color="#117755"><i>/*</i></font>
+<a name="86"><font color="#888888 "><i>   86   </i></font></a><font color="#117755"><I> * File trailer for my_laneKF_CLS.c</i></font>
+<a name="87"><font color="#888888 "><i>   87   </i></font></a><font color="#117755"><I> *</i></font>
+<a name="88"><font color="#888888 "><i>   88   </i></font></a><font color="#117755"><I> * [EOF]</i></font>
+<a name="89"><font color="#888888 "><i>   89   </i></font></a><font color="#117755"><I> */</i></font>
+<a name="90"><font color="#888888 "><i>   90   </i></font></a></pre>
+</td></tr></table>
+</p>
+</body>
+</html>

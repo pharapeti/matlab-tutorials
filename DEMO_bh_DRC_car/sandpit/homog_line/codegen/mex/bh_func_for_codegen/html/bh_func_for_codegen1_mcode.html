@@ -1,0 +1,30 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="1,1" id="srcline1"> 1</a></span><span class="line"><span class="keyword">function</span> bh_func_for_codegen(<span class="var type1" id="S2T1U5">u</span>,<span class="var type1" id="S3T1U6">v</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="1,2" id="srcline2"> 2</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,3" id="srcline3"> 3</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,4" id="srcline4"> 4</a></span><span class="line"><span class="mxinfo " id="T2:U3"><span class="var type1" id="S4T2U9">OBJ</span>   = <span class="mxinfo " id="T2:U5"><span class="fcn" id="F420N10:B11">bh_line_homog_CLS</span>(<span class="var type1" id="S2T1U12">u</span>,<span class="var type1" id="S3T1U13">v</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="1,5" id="srcline5"> 5</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,6" id="srcline6"> 6</a></span><span class="line"><span class="keyword">if</span>(1 == coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="1,7" id="srcline7"> 7</a></span><span class="line">   <span class="var type0" id="S7T0U26">hax</span> = <span class="var type0" id="S4T0U29">OBJ</span>.plot_simple(<span class="var type0" id="S2T0U31">u</span>,<span class="var type0" id="S3T0U32">v</span>);   axis <span class="string">equal</span>; grid <span class="string">on</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="1,8" id="srcline8"> 8</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="1,9" id="srcline9"> 9</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,10" id="srcline10">10</a></span><span class="line"><span class="mxinfo " id="T6:U8"><span class="var type1" id="S10T6U41">ulim</span> = <span class="mxinfo " id="T6:U10">[<span class="mxinfo " id="T3:U11">-<span class="mxinfo " id="T3:U12">5</span></span>, <span class="mxinfo " id="T3:U13">15</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="1,11" id="srcline11">11</a></span><span class="line"><span class="mxinfo " id="T6:U14"><span class="var type1" id="S11T6U49">vlim</span> = <span class="mxinfo " id="T6:U16">[<span class="mxinfo " id="T3:U17">-<span class="mxinfo " id="T3:U18">10</span></span>, <span class="mxinfo " id="T3:U19">20</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="1,12" id="srcline12">12</a></span><span class="line"><span class="mxinfo " id="T6:U20"><span class="var type1" id="S10T6U57">ulim</span> = <span class="mxinfo " id="T6:U22">[5, 10]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="1,13" id="srcline13">13</a></span><span class="line"><span class="mxinfo " id="T6:U23"><span class="var type1" id="S11T6U64">vlim</span> = <span class="mxinfo " id="T6:U25">[-4, 10]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="1,14" id="srcline14">14</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,15" id="srcline15">15</a></span><span class="line">  [<span class="var type1" id="S12T5U73">tf_is_valid</span>, <span class="var type1" id="S13T7U74">uv_bot</span>, <span class="var type1" id="S14T7U75">uv_top</span>] = <span class="var type1" id="S4T2U78">OBJ</span>.<span class="fcn" id="F502N11:B79">get_roi_intersection_co_ords</span>(<span class="var type1" id="S10T6U80">ulim</span>, <span class="var type1" id="S11T6U81">vlim</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="1,16" id="srcline16">16</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,17" id="srcline17">17</a></span><span class="line">  </span></span>
+<span class="srcline"><span class="lineno"><a href="1,18" id="srcline18">18</a></span><span class="line"><span class="keyword">if</span>(1 == coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="1,19" id="srcline19">19</a></span><span class="line">    <span class="var type0" id="S4T0U95">OBJ</span>.plot_intersection(<span class="var type0" id="S7T0U97">hax</span>, <span class="string">'r'</span>, <span class="var type0" id="S10T0U99">ulim</span>, <span class="var type0" id="S11T0U100">vlim</span>, true);</span></span>
+<span class="srcline"><span class="lineno"><a href="1,20" id="srcline20">20</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="1,21" id="srcline21">21</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="1,22" id="srcline22">22</a></span><span class="line"><span class="keyword">end</span></span></span>
+</pre>
+</body>
+</html>

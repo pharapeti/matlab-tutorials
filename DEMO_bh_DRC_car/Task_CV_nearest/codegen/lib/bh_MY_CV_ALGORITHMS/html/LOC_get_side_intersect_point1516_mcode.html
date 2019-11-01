@@ -1,0 +1,397 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="193,1" id="srcline1">  1</a></span><span class="line"><span class="keyword">classdef</span> bh_line_homog_CLS <span class="comment">%#codegen</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,2" id="srcline2">  2</a></span><span class="line"><span class="comment">% BH_LINE_HOMOG_CLS - Regression fit for Homogeneous co-ordinate representation of a line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,3" id="srcline3">  3</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,4" id="srcline4">  4</a></span><span class="line"><span class="comment">% The Homogeneous representation of a line is:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,5" id="srcline5">  5</a></span><span class="line"><span class="comment">%</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,6" id="srcline6">  6</a></span><span class="line"><span class="comment">%     a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,7" id="srcline7">  7</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,8" id="srcline8">  8</a></span><span class="line"><span class="comment">% USAGE:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,9" id="srcline9">  9</a></span><span class="line"><span class="comment">%    OBJ   = bh_line_homog_CLS(u,v);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,10" id="srcline10"> 10</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,11" id="srcline11"> 11</a></span><span class="line"><span class="comment">%    hax = OBJ.plot_simple(u,v);   axis equal; grid on;</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,12" id="srcline12"> 12</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,13" id="srcline13"> 13</a></span><span class="line"><span class="comment">%    ulim = [5, 10];</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,14" id="srcline14"> 14</a></span><span class="line"><span class="comment">%    vlim = [-4, 10];</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,15" id="srcline15"> 15</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,16" id="srcline16"> 16</a></span><span class="line"><span class="comment">%    [tf_is_valid, uv_bot, uv_top] = OBJ.get_roi_intersection_co_ords(ulim, vlim);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,17" id="srcline17"> 17</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,18" id="srcline18"> 18</a></span><span class="line"><span class="comment">%   </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,19" id="srcline19"> 19</a></span><span class="line"><span class="comment">%    OBJ.plot_intersection(hax, 'r', ulim, vlim, true);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,20" id="srcline20"> 20</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,21" id="srcline21"> 21</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,22" id="srcline22"> 22</a></span><span class="line"><span class="keyword">properties</span> (SetAccess = private)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,23" id="srcline23"> 23</a></span><span class="line">    abd_col = [0;0;0];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,24" id="srcline24"> 24</a></span><span class="line">    a</span></span>
+<span class="srcline"><span class="lineno"><a href="193,25" id="srcline25"> 25</a></span><span class="line">    b</span></span>
+<span class="srcline"><span class="lineno"><a href="193,26" id="srcline26"> 26</a></span><span class="line">    d</span></span>
+<span class="srcline"><span class="lineno"><a href="193,27" id="srcline27"> 27</a></span><span class="line">    line_type <span class="comment">%char {mustBeMember(line_type,{'HORZ','VERT','SLOPEY','UNKNOWN'})} = 'UNKNOWN';</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,28" id="srcline28"> 28</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,29" id="srcline29"> 29</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,30" id="srcline30"> 30</a></span><span class="line"><span class="keyword">methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,31" id="srcline31"> 31</a></span><span class="line"><span class="keyword">function</span> OBJ = bh_line_homog_CLS(u,v) </span></span>
+<span class="srcline"><span class="lineno"><a href="193,32" id="srcline32"> 32</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,33" id="srcline33"> 33</a></span><span class="line">u = u(:);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,34" id="srcline34"> 34</a></span><span class="line">v = v(:);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,35" id="srcline35"> 35</a></span><span class="line">A = [u,v, ones(size(u))];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,36" id="srcline36"> 36</a></span><span class="line">B = [1,0,0;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,37" id="srcline37"> 37</a></span><span class="line">     0,1,0];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,38" id="srcline38"> 38</a></span><span class="line">[eVec_mat, eVal_mat] = eig(A'* A,  B'*B);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,39" id="srcline39"> 39</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,40" id="srcline40"> 40</a></span><span class="line"><span class="comment">% for codegen</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,41" id="srcline41"> 41</a></span><span class="line">eVec_mat = real(eVec_mat);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,42" id="srcline42"> 42</a></span><span class="line">eVal_mat = real(eVal_mat);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,43" id="srcline43"> 43</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,44" id="srcline44"> 44</a></span><span class="line"><span class="comment">% where's the smallest eigenvalue</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,45" id="srcline45"> 45</a></span><span class="line">[~,ind]     = min(abs(diag(eVal_mat)));</span></span>
+<span class="srcline"><span class="lineno"><a href="193,46" id="srcline46"> 46</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,47" id="srcline47"> 47</a></span><span class="line">THE_SOL_VEC = eVec_mat(:,ind);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,48" id="srcline48"> 48</a></span><span class="line">normal_vec  = THE_SOL_VEC(1:2);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,49" id="srcline49"> 49</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,50" id="srcline50"> 50</a></span><span class="line"><span class="comment">% classify the type of line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,51" id="srcline51"> 51</a></span><span class="line">OBJ.line_type = LOC_classify_line_type(normal_vec);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,52" id="srcline52"> 52</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,53" id="srcline53"> 53</a></span><span class="line"><span class="keyword">switch</span>(OBJ.line_type)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,54" id="srcline54"> 54</a></span><span class="line">    <span class="keyword">case</span> <span class="string">'SLOPEY'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,55" id="srcline55"> 55</a></span><span class="line">          THE_SOL_VEC = THE_SOL_VEC / THE_SOL_VEC(2); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,56" id="srcline56"> 56</a></span><span class="line">    <span class="keyword">case</span> <span class="string">'VERT'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,57" id="srcline57"> 57</a></span><span class="line">          THE_SOL_VEC = THE_SOL_VEC / THE_SOL_VEC(1); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,58" id="srcline58"> 58</a></span><span class="line">    <span class="keyword">case</span> <span class="string">'HORZ'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,59" id="srcline59"> 59</a></span><span class="line">          THE_SOL_VEC = THE_SOL_VEC / THE_SOL_VEC(2); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,60" id="srcline60"> 60</a></span><span class="line">    <span class="keyword">otherwise</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,61" id="srcline61"> 61</a></span><span class="line">        error(<span class="string">'###_ERROR:  unknown line type'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,62" id="srcline62"> 62</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,63" id="srcline63"> 63</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,64" id="srcline64"> 64</a></span><span class="line">OBJ.abd_col = THE_SOL_VEC;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,65" id="srcline65"> 65</a></span><span class="line">OBJ.a       = THE_SOL_VEC(1);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,66" id="srcline66"> 66</a></span><span class="line">OBJ.b       = THE_SOL_VEC(2);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,67" id="srcline67"> 67</a></span><span class="line">OBJ.d       = THE_SOL_VEC(3);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,68" id="srcline68"> 68</a></span><span class="line"><span class="keyword">end</span>   <span class="comment">% bh_line_homog_CLS</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,69" id="srcline69"> 69</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,70" id="srcline70"> 70</a></span><span class="line"><span class="keyword">function</span> tf_val = isVert(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,71" id="srcline71"> 71</a></span><span class="line">         tf_val = strcmp(OBJ.line_type,<span class="string">'VERT'</span>); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,72" id="srcline72"> 72</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,73" id="srcline73"> 73</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,74" id="srcline74"> 74</a></span><span class="line"><span class="keyword">function</span> tf_val = isHorz(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,75" id="srcline75"> 75</a></span><span class="line">         tf_val = strcmp(OBJ.line_type,<span class="string">'HORZ'</span>); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,76" id="srcline76"> 76</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,77" id="srcline77"> 77</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,78" id="srcline78"> 78</a></span><span class="line"><span class="keyword">function</span> tf_val = isSlopey(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,79" id="srcline79"> 79</a></span><span class="line">         tf_val = strcmp(OBJ.line_type,<span class="string">'SLOPEY'</span>); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,80" id="srcline80"> 80</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,81" id="srcline81"> 81</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,82" id="srcline82"> 82</a></span><span class="line"><span class="keyword">function</span> [u,v] = calc_uv(OBJ,u_meas, v_meas)  </span></span>
+<span class="srcline"><span class="lineno"><a href="193,83" id="srcline83"> 83</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,84" id="srcline84"> 84</a></span><span class="line">    u_meas = u_meas(:);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,85" id="srcline85"> 85</a></span><span class="line">    v_meas = v_meas(:);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,86" id="srcline86"> 86</a></span><span class="line">    N      = length(u_meas);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,87" id="srcline87"> 87</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,88" id="srcline88"> 88</a></span><span class="line">    <span class="comment">% a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,89" id="srcline89"> 89</a></span><span class="line">    <span class="keyword">if</span>( OBJ.isVert() )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,90" id="srcline90"> 90</a></span><span class="line">         <span class="comment">% a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,91" id="srcline91"> 91</a></span><span class="line">         <span class="comment">% then we have a VERTICAL ||| line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,92" id="srcline92"> 92</a></span><span class="line">         v = linspace(min(v_meas), max(v_meas), N)'; <span class="comment">% a COL       </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,93" id="srcline93"> 93</a></span><span class="line">         u = (-1*OBJ.d/OBJ.a)  *  ones(size(v));</span></span>
+<span class="srcline"><span class="lineno"><a href="193,94" id="srcline94"> 94</a></span><span class="line">    <span class="keyword">elseif</span>(OBJ.isHorz())</span></span>
+<span class="srcline"><span class="lineno"><a href="193,95" id="srcline95"> 95</a></span><span class="line">         <span class="comment">% a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,96" id="srcline96"> 96</a></span><span class="line">         <span class="comment">% then we have a HORIZONTAL --- line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,97" id="srcline97"> 97</a></span><span class="line">         u = linspace(min(u_meas), max(u_meas), N)'; <span class="comment">% a COL</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,98" id="srcline98"> 98</a></span><span class="line">         v = (-OBJ.d/OBJ.b)  *  ones(size(u));</span></span>
+<span class="srcline"><span class="lineno"><a href="193,99" id="srcline99"> 99</a></span><span class="line">    <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,100" id="srcline100">100</a></span><span class="line">         <span class="comment">% a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,101" id="srcline101">101</a></span><span class="line">         <span class="comment">% then we have a SLOPEY ///\\\ line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,102" id="srcline102">102</a></span><span class="line">         u = u_meas;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,103" id="srcline103">103</a></span><span class="line">         v = -1*(OBJ.d + OBJ.a*u_meas)/OBJ.b;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,104" id="srcline104">104</a></span><span class="line">    <span class="keyword">end</span>  </span></span>
+<span class="srcline"><span class="lineno"><a href="193,105" id="srcline105">105</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,106" id="srcline106">106</a></span><span class="line"><span class="comment">%========================================================================== </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,107" id="srcline107">107</a></span><span class="line"><span class="keyword">function</span> hax = plot_simple(OBJ,u_meas,v_meas)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,108" id="srcline108">108</a></span><span class="line">    hax = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,109" id="srcline109">109</a></span><span class="line">    <span class="comment">% this is purely a visualization method</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,110" id="srcline110">110</a></span><span class="line">    <span class="comment">% so NONE of it is releveant for a CODER deployment</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,111" id="srcline111">111</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,112" id="srcline112">112</a></span><span class="line">        figure;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,113" id="srcline113">113</a></span><span class="line">        hax = axes;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,114" id="srcline114">114</a></span><span class="line">        plot(hax,u_meas,v_meas,<span class="string">'ro'</span>);  axis <span class="string">tight</span>; grid <span class="string">on</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,115" id="srcline115">115</a></span><span class="line">          hold <span class="string">on</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,116" id="srcline116">116</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,117" id="srcline117">117</a></span><span class="line">        [u,v] = OBJ.calc_uv(u_meas, v_meas); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,118" id="srcline118">118</a></span><span class="line">        plot(hax,u,v,<span class="string">'-b'</span>, <span class="string">'LineWidth'</span>,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,119" id="srcline119">119</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,120" id="srcline120">120</a></span><span class="line">        tmp_c = [<span class="string">'Line type is '</span>, char(OBJ.line_type)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,121" id="srcline121">121</a></span><span class="line">        title(hax,tmp_c); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,122" id="srcline122">122</a></span><span class="line">        axis(hax,<span class="string">'equal'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,123" id="srcline123">123</a></span><span class="line">        hax.YDir = <span class="string">'reverse'</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,124" id="srcline124">124</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,125" id="srcline125">125</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,126" id="srcline126">126</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,127" id="srcline127">127</a></span><span class="line"><span class="keyword">function</span> [tf_is_valid, uv_bot, uv_top] = get_roi_intersection_co_ords(OBJ, ulim, vlim)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,128" id="srcline128">128</a></span><span class="line">         [tf_is_valid, uv_bot, uv_top] = LOC_get_roi_intersection_co_ords(OBJ, ulim, vlim); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,129" id="srcline129">129</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,130" id="srcline130">130</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,131" id="srcline131">131</a></span><span class="line"><span class="keyword">function</span> plot_intersection(OBJ, hax, color_char, ulim, vlim, tf_plot_roi)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,132" id="srcline132">132</a></span><span class="line">    <span class="comment">% this is purely a visualization method</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,133" id="srcline133">133</a></span><span class="line">    <span class="comment">% so NONE of it is releveant for a CODER deployment</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,134" id="srcline134">134</a></span><span class="line">    <span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,135" id="srcline135">135</a></span><span class="line">           <span class="keyword">if</span>(isempty(hax))</span></span>
+<span class="srcline"><span class="lineno"><a href="193,136" id="srcline136">136</a></span><span class="line">               figure;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,137" id="srcline137">137</a></span><span class="line">               hax = axes();</span></span>
+<span class="srcline"><span class="lineno"><a href="193,138" id="srcline138">138</a></span><span class="line">               axis(hax,<span class="string">'equal'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,139" id="srcline139">139</a></span><span class="line">               hax.YDir = <span class="string">'reverse'</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,140" id="srcline140">140</a></span><span class="line">           <span class="keyword">end</span>    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,141" id="srcline141">141</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,142" id="srcline142">142</a></span><span class="line">           <span class="keyword">if</span>( true==tf_plot_roi )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,143" id="srcline143">143</a></span><span class="line">               u = [ulim(1), ulim(2), ulim(2), ulim(1), ulim(1)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,144" id="srcline144">144</a></span><span class="line">               v = [vlim(1), vlim(1), vlim(2), vlim(2), vlim(1)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,145" id="srcline145">145</a></span><span class="line">               <span class="comment">%plot(hax,u,v,'-m','LineWidth',2);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,146" id="srcline146">146</a></span><span class="line">               hL = line(hax,<span class="string">'XData'</span>,u,<span class="string">'YData'</span>,v,<span class="string">'Color'</span>,<span class="string">'m'</span>,<span class="string">'LineStyle'</span>,<span class="string">'-'</span>,<span class="string">'LineWidth'</span>,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,147" id="srcline147">147</a></span><span class="line">           <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,148" id="srcline148">148</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,149" id="srcline149">149</a></span><span class="line">           [tf_is_valid, uv_bot, uv_top] = get_roi_intersection_co_ords(OBJ, ulim, vlim);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,150" id="srcline150">150</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,151" id="srcline151">151</a></span><span class="line">           <span class="keyword">if</span>(false==tf_is_valid)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,152" id="srcline152">152</a></span><span class="line">               <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,153" id="srcline153">153</a></span><span class="line">           <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,154" id="srcline154">154</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,155" id="srcline155">155</a></span><span class="line">           u = [uv_bot(1),uv_top(1)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,156" id="srcline156">156</a></span><span class="line">           v = [uv_bot(2),uv_top(2)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,157" id="srcline157">157</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,158" id="srcline158">158</a></span><span class="line">           <span class="comment">% plot the line   </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,159" id="srcline159">159</a></span><span class="line">           hL = line(hax,<span class="string">'XData'</span>,u,<span class="string">'YData'</span>,v,<span class="string">'Color'</span>,color_char, <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,160" id="srcline160">160</a></span><span class="line">                     <span class="string">'LineStyle'</span>,<span class="string">'-'</span>,<span class="string">'LineWidth'</span>,2 );</span></span>
+<span class="srcline"><span class="lineno"><a href="193,161" id="srcline161">161</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,162" id="srcline162">162</a></span><span class="line">           <span class="comment">% plot an o for the TOP point</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,163" id="srcline163">163</a></span><span class="line">           line(hax,<span class="string">'XData'</span>,uv_top(1),<span class="string">'YData'</span>,uv_top(2),<span class="string">'Color'</span>,color_char, <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,164" id="srcline164">164</a></span><span class="line">                     <span class="string">'Marker'</span>, <span class="string">'o'</span>, <span class="string">'MarkerSize'</span>,10,<span class="string">'MarkerfaceColor'</span>,color_char); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,165" id="srcline165">165</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,166" id="srcline166">166</a></span><span class="line">           <span class="comment">% plot an o for the BOT point      </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,167" id="srcline167">167</a></span><span class="line">           line(hax,<span class="string">'XData'</span>,uv_bot(1),<span class="string">'YData'</span>,uv_bot(2),<span class="string">'Color'</span>,color_char, <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,168" id="srcline168">168</a></span><span class="line">                     <span class="string">'Marker'</span>, <span class="string">'s'</span>, <span class="string">'MarkerSize'</span>,10,<span class="string">'MarkerfaceColor'</span>,color_char); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,169" id="srcline169">169</a></span><span class="line">    <span class="keyword">end</span>         </span></span>
+<span class="srcline"><span class="lineno"><a href="193,170" id="srcline170">170</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,171" id="srcline171">171</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,172" id="srcline172">172</a></span><span class="line"><span class="keyword">function</span> mc_col = get_mc(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,173" id="srcline173">173</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,174" id="srcline174">174</a></span><span class="line">         mc_col = [NaN;NaN];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,175" id="srcline175">175</a></span><span class="line">         </span></span>
+<span class="srcline"><span class="lineno"><a href="193,176" id="srcline176">176</a></span><span class="line">         <span class="keyword">if</span>( true==OBJ.isSlopey()  )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,177" id="srcline177">177</a></span><span class="line">             <span class="comment">% a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,178" id="srcline178">178</a></span><span class="line">             </span></span>
+<span class="srcline"><span class="lineno"><a href="193,179" id="srcline179">179</a></span><span class="line">             <span class="comment">%  b.V = -a.U + -d</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,180" id="srcline180">180</a></span><span class="line">             mc_col(1) = (-1*OBJ.a) / OBJ.b;  <span class="comment">% m</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,181" id="srcline181">181</a></span><span class="line">             mc_col(2) = (-1*OBJ.d) / OBJ.b;  <span class="comment">% c</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,182" id="srcline182">182</a></span><span class="line">         <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,183" id="srcline183">183</a></span><span class="line">              mc_col = [NaN;  NaN];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,184" id="srcline184">184</a></span><span class="line">         <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,185" id="srcline185">185</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,186" id="srcline186">186</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,187" id="srcline187">187</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,188" id="srcline188">188</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,189" id="srcline189">189</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,190" id="srcline190">190</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% classdef</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,191" id="srcline191">191</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,192" id="srcline192">192</a></span><span class="line"><span class="comment">% Local HELPER functions</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,193" id="srcline193">193</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,194" id="srcline194">194</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,195" id="srcline195">195</a></span><span class="line"><span class="keyword">function</span> a_str = LOC_classify_line_type(normal_vec)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,196" id="srcline196">196</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,197" id="srcline197">197</a></span><span class="line">    normal_vec = normal_vec / norm(normal_vec);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,198" id="srcline198">198</a></span><span class="line">    Y          = normal_vec(2); <span class="comment">% V</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,199" id="srcline199">199</a></span><span class="line">    X          = normal_vec(1); <span class="comment">% U</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,200" id="srcline200">200</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,201" id="srcline201">201</a></span><span class="line">    theta_rad  = atan2(Y,X);          <span class="comment">% [-pi , pi]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,202" id="srcline202">202</a></span><span class="line">    theta_deg  = theta_rad * 180/pi;  <span class="comment">% [-180, 180]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,203" id="srcline203">203</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,204" id="srcline204">204</a></span><span class="line">    <span class="comment">% convert angle from [-180,180] to [0, 360]</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,205" id="srcline205">205</a></span><span class="line">    <span class="keyword">if</span>(theta_deg&lt;0)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,206" id="srcline206">206</a></span><span class="line">        theta_deg = 360 + theta_deg;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,207" id="srcline207">207</a></span><span class="line">    <span class="keyword">end</span>    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,208" id="srcline208">208</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,209" id="srcline209">209</a></span><span class="line">    <span class="comment">% first categorise the NORMAL to the line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,210" id="srcline210">210</a></span><span class="line">    tf_the_normal_is_horz = false;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,211" id="srcline211">211</a></span><span class="line">    tf_the_normal_is_vert = false;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,212" id="srcline212">212</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,213" id="srcline213">213</a></span><span class="line">    <span class="comment">%  so we have   0 &lt;= theta_deg &lt;= 360</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,214" id="srcline214">214</a></span><span class="line">    TOL_DEG = 2; <span class="comment">% a tolerence</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,215" id="srcline215">215</a></span><span class="line">    <span class="keyword">if</span>(      (theta_deg &lt;= TOL_DEG       )   || <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,216" id="srcline216">216</a></span><span class="line">             (theta_deg &gt;= (360-TOL_DEG) )   || <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,217" id="srcline217">217</a></span><span class="line">         (   (theta_deg &gt;= (180-TOL_DEG) )   &amp;&amp; <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,218" id="srcline218">218</a></span><span class="line">             (theta_deg &lt;= (180+TOL_DEG) )   ) <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,219" id="srcline219">219</a></span><span class="line">       )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,220" id="srcline220">220</a></span><span class="line">           tf_the_normal_is_horz = true;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,221" id="srcline221">221</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,222" id="srcline222">222</a></span><span class="line">    <span class="keyword">elseif</span>(    (theta_deg &gt;= (90-TOL_DEG)  &amp;&amp; (theta_deg &lt;= (90+TOL_DEG))) || <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,223" id="srcline223">223</a></span><span class="line">               (theta_deg &gt;= (270-TOL_DEG) &amp;&amp; (theta_deg &lt;= (270+TOL_DEG))) <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,224" id="srcline224">224</a></span><span class="line">          )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,225" id="srcline225">225</a></span><span class="line">           tf_the_normal_is_vert = true;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,226" id="srcline226">226</a></span><span class="line">    <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,227" id="srcline227">227</a></span><span class="line">           <span class="comment">% do NOTHING</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,228" id="srcline228">228</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,229" id="srcline229">229</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,230" id="srcline230">230</a></span><span class="line">    <span class="comment">% OK: so we know the orientation of the NORMAL vector</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,231" id="srcline231">231</a></span><span class="line">    <span class="comment">%     now we can classify the actual LINE</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,232" id="srcline232">232</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,233" id="srcline233">233</a></span><span class="line">    <span class="keyword">if</span>(true==tf_the_normal_is_horz)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,234" id="srcline234">234</a></span><span class="line">            a_str = <span class="string">'VERT'</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,235" id="srcline235">235</a></span><span class="line">    <span class="keyword">elseif</span>(true==tf_the_normal_is_vert)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,236" id="srcline236">236</a></span><span class="line">           a_str = <span class="string">'HORZ'</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,237" id="srcline237">237</a></span><span class="line">    <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,238" id="srcline238">238</a></span><span class="line">           a_str = <span class="string">'SLOPEY'</span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,239" id="srcline239">239</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,240" id="srcline240">240</a></span><span class="line"><span class="keyword">end</span> <span class="comment">%LOC_classify_line_type</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,241" id="srcline241">241</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,242" id="srcline242">242</a></span><span class="line"><span class="keyword">function</span> [tf_is_valid, uv_bot, uv_top] = LOC_get_roi_intersection_co_ords(OBJ, ulim, vlim)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,243" id="srcline243">243</a></span><span class="line"> </span></span>
+<span class="srcline"><span class="lineno"><a href="193,244" id="srcline244">244</a></span><span class="line"><span class="keyword">if</span>(1 == coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,245" id="srcline245">245</a></span><span class="line">    validateattributes(ulim,{<span class="string">'numeric'</span>},{<span class="string">'vector'</span>,<span class="string">'numel'</span>,2});</span></span>
+<span class="srcline"><span class="lineno"><a href="193,246" id="srcline246">246</a></span><span class="line">    validateattributes(ulim,{<span class="string">'numeric'</span>},{<span class="string">'vector'</span>,<span class="string">'numel'</span>,2});</span></span>
+<span class="srcline"><span class="lineno"><a href="193,247" id="srcline247">247</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,248" id="srcline248">248</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,249" id="srcline249">249</a></span><span class="line">    tf_is_valid = false;    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,250" id="srcline250">250</a></span><span class="line">    uv_bot = [NaN;NaN];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,251" id="srcline251">251</a></span><span class="line">    uv_top = [NaN;NaN];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,252" id="srcline252">252</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,253" id="srcline253">253</a></span><span class="line">    <span class="keyword">switch</span>(OBJ.line_type)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,254" id="srcline254">254</a></span><span class="line">        <span class="keyword">case</span> <span class="string">'VERT'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,255" id="srcline255">255</a></span><span class="line">             u = (-1*OBJ.d/OBJ.a);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,256" id="srcline256">256</a></span><span class="line">             <span class="keyword">if</span>( (u &lt;= ulim(2)) &amp;&amp; (u&gt;=ulim(1)) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,257" id="srcline257">257</a></span><span class="line">                  uv_bot = [u;vlim(2)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,258" id="srcline258">258</a></span><span class="line">                  uv_top = [u;vlim(1)];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,259" id="srcline259">259</a></span><span class="line">                  tf_is_valid = true;    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,260" id="srcline260">260</a></span><span class="line">             <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,261" id="srcline261">261</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,262" id="srcline262">262</a></span><span class="line">             <span class="keyword">return</span> <span class="comment">% RETURN</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,263" id="srcline263">263</a></span><span class="line">        <span class="keyword">case</span> <span class="string">'HORZ'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,264" id="srcline264">264</a></span><span class="line">             v = (-OBJ.d/OBJ.b);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,265" id="srcline265">265</a></span><span class="line">             <span class="keyword">if</span>( (v &lt;= vlim(2)) &amp;&amp; (v&gt;=vlim(1)) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,266" id="srcline266">266</a></span><span class="line">                  uv_bot = [ulim(1);v];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,267" id="srcline267">267</a></span><span class="line">                  uv_top = [ulim(2);v];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,268" id="srcline268">268</a></span><span class="line">                  tf_is_valid = true;    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,269" id="srcline269">269</a></span><span class="line">             <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,270" id="srcline270">270</a></span><span class="line">             <span class="keyword">return</span> <span class="comment">% RETURN</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,271" id="srcline271">271</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,272" id="srcline272">272</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,273" id="srcline273">273</a></span><span class="line">    <span class="comment">% so if we made it to here then we have a SLOPEY line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,274" id="srcline274">274</a></span><span class="line">    <span class="comment">%  a.U + b.V + d = 0</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,275" id="srcline275">275</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,276" id="srcline276">276</a></span><span class="line">    my_Vf = @(U) (-1*(OBJ.d + OBJ.a*U)/OBJ.b);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,277" id="srcline277">277</a></span><span class="line">    my_Uf = @(V) (-1*(OBJ.d + OBJ.b*V)/OBJ.a);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,278" id="srcline278">278</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,279" id="srcline279">279</a></span><span class="line">    [tf_west,  UV_west ] = LOC_get_side_intersect_point(<span class="string">'WEST'</span>,  my_Vf, my_Uf, ulim, vlim);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,280" id="srcline280">280</a></span><span class="line">    [tf_east,  UV_east ] = LOC_get_side_intersect_point(<span class="string">'EAST'</span>,  my_Vf, my_Uf, ulim, vlim);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,281" id="srcline281">281</a></span><span class="line">    [tf_north, UV_north] = LOC_get_side_intersect_point(<span class="string">'NORTH'</span>, my_Vf, my_Uf, ulim, vlim);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,282" id="srcline282">282</a></span><span class="line">    [tf_south, UV_south] = LOC_get_side_intersect_point(<span class="string">'SOUTH'</span>, my_Vf, my_Uf, ulim, vlim);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,283" id="srcline283">283</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,284" id="srcline284">284</a></span><span class="line">    the_tf_mat = [tf_west, tf_east, tf_north, tf_south];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,285" id="srcline285">285</a></span><span class="line">    the_UV_mat = [UV_west, UV_east, UV_north, UV_south];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,286" id="srcline286">286</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,287" id="srcline287">287</a></span><span class="line">    <span class="keyword">if</span>(2 ~= nnz(the_tf_mat) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,288" id="srcline288">288</a></span><span class="line">       <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,289" id="srcline289">289</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,290" id="srcline290">290</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,291" id="srcline291">291</a></span><span class="line">    <span class="comment">% OK: so our line has intersected our ROI box</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,292" id="srcline292">292</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,293" id="srcline293">293</a></span><span class="line">    THE_SOL_UV_mat = the_UV_mat(:,the_tf_mat ); </span></span>
+<span class="srcline"><span class="lineno"><a href="193,294" id="srcline294">294</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,295" id="srcline295">295</a></span><span class="line">    UV_A = THE_SOL_UV_mat(:,1);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,296" id="srcline296">296</a></span><span class="line">    UV_B = THE_SOL_UV_mat(:,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,297" id="srcline297">297</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,298" id="srcline298">298</a></span><span class="line">    <span class="keyword">if</span>( UV_A(2) &gt; UV_B(2))</span></span>
+<span class="srcline"><span class="lineno"><a href="193,299" id="srcline299">299</a></span><span class="line">        uv_bot = UV_A;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,300" id="srcline300">300</a></span><span class="line">        uv_top = UV_B;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,301" id="srcline301">301</a></span><span class="line">    <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,302" id="srcline302">302</a></span><span class="line">        uv_bot = UV_B;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,303" id="srcline303">303</a></span><span class="line">        uv_top = UV_A;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,304" id="srcline304">304</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,305" id="srcline305">305</a></span><span class="line">    tf_is_valid = true;    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,306" id="srcline306">306</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,307" id="srcline307">307</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% LOC_get_roi_intersection_co_ords()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,308" id="srcline308">308</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,309" id="srcline309">309</a></span><span class="line"><span class="keyword">function</span> tf_val = LOC_UV_is_in_box(UV, ulim, vlim)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,310" id="srcline310">310</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,311" id="srcline311">311</a></span><span class="line">    tf_val = false;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,312" id="srcline312">312</a></span><span class="line">    u      = UV(1);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,313" id="srcline313">313</a></span><span class="line">    v      = UV(2);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,314" id="srcline314">314</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,315" id="srcline315">315</a></span><span class="line">    <span class="keyword">if</span>( (u &lt;= ulim(2)) &amp;&amp; (u &gt;= ulim(1)) &amp;&amp; <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,316" id="srcline316">316</a></span><span class="line">        (v &lt;= vlim(2)) &amp;&amp; (v &gt;= vlim(1))   <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,317" id="srcline317">317</a></span><span class="line">       )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,318" id="srcline318">318</a></span><span class="line">         tf_val = true;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,319" id="srcline319">319</a></span><span class="line">    <span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,320" id="srcline320">320</a></span><span class="line">         tf_val = false;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,321" id="srcline321">321</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,322" id="srcline322">322</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,323" id="srcline323">323</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% LOC_UV_is_in_box(()</span></span></span>
+</pre>
+</div>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="193,324" id="srcline324">324</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,325" id="srcline325">325</a></span><span class="line"><span class="keyword">function</span> [<span class="var type1" id="S160T5U1365">tf_valid_intersection</span>, <span class="var type1" id="S161T4U1366">UV</span>] = <span class="keyword">...</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,326" id="srcline326">326</a></span><span class="line">    LOC_get_side_intersect_point(<span class="var type2" id="S162T13V3U1369">side_str</span>, <span class="var type1" id="S163T357U1370">my_Vf</span>, <span class="var type1" id="S164T335U1371">my_Uf</span>, <span class="var type1" id="S165T154U1372">ulim</span>, <span class="var type1" id="S166T154U1373">vlim</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,327" id="srcline327">327</a></span><span class="line"> </span></span>
+<span class="srcline"><span class="lineno"><a href="193,328" id="srcline328">328</a></span><span class="line">    <span class="comment">% SUMMARY:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,329" id="srcline329">329</a></span><span class="line">    <span class="comment">%   for a specified side of an ROI box, where (if at all)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,330" id="srcline330">330</a></span><span class="line">    <span class="comment">%   does our line intersect that side of teh ROI box</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,331" id="srcline331">331</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,332" id="srcline332">332</a></span><span class="line">    <span class="mxinfo " id="T4:U8"><span class="var type1" id="S161T4U1376">UV</span> = <span class="mxinfo " id="T4:U10">[<span class="mxinfo " id="T3:U11">0</span>;<span class="mxinfo " id="T3:U12">0</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,333" id="srcline333">333</a></span><span class="line">    <span class="mxinfo " id="T5:U13"><span class="var type1" id="S160T5U1384">tf_valid_intersection</span> = <span class="mxinfo " id="T5:U15">false</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,334" id="srcline334">334</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="193,335" id="srcline335">335</a></span><span class="line">    <span class="comment">% assert that our side_str INPUT argument is a valid</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,336" id="srcline336">336</a></span><span class="line">    <span class="comment">%mustBeMember(side_str, ["NORTH","SOUTH","EAST","WEST"] );</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,337" id="srcline337">337</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,338" id="srcline338">338</a></span><span class="line">    <span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,339" id="srcline339">339</a></span><span class="line">    <span class="comment">%          0------------------------------&gt; U</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,340" id="srcline340">340</a></span><span class="line">    <span class="comment">%          |</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,341" id="srcline341">341</a></span><span class="line">    <span class="comment">%          |               NORTH</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,342" id="srcline342">342</a></span><span class="line">    <span class="comment">%          |           *-------------*</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,343" id="srcline343">343</a></span><span class="line">    <span class="comment">%          |          |              |</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,344" id="srcline344">344</a></span><span class="line">    <span class="comment">%          |          |              |</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,345" id="srcline345">345</a></span><span class="line">    <span class="comment">%          |    WEST  |              |  EAST</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,346" id="srcline346">346</a></span><span class="line">    <span class="comment">%          |          |              | </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,347" id="srcline347">347</a></span><span class="line">    <span class="comment">%          |          |              |</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,348" id="srcline348">348</a></span><span class="line">    <span class="comment">%          |          *--------------*</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,349" id="srcline349">349</a></span><span class="line">    <span class="comment">%          |               SOUTH    </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,350" id="srcline350">350</a></span><span class="line">    <span class="comment">%      V   V   </span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,351" id="srcline351">351</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,352" id="srcline352">352</a></span><span class="line">    <span class="mxinfo " id="T340:U16"><span class="var type1" id="S168T340U1389">FH_in_V_zone</span> = <span class="mxinfo " id="T340:U18">@(V) ( (V &lt;= <span class="var type0" id="S166T0U1398">vlim</span>(2)) &amp; (V &gt;= <span class="var type0" id="S166T0U1404">vlim</span>(1)) )</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,353" id="srcline353">353</a></span><span class="line">    <span class="mxinfo " id="T344:U19"><span class="var type1" id="S169T344U1408">FH_in_U_zone</span> = <span class="mxinfo " id="T344:U21">@(U) ( (U &lt;= <span class="var type0" id="S165T0U1417">ulim</span>(2)) &amp; (U &gt;= <span class="var type0" id="S165T0U1423">ulim</span>(1)) )</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,354" id="srcline354">354</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="193,355" id="srcline355">355</a></span><span class="line">    <span class="keyword">switch</span>(<span class="var type1" id="S162T13U1427">side_str</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="193,356" id="srcline356">356</a></span><span class="line">        <span class="keyword">case</span> <span class="string">'WEST'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,357" id="srcline357">357</a></span><span class="line">                   <span class="var type0" id="S170T0U1432">u</span> = <span class="var type0" id="S165T0U1434">ulim</span>(1);  <span class="var type0" id="S171T0U1438">v</span> = <span class="var type0" id="S163T0U1440">my_Vf</span>(<span class="var type0" id="S170T0U1441">u</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,358" id="srcline358">358</a></span><span class="line">                   <span class="var type0" id="S161T0U1444">UV</span> = [<span class="var type0" id="S170T0U1447">u</span>;<span class="var type0" id="S171T0U1449">v</span>];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,359" id="srcline359">359</a></span><span class="line">                   <span class="keyword">if</span>( <span class="var type0" id="S168T0U1454">FH_in_V_zone</span>(<span class="var type0" id="S171T0U1455">v</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,360" id="srcline360">360</a></span><span class="line">                       <span class="var type0" id="S160T0U1458">tf_valid_intersection</span> = true;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,361" id="srcline361">361</a></span><span class="line">                   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,362" id="srcline362">362</a></span><span class="line">        <span class="keyword">case</span> <span class="string">'EAST'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,363" id="srcline363">363</a></span><span class="line">                   <span class="var type0" id="S170T0U1465">u</span> = <span class="var type0" id="S165T0U1467">ulim</span>(2);  <span class="var type0" id="S171T0U1471">v</span> = <span class="var type0" id="S163T0U1473">my_Vf</span>(<span class="var type0" id="S170T0U1474">u</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,364" id="srcline364">364</a></span><span class="line">                   <span class="var type0" id="S161T0U1477">UV</span> = [<span class="var type0" id="S170T0U1480">u</span>;<span class="var type0" id="S171T0U1482">v</span>];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,365" id="srcline365">365</a></span><span class="line">                   <span class="keyword">if</span>( <span class="var type0" id="S168T0U1487">FH_in_V_zone</span>(<span class="var type0" id="S171T0U1488">v</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,366" id="srcline366">366</a></span><span class="line">                       <span class="var type0" id="S160T0U1491">tf_valid_intersection</span> = true;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,367" id="srcline367">367</a></span><span class="line">                   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,368" id="srcline368">368</a></span><span class="line">        <span class="keyword">case</span> <span class="string">'NORTH'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,369" id="srcline369">369</a></span><span class="line">                   <span class="mxinfo " id="T3:U23"><span class="var type1" id="S171T3U1498">v</span> = <span class="mxinfo " id="T3:U25"><span class="var type1" id="S166T154U1500">vlim</span>(<span class="mxinfo " id="T21:U27">1</span>)</span></span>;  <span class="mxinfo " id="T3:U28"><span class="var type1" id="S170T3U1504">u</span> = <span class="mxinfo " id="T3:U30"><span class="mxinfo " id="T335:U31"><span class="fcn" id="F1512N5:B335">my_Uf</span></span>(<span class="var type1" id="S171T3U1507">v</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,370" id="srcline370">370</a></span><span class="line">                   <span class="mxinfo " id="T4:U33"><span class="var type1" id="S161T4U1510">UV</span> = <span class="mxinfo " id="T4:U35">[<span class="var type1" id="S170T3U1513">u</span>;<span class="var type1" id="S171T3U1515">v</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,371" id="srcline371">371</a></span><span class="line">                   <span class="keyword">if</span>( <span class="mxinfo " id="T5:U38"><span class="mxinfo " id="T344:U39"><span class="fcn" id="F1514N2:B344">FH_in_U_zone</span></span>(<span class="var type1" id="S170T3U1521">u</span>)</span> )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,372" id="srcline372">372</a></span><span class="line">                       <span class="mxinfo " id="T5:U41"><span class="var type1" id="S160T5U1524">tf_valid_intersection</span> = <span class="mxinfo " id="T5:U43">true</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,373" id="srcline373">373</a></span><span class="line">                   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,374" id="srcline374">374</a></span><span class="line">        <span class="keyword">case</span> <span class="string">'SOUTH'</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,375" id="srcline375">375</a></span><span class="line">                   <span class="var type0" id="S171T0U1531">v</span> = <span class="var type0" id="S166T0U1533">vlim</span>(2);  <span class="var type0" id="S170T0U1537">u</span> = <span class="var type0" id="S164T0U1539">my_Uf</span>(<span class="var type0" id="S171T0U1540">v</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,376" id="srcline376">376</a></span><span class="line">                   <span class="var type0" id="S161T0U1543">UV</span> = [<span class="var type0" id="S170T0U1546">u</span>;<span class="var type0" id="S171T0U1548">v</span>];</span></span>
+<span class="srcline"><span class="lineno"><a href="193,377" id="srcline377">377</a></span><span class="line">                   <span class="keyword">if</span>( <span class="var type0" id="S169T0U1553">FH_in_U_zone</span>(<span class="var type0" id="S170T0U1554">u</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="193,378" id="srcline378">378</a></span><span class="line">                       <span class="var type0" id="S160T0U1557">tf_valid_intersection</span> = true;</span></span>
+<span class="srcline"><span class="lineno"><a href="193,379" id="srcline379">379</a></span><span class="line">                   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,380" id="srcline380">380</a></span><span class="line">        <span class="keyword">otherwise</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,381" id="srcline381">381</a></span><span class="line">            error(<span class="string">'###_ERROR:  UNknown BOX side string'</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="193,382" id="srcline382">382</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,383" id="srcline383">383</a></span><span class="line"><span class="keyword">end</span> <span class="comment">%LOC_get_side_intersect_point</span></span></span>
+<span class="srcline"><span class="lineno"><a href="193,384" id="srcline384">384</a></span><span class="line"><span class="comment">%==========================================================================</span></span></span>
+</pre>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+component bh_Fmag 
+    
+inputs
+    y    = { 1.0, 'm' };  % Y:left
+    i    = { 1.0, 'A'};   % i:left
+end
+
+
+parameters    
+    C1 = {1,'H*(m^5)'}; 
+    C2 = {1,'m^2'}; 
+    C3 = {1,'m^3'}; 
+end
+
+outputs
+    Fmag    = { 1.0, 'N' };  % Fmag:right
+end
+
+equations    
+    Fmag == 0.5 * i^2 * C1 / (  (C2*y + C3)^2  );
+end
+
+end

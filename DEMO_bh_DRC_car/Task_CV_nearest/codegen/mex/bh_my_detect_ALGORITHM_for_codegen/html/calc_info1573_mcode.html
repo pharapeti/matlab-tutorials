@@ -1,0 +1,124 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="207,1" id="srcline1">  1</a></span><span class="line"> <span class="keyword">classdef</span> box_info_CLS <span class="comment">%#codegen</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,2" id="srcline2">  2</a></span><span class="line"><span class="comment">% ATTENTION:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,3" id="srcline3">  3</a></span><span class="line"><span class="comment">% I want this class to be MATLAB CODER friendly, hence I have prepopulated</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,4" id="srcline4">  4</a></span><span class="line"><span class="comment">% some properties with NaNs</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,5" id="srcline5">  5</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="207,6" id="srcline6">  6</a></span><span class="line"><span class="keyword">properties</span> (SetAccess = protected)</span></span>
+<span class="srcline"><span class="lineno"><a href="207,7" id="srcline7">  7</a></span><span class="line">    BW             ;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,8" id="srcline8">  8</a></span><span class="line">    pixIND_list    ;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,9" id="srcline9">  9</a></span><span class="line">    NUM_ROWS    = 0; </span></span>
+<span class="srcline"><span class="lineno"><a href="207,10" id="srcline10"> 10</a></span><span class="line">    NUM_COLS    = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,11" id="srcline11"> 11</a></span><span class="line">    <span class="comment">%---------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,12" id="srcline12"> 12</a></span><span class="line">    left_edge_xy_col  = [0;0]; </span></span>
+<span class="srcline"><span class="lineno"><a href="207,13" id="srcline13"> 13</a></span><span class="line">    right_edge_xy_col = [0;0]; </span></span>
+<span class="srcline"><span class="lineno"><a href="207,14" id="srcline14"> 14</a></span><span class="line">    <span class="comment">%---------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,15" id="srcline15"> 15</a></span><span class="line">    centroid_xy_col   = [0;0];</span></span>
+<span class="srcline"><span class="lineno"><a href="207,16" id="srcline16"> 16</a></span><span class="line">    <span class="comment">%---------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,17" id="srcline17"> 17</a></span><span class="line">    tf_is_detected   = false;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,18" id="srcline18"> 18</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,19" id="srcline19"> 19</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,20" id="srcline20"> 20</a></span><span class="line"><span class="keyword">methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,21" id="srcline21"> 21</a></span><span class="line"><span class="keyword">function</span> OBJ = box_info_CLS(BW, tf_found)</span></span>
+<span class="srcline"><span class="lineno"><a href="207,22" id="srcline22"> 22</a></span><span class="line">      OBJ.BW            = BW;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,23" id="srcline23"> 23</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="207,24" id="srcline24"> 24</a></span><span class="line">      OBJ.NUM_ROWS       = size(BW,1);</span></span>
+<span class="srcline"><span class="lineno"><a href="207,25" id="srcline25"> 25</a></span><span class="line">      OBJ.NUM_COLS       = size(BW,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="207,26" id="srcline26"> 26</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="207,27" id="srcline27"> 27</a></span><span class="line">      OBJ.tf_is_detected = tf_found;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,28" id="srcline28"> 28</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="207,29" id="srcline29"> 29</a></span><span class="line">      OBJ = OBJ.calc_info();</span></span>
+<span class="srcline"><span class="lineno"><a href="207,30" id="srcline30"> 30</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,31" id="srcline31"> 31</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,32" id="srcline32"> 32</a></span><span class="line"><span class="keyword">function</span> tf_detected = is_detected(OBJ)   </span></span>
+<span class="srcline"><span class="lineno"><a href="207,33" id="srcline33"> 33</a></span><span class="line">         tf_detected = OBJ.tf_is_detected;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,34" id="srcline34"> 34</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% is_detected()</span></span></span>
+</pre>
+</div>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="207,35" id="srcline35"> 35</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,36" id="srcline36"> 36</a></span><span class="line"><span class="keyword">function</span> <span class="var type1" id="S20T367U103">OBJ</span> = calc_info(<span class="var type1" id="S20T367U106">OBJ</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="207,37" id="srcline37"> 37</a></span><span class="line">   <span class="keyword">if</span>( <span class="mxinfo " id="T5:U3">~<span class="mxinfo " id="T5:U4"><span class="var type1" id="S20T367U113">OBJ</span>.<span class="fcn" id="F1564N18:B114">is_detected</span>()</span></span> ) </span></span>
+<span class="srcline"><span class="lineno"><a href="207,38" id="srcline38"> 38</a></span><span class="line">       <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,39" id="srcline39"> 39</a></span><span class="line">   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,40" id="srcline40"> 40</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="207,41" id="srcline41"> 41</a></span><span class="line">   <span class="comment">% OK: if we're here we have a box</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,42" id="srcline42"> 42</a></span><span class="line">   <span class="mxinfo " id="T154:U6"><span class="var type1" id="S21T154U118">the_size</span> = <span class="mxinfo " id="T154:U8">[<span class="mxinfo " id="T3:U9"><span class="var type1" id="S20T367U122">OBJ</span>.NUM_ROWS</span>, <span class="mxinfo " id="T3:U11"><span class="var type1" id="S20T367U125">OBJ</span>.NUM_COLS</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,43" id="srcline43"> 43</a></span><span class="line">   <span class="mxinfo " id="T115:U13"><span class="var type1" id="S22T115U129">the_ind</span>  = <span class="mxinfo " id="T115:U15">find(<span class="mxinfo " id="T2:U16"><span class="var type1" id="S20T367U133">OBJ</span>.BW</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,44" id="srcline44"> 44</a></span><span class="line">   [<span class="var type1" id="S24T115U138">y</span>,<span class="var type1" id="S25T115U139">x</span>]    = ind2sub(<span class="var type1" id="S21T154U142">the_size</span>,<span class="var type1" id="S22T115U143">the_ind</span>); <span class="comment">% convert INDS to SUBSCRIPTS</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,45" id="srcline45"> 45</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="207,46" id="srcline46"> 46</a></span><span class="line">   <span class="comment">% the LEFT edge will have the smallest X-co-ord</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,47" id="srcline47"> 47</a></span><span class="line">   <span class="mxinfo " id="T3:U22"><span class="var type1" id="S27T3U146">the_left_edge_x</span>  = <span class="mxinfo " id="T3:U24">1</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,48" id="srcline48"> 48</a></span><span class="line">   [<span class="mxinfo " id="T3:U25">~</span>,<span class="var type1" id="S28T3U152">tmp_I</span>]        = min(<span class="var type1" id="S25T115U155">x</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="207,49" id="srcline49"> 49</a></span><span class="line">   <span class="mxinfo " id="T3:U28"><span class="var type1" id="S27T3U158">the_left_edge_x</span>  =  <span class="mxinfo " id="T3:U30"><span class="var type1" id="S25T115U160">x</span>(<span class="var type1" id="S28T3U162">tmp_I</span>(1))</span></span>;        <span class="comment">% MATLAB CODER friendly</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,50" id="srcline50"> 50</a></span><span class="line">   <span class="mxinfo " id="T115:U33"><span class="var type1" id="S30T115U166">tmp_II</span>           = <span class="mxinfo " id="T115:U35">find(<span class="mxinfo " id="T308:U36"><span class="var type1" id="S25T115U170">x</span>==<span class="var type1" id="S27T3U171">the_left_edge_x</span></span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,51" id="srcline51"> 51</a></span><span class="line">   <span class="mxinfo " id="T115:U39"><span class="var type1" id="S31T115U174">yI</span>               = <span class="mxinfo " id="T115:U41"><span class="var type1" id="S24T115U176">y</span>(<span class="var type1" id="S30T115U177">tmp_II</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,52" id="srcline52"> 52</a></span><span class="line">   <span class="mxinfo " id="T3:U44"><span class="var type1" id="S32T3U180">the_left_edge_y</span>  = <span class="mxinfo " id="T3:U46">min(<span class="var type1" id="S31T115U183">yI</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,53" id="srcline53"> 53</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="207,54" id="srcline54"> 54</a></span><span class="line">   <span class="comment">% the RIGHT edge will have the biggest X-co-ord</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,55" id="srcline55"> 55</a></span><span class="line">   <span class="mxinfo " id="T3:U48"><span class="var type1" id="S33T3U186">the_right_edge_x</span>  = <span class="mxinfo " id="T3:U50">1</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,56" id="srcline56"> 56</a></span><span class="line">   [<span class="mxinfo " id="T3:U51">~</span>,<span class="var type1" id="S28T3U192">tmp_I</span>]         = max(<span class="var type1" id="S25T115U195">x</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="207,57" id="srcline57"> 57</a></span><span class="line">   <span class="mxinfo " id="T3:U54"><span class="var type1" id="S33T3U198">the_right_edge_x</span>  =  <span class="mxinfo " id="T3:U56"><span class="var type1" id="S25T115U200">x</span>(<span class="var type1" id="S28T3U202">tmp_I</span>(1))</span></span>;        <span class="comment">% MATLAB CODER friendly</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,58" id="srcline58"> 58</a></span><span class="line">   <span class="mxinfo " id="T115:U59"><span class="var type1" id="S35T115U206">tmp_RR</span>            = <span class="mxinfo " id="T115:U61">find(<span class="mxinfo " id="T308:U62"><span class="var type1" id="S25T115U210">x</span>==<span class="var type1" id="S33T3U211">the_right_edge_x</span></span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,59" id="srcline59"> 59</a></span><span class="line">   <span class="mxinfo " id="T115:U65"><span class="var type1" id="S36T115U214">yR</span>                = <span class="mxinfo " id="T115:U67"><span class="var type1" id="S24T115U216">y</span>(<span class="var type1" id="S35T115U217">tmp_RR</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,60" id="srcline60"> 60</a></span><span class="line">   <span class="mxinfo " id="T3:U70"><span class="var type1" id="S37T3U220">the_right_edge_y</span>  = <span class="mxinfo " id="T3:U72">min(<span class="var type1" id="S36T115U223">yR</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,61" id="srcline61"> 61</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="207,62" id="srcline62"> 62</a></span><span class="line">   <span class="comment">% calc the centroid</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,63" id="srcline63"> 63</a></span><span class="line">   <span class="mxinfo " id="T3:U74"><span class="var type1" id="S38T3U226">xc</span> = <span class="mxinfo " id="T3:U76">mean(<span class="var type1" id="S25T115U229">x</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,64" id="srcline64"> 64</a></span><span class="line">   <span class="mxinfo " id="T3:U78"><span class="var type1" id="S40T3U232">yc</span> = <span class="mxinfo " id="T3:U80">mean(<span class="var type1" id="S24T115U235">y</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,65" id="srcline65"> 65</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="207,66" id="srcline66"> 66</a></span><span class="line">   <span class="comment">% take care of the OUTPUTS</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,67" id="srcline67"> 67</a></span><span class="line">   <span class="mxinfo " id="T4:U82"><span class="mxinfo " id="T4:U83"><span class="var type1" id="S20T367U239">OBJ</span>.left_edge_xy_col</span>   = <span class="mxinfo " id="T4:U85">[<span class="var type1" id="S27T3U244">the_left_edge_x</span>(1);  <span class="var type1" id="S32T3U248">the_left_edge_y</span>(1)   ]</span></span>; <span class="comment">% MATLAB CODER friendly</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,68" id="srcline68"> 68</a></span><span class="line">   <span class="mxinfo " id="T4:U88"><span class="mxinfo " id="T4:U89"><span class="var type1" id="S20T367U253">OBJ</span>.right_edge_xy_col</span>  = <span class="mxinfo " id="T4:U91">[<span class="var type1" id="S33T3U258">the_right_edge_x</span>(1); <span class="var type1" id="S37T3U262">the_right_edge_y</span>(1)  ]</span></span>; <span class="comment">% MATLAB CODER friendly</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,69" id="srcline69"> 69</a></span><span class="line">  </span></span>
+<span class="srcline"><span class="lineno"><a href="207,70" id="srcline70"> 70</a></span><span class="line">   <span class="mxinfo " id="T4:U94"><span class="mxinfo " id="T4:U95"><span class="var type1" id="S20T367U267">OBJ</span>.centroid_xy_col</span>    = <span class="mxinfo " id="T4:U97">[<span class="var type1" id="S38T3U272">xc</span>(1); <span class="var type1" id="S40T3U276">yc</span>(1) ]</span></span>; <span class="comment">% MATLAB CODER friendly</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,71" id="srcline71"> 71</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="207,72" id="srcline72"> 72</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% calc_info()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,73" id="srcline73"> 73</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+</pre>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="207,74" id="srcline74"> 74</a></span><span class="line"><span class="keyword">function</span> xy = get_xy(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="207,75" id="srcline75"> 75</a></span><span class="line">    coder.varsize(<span class="string">'xy'</span>, [2 1]);</span></span>
+<span class="srcline"><span class="lineno"><a href="207,76" id="srcline76"> 76</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="207,77" id="srcline77"> 77</a></span><span class="line">    xy = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="207,78" id="srcline78"> 78</a></span><span class="line">    <span class="keyword">if</span>( ~OBJ.is_detected() ) </span></span>
+<span class="srcline"><span class="lineno"><a href="207,79" id="srcline79"> 79</a></span><span class="line">       <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,80" id="srcline80"> 80</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,81" id="srcline81"> 81</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="207,82" id="srcline82"> 82</a></span><span class="line">    xy = OBJ.centroid_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,83" id="srcline83"> 83</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% get_xy()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,84" id="srcline84"> 84</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,85" id="srcline85"> 85</a></span><span class="line"><span class="keyword">function</span> my_S = convert_to_struct(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="207,86" id="srcline86"> 86</a></span><span class="line">  <span class="comment">% ATTENTION(R2017b):</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,87" id="srcline87"> 87</a></span><span class="line">  <span class="comment">% the following usage is NOT supported by the MATLAB Coder:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,88" id="srcline88"> 88</a></span><span class="line">  <span class="comment">%   &gt;&gt; struct(OBJ)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,89" id="srcline89"> 89</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="207,90" id="srcline90"> 90</a></span><span class="line">    my_S.BW                = OBJ.BW;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,91" id="srcline91"> 91</a></span><span class="line">    my_S.NUM_ROWS          = OBJ.NUM_ROWS; </span></span>
+<span class="srcline"><span class="lineno"><a href="207,92" id="srcline92"> 92</a></span><span class="line">    my_S.NUM_COLS          = OBJ.NUM_COLS;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,93" id="srcline93"> 93</a></span><span class="line">    my_S.left_edge_xy_col  = OBJ.left_edge_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,94" id="srcline94"> 94</a></span><span class="line">    my_S.right_edge_xy_col = OBJ.right_edge_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,95" id="srcline95"> 95</a></span><span class="line">    my_S.centroid_xy_col   = OBJ.centroid_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="207,96" id="srcline96"> 96</a></span><span class="line">    my_S.tf_is_detected    = OBJ.tf_is_detected; </span></span>
+<span class="srcline"><span class="lineno"><a href="207,97" id="srcline97"> 97</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,98" id="srcline98"> 98</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,99" id="srcline99"> 99</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% methods()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,100" id="srcline100">100</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,101" id="srcline101">101</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="207,102" id="srcline102">102</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% classdef()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,103" id="srcline103">103</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,104" id="srcline104">104</a></span><span class="line"><span class="comment">% END CLASSDEF</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,105" id="srcline105">105</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="207,106" id="srcline106">106</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="207,107" id="srcline107">107</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="207,108" id="srcline108">108</a></span><span class="line"> </span></span>
+</pre>
+</div>
+</body>
+</html>

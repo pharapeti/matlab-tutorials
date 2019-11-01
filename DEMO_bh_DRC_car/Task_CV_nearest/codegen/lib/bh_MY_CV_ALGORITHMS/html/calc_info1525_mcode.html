@@ -1,0 +1,137 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="142,1" id="srcline1">  1</a></span><span class="line"><span class="keyword">classdef</span> lane_info_CLS <span class="comment">%#codegen</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,2" id="srcline2">  2</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,3" id="srcline3">  3</a></span><span class="line"><span class="comment">% ATTENTION:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,4" id="srcline4">  4</a></span><span class="line"><span class="comment">% I want this class to be MATLAB CODER friendly, hence I have prepopulated</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,5" id="srcline5">  5</a></span><span class="line"><span class="comment">% some properties with NaNs</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,6" id="srcline6">  6</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,7" id="srcline7">  7</a></span><span class="line"><span class="keyword">properties</span> (SetAccess = protected)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,8" id="srcline8">  8</a></span><span class="line">    BW             ;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,9" id="srcline9">  9</a></span><span class="line">    NUM_ROWS    = 0; </span></span>
+<span class="srcline"><span class="lineno"><a href="142,10" id="srcline10"> 10</a></span><span class="line">    NUM_COLS    = 0;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,11" id="srcline11"> 11</a></span><span class="line">    <span class="comment">%---------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,12" id="srcline12"> 12</a></span><span class="line">    tip_upper_xy_col = [0;0]; <span class="comment">% closest to TOP of image</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,13" id="srcline13"> 13</a></span><span class="line">    tip_lower_xy_col = [0;0]; <span class="comment">% closest to BOTTOM of image</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,14" id="srcline14"> 14</a></span><span class="line">    <span class="comment">%fh_line;</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,15" id="srcline15"> 15</a></span><span class="line">    m                = [0];</span></span>
+<span class="srcline"><span class="lineno"><a href="142,16" id="srcline16"> 16</a></span><span class="line">    c                = [0];</span></span>
+<span class="srcline"><span class="lineno"><a href="142,17" id="srcline17"> 17</a></span><span class="line">    <span class="comment">%---------------------------------</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,18" id="srcline18"> 18</a></span><span class="line">    tf_is_detected   = false;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,19" id="srcline19"> 19</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,20" id="srcline20"> 20</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,21" id="srcline21"> 21</a></span><span class="line"><span class="keyword">methods</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,22" id="srcline22"> 22</a></span><span class="line"><span class="keyword">function</span> OBJ = lane_info_CLS(BW, tf_found)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,23" id="srcline23"> 23</a></span><span class="line">      OBJ.BW             = BW;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,24" id="srcline24"> 24</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="142,25" id="srcline25"> 25</a></span><span class="line">      OBJ.NUM_ROWS       = size(BW,1);</span></span>
+<span class="srcline"><span class="lineno"><a href="142,26" id="srcline26"> 26</a></span><span class="line">      OBJ.NUM_COLS       = size(BW,2);</span></span>
+<span class="srcline"><span class="lineno"><a href="142,27" id="srcline27"> 27</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="142,28" id="srcline28"> 28</a></span><span class="line">      OBJ.tf_is_detected = tf_found;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,29" id="srcline29"> 29</a></span><span class="line">      </span></span>
+<span class="srcline"><span class="lineno"><a href="142,30" id="srcline30"> 30</a></span><span class="line">      OBJ = OBJ.calc_info();</span></span>
+<span class="srcline"><span class="lineno"><a href="142,31" id="srcline31"> 31</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,32" id="srcline32"> 32</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,33" id="srcline33"> 33</a></span><span class="line"><span class="keyword">function</span> tf_detected = is_detected(OBJ)   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,34" id="srcline34"> 34</a></span><span class="line">         tf_detected = OBJ.tf_is_detected;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,35" id="srcline35"> 35</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% is_detected()</span></span></span>
+</pre>
+</div>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="142,36" id="srcline36"> 36</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------- </span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,37" id="srcline37"> 37</a></span><span class="line"><span class="keyword">function</span> <span class="var type1" id="S20T303U104">OBJ</span> = calc_info(<span class="var type1" id="S20T303U107">OBJ</span>, <span class="var type1" id="S21T154U108">ulim</span>, <span class="var type1" id="S22T154U109">vlim</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,38" id="srcline38"> 38</a></span><span class="line">   <span class="keyword">if</span>( <span class="mxinfo " id="T5:U5">~<span class="mxinfo " id="T5:U6"><span class="var type1" id="S20T303U116">OBJ</span>.<span class="fcn" id="F1163N30:B117">is_detected</span>()</span></span> ) </span></span>
+<span class="srcline"><span class="lineno"><a href="142,39" id="srcline39"> 39</a></span><span class="line">       <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,40" id="srcline40"> 40</a></span><span class="line">   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,41" id="srcline41"> 41</a></span><span class="line">       </span></span>
+<span class="srcline"><span class="lineno"><a href="142,42" id="srcline42"> 42</a></span><span class="line">   <span class="keyword">if</span>(1==nargin)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,43" id="srcline43"> 43</a></span><span class="line">      <span class="mxinfo " id="T154:U8"><span class="var type1" id="S21T154U128">ulim</span> = <span class="mxinfo " id="T154:U10">[<span class="mxinfo " id="T3:U11">1</span>, <span class="mxinfo " id="T3:U12"><span class="var type1" id="S20T303U133">OBJ</span>.NUM_COLS</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,44" id="srcline44"> 44</a></span><span class="line">      <span class="mxinfo " id="T154:U14"><span class="var type1" id="S22T154U137">vlim</span> = <span class="mxinfo " id="T154:U16">[<span class="mxinfo " id="T3:U17">1</span>, <span class="mxinfo " id="T3:U18"><span class="var type1" id="S20T303U142">OBJ</span>.NUM_ROWS</span>]</span></span>;  </span></span>
+<span class="srcline"><span class="lineno"><a href="142,45" id="srcline45"> 45</a></span><span class="line">   <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,46" id="srcline46"> 46</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,47" id="srcline47"> 47</a></span><span class="line">   <span class="comment">% OK: if we're here we have a lane</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,48" id="srcline48"> 48</a></span><span class="line">   <span class="mxinfo " id="T154:U20"><span class="var type1" id="S24T154U146">the_size</span> = <span class="mxinfo " id="T154:U22">[<span class="mxinfo " id="T3:U23"><span class="var type1" id="S20T303U150">OBJ</span>.NUM_ROWS</span>, <span class="mxinfo " id="T3:U25"><span class="var type1" id="S20T303U153">OBJ</span>.NUM_COLS</span>]</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,49" id="srcline49"> 49</a></span><span class="line">   <span class="mxinfo " id="T308:U27"><span class="var type1" id="S25T308U157">the_ind</span>  = <span class="mxinfo " id="T308:U29">find(<span class="mxinfo " id="T2:U30"><span class="var type1" id="S20T303U161">OBJ</span>.BW</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,50" id="srcline50"> 50</a></span><span class="line">   [<span class="var type1" id="S27T308U166">y</span>,<span class="var type1" id="S28T308U167">x</span>]    = ind2sub(<span class="var type1" id="S24T154U170">the_size</span>,<span class="var type1" id="S25T308U171">the_ind</span>); <span class="comment">% convert INDS to SUBSCRIPTS</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,51" id="srcline51"> 51</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,52" id="srcline52"> 52</a></span><span class="line">   <span class="comment">% create a homogenous line object</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,53" id="srcline53"> 53</a></span><span class="line">   <span class="mxinfo " id="T329:U36"><span class="var type1" id="S30T329U174">LO_OBJ</span>   = <span class="mxinfo " id="T329:U38"><span class="fcn" id="F1471N9:B176">bh_line_homog_CLS</span>(<span class="var type1" id="S28T308U177">x</span>,<span class="var type1" id="S27T308U178">y</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,54" id="srcline54"> 54</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,55" id="srcline55"> 55</a></span><span class="line">   [<span class="var type1" id="S32T5U182">tf_is_valid</span>, <span class="var type1" id="S33T4U183">uv_bot</span>, <span class="var type1" id="S34T4U184">uv_top</span>] = <span class="var type1" id="S30T329U187">LO_OBJ</span>.<span class="fcn" id="F1522N11:B188">get_roi_intersection_co_ords</span>(<span class="var type1" id="S21T154U189">ulim</span>, <span class="var type1" id="S22T154U190">vlim</span>);</span></span>
+<span class="srcline"><span class="lineno"><a href="142,56" id="srcline56"> 56</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,57" id="srcline57"> 57</a></span><span class="line">   <span class="comment">% take care of the OUTPUTS</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,58" id="srcline58"> 58</a></span><span class="line">   <span class="mxinfo " id="T4:U47"><span class="mxinfo " id="T4:U48"><span class="var type1" id="S20T303U194">OBJ</span>.tip_upper_xy_col</span>  = <span class="var type1" id="S34T4U196">uv_top</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,59" id="srcline59"> 59</a></span><span class="line">   <span class="mxinfo " id="T4:U51"><span class="mxinfo " id="T4:U52"><span class="var type1" id="S20T303U200">OBJ</span>.tip_lower_xy_col</span>  = <span class="var type1" id="S33T4U202">uv_bot</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,60" id="srcline60"> 60</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,61" id="srcline61"> 61</a></span><span class="line">   <span class="comment">% get equation of the line</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,62" id="srcline62"> 62</a></span><span class="line">   <span class="comment">% :  y = mx + c</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,63" id="srcline63"> 63</a></span><span class="line">   <span class="mxinfo " id="T4:U55"><span class="var type1" id="S35T4U205">mc_col</span> = <span class="mxinfo " id="T4:U57"><span class="var type1" id="S30T329U208">LO_OBJ</span>.<span class="fcn" id="F1524N10:B209">get_mc</span>()</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,64" id="srcline64"> 64</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,65" id="srcline65"> 65</a></span><span class="line">   <span class="comment">%OBJ.fh_line = @(x) (m*x + c);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,66" id="srcline66"> 66</a></span><span class="line">   <span class="mxinfo " id="T3:U59"><span class="mxinfo " id="T3:U60"><span class="var type1" id="S20T303U213">OBJ</span>.m</span>       = <span class="mxinfo " id="T3:U62"><span class="var type1" id="S35T4U216">mc_col</span>(<span class="mxinfo " id="T3:U64">1</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,67" id="srcline67"> 67</a></span><span class="line">   <span class="mxinfo " id="T3:U65"><span class="mxinfo " id="T3:U66"><span class="var type1" id="S20T303U221">OBJ</span>.c</span>       = <span class="mxinfo " id="T3:U68"><span class="var type1" id="S35T4U224">mc_col</span>(<span class="mxinfo " id="T3:U70">2</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,68" id="srcline68"> 68</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% calc_info()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,69" id="srcline69"> 69</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+</pre>
+<div class="dead">
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="142,70" id="srcline70"> 70</a></span><span class="line"><span class="keyword">function</span> xy = get_xy(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,71" id="srcline71"> 71</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="142,72" id="srcline72"> 72</a></span><span class="line">    coder.varsize(<span class="string">'xy'</span>, [2 1]);</span></span>
+<span class="srcline"><span class="lineno"><a href="142,73" id="srcline73"> 73</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,74" id="srcline74"> 74</a></span><span class="line">    xy = [];</span></span>
+<span class="srcline"><span class="lineno"><a href="142,75" id="srcline75"> 75</a></span><span class="line">    <span class="keyword">if</span>( ~OBJ.is_detected() ) </span></span>
+<span class="srcline"><span class="lineno"><a href="142,76" id="srcline76"> 76</a></span><span class="line">       <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,77" id="srcline77"> 77</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,78" id="srcline78"> 78</a></span><span class="line">   </span></span>
+<span class="srcline"><span class="lineno"><a href="142,79" id="srcline79"> 79</a></span><span class="line">    xy = OBJ.tip_upper_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,80" id="srcline80"> 80</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% get_xy()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,81" id="srcline81"> 81</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,82" id="srcline82"> 82</a></span><span class="line"><span class="keyword">function</span> [m,c] = get_mc(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,83" id="srcline83"> 83</a></span><span class="line">    <span class="comment">%coder.varsize('m','c', [1 1]);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,84" id="srcline84"> 84</a></span><span class="line">     </span></span>
+<span class="srcline"><span class="lineno"><a href="142,85" id="srcline85"> 85</a></span><span class="line">    m = zeros(1,0);  <span class="comment">% []</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,86" id="srcline86"> 86</a></span><span class="line">    c = zeros(1,0);  <span class="comment">% []</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,87" id="srcline87"> 87</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="142,88" id="srcline88"> 88</a></span><span class="line">    <span class="keyword">if</span>( ~OBJ.is_detected() ) </span></span>
+<span class="srcline"><span class="lineno"><a href="142,89" id="srcline89"> 89</a></span><span class="line">       <span class="keyword">return</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,90" id="srcline90"> 90</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,91" id="srcline91"> 91</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="142,92" id="srcline92"> 92</a></span><span class="line">    m = OBJ.m;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,93" id="srcline93"> 93</a></span><span class="line">    c = OBJ.c;    </span></span>
+<span class="srcline"><span class="lineno"><a href="142,94" id="srcline94"> 94</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,95" id="srcline95"> 95</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,96" id="srcline96"> 96</a></span><span class="line"><span class="keyword">function</span> my_S = convert_to_struct(OBJ)</span></span>
+<span class="srcline"><span class="lineno"><a href="142,97" id="srcline97"> 97</a></span><span class="line">  <span class="comment">% ATTENTION(R2017b):</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,98" id="srcline98"> 98</a></span><span class="line">  <span class="comment">% the following usage is NOT supported by the MATLAB Coder:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,99" id="srcline99"> 99</a></span><span class="line">  <span class="comment">%   &gt;&gt; struct(OBJ)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,100" id="srcline100">100</a></span><span class="line">    </span></span>
+<span class="srcline"><span class="lineno"><a href="142,101" id="srcline101">101</a></span><span class="line">    my_S.BW               = OBJ.BW;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,102" id="srcline102">102</a></span><span class="line">    my_S.NUM_ROWS         = OBJ.NUM_ROWS; </span></span>
+<span class="srcline"><span class="lineno"><a href="142,103" id="srcline103">103</a></span><span class="line">    my_S.NUM_COLS         = OBJ.NUM_COLS;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,104" id="srcline104">104</a></span><span class="line">    my_S.tip_upper_xy_col = OBJ.tip_upper_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,105" id="srcline105">105</a></span><span class="line">    my_S.tip_lower_xy_col = OBJ.tip_lower_xy_col;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,106" id="srcline106">106</a></span><span class="line">    my_S.m                = OBJ.m;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,107" id="srcline107">107</a></span><span class="line">    my_S.c                = OBJ.c;</span></span>
+<span class="srcline"><span class="lineno"><a href="142,108" id="srcline108">108</a></span><span class="line">    my_S.tf_is_detected   = OBJ.tf_is_detected; </span></span>
+<span class="srcline"><span class="lineno"><a href="142,109" id="srcline109">109</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,110" id="srcline110">110</a></span><span class="line"><span class="comment">%--------------------------------------------------------------------------  </span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,111" id="srcline111">111</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,112" id="srcline112">112</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% methods()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,113" id="srcline113">113</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,114" id="srcline114">114</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,115" id="srcline115">115</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% classdef()</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,116" id="srcline116">116</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,117" id="srcline117">117</a></span><span class="line"><span class="comment">% END CLASSDEF</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,118" id="srcline118">118</a></span><span class="line"><span class="comment">%_#########################################################################</span></span></span>
+<span class="srcline"><span class="lineno"><a href="142,119" id="srcline119">119</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,120" id="srcline120">120</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="142,121" id="srcline121">121</a></span><span class="line"> </span></span>
+</pre>
+</div>
+</body>
+</html>

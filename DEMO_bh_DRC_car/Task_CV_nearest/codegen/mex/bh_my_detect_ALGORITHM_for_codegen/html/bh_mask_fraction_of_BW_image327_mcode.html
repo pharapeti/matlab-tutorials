@@ -1,0 +1,62 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="85,1" id="srcline1"> 1</a></span><span class="line"><span class="keyword">function</span> [<span class="var type1" id="S2T2U3">I</span>, <span class="var type1" id="S3T5U4">tf_was_applied</span>, <span class="var type1" id="S4T3U5">R_max</span>] = bh_mask_fraction_of_BW_image(<span class="var type1" id="S5T2U8">I_BW</span>, <span class="var type1" id="S6T3U9">the_frac</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="85,2" id="srcline2"> 2</a></span><span class="line"><span class="comment">%  [I, tf_was_applied] = bh_mask_fraction_of_BW_image(I_BW, the_frac)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,3" id="srcline3"> 3</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------      </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,4" id="srcline4"> 4</a></span><span class="line"><span class="comment">% Apply a mask of 0's to the first "N" rows of an image matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,5" id="srcline5"> 5</a></span><span class="line"><span class="comment">% where N is determined by the fraction scalar provided by the user</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,6" id="srcline6"> 6</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,7" id="srcline7"> 7</a></span><span class="line"><span class="comment">% When you view this masked image, the TOP portion of the image will appear blacked out</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,8" id="srcline8"> 8</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,9" id="srcline9"> 9</a></span><span class="line"><span class="comment">% EXAMPLE:     if our input image has 9 rows, </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,10" id="srcline10">10</a></span><span class="line"><span class="comment">%              and if we set the_frac = 2/3 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,11" id="srcline11">11</a></span><span class="line"><span class="comment">%              </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,12" id="srcline12">12</a></span><span class="line"><span class="comment">%              then the desired effect would look something like this:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,13" id="srcline13">13</a></span><span class="line"><span class="comment">% </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,14" id="srcline14">14</a></span><span class="line"><span class="comment">%             0--------------------------&gt;  u, x</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,15" id="srcline15">15</a></span><span class="line"><span class="comment">%  row #1     | 0 0 0 0 0 0 0 0 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,16" id="srcline16">16</a></span><span class="line"><span class="comment">%  row #2     | 0 0 0 0 0 0 0 0 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,17" id="srcline17">17</a></span><span class="line"><span class="comment">%  row #3     | 0 0 0 0 0 0 0 0 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,18" id="srcline18">18</a></span><span class="line"><span class="comment">%  row #4     | 0 0 0 0 0 0 0 0 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,19" id="srcline19">19</a></span><span class="line"><span class="comment">%  row #5     | 0 0 0 0 0 0 0 0 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,20" id="srcline20">20</a></span><span class="line"><span class="comment">%  row #6     | 0 0 0 0 0 0 0 0 </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,21" id="srcline21">21</a></span><span class="line"><span class="comment">%  row #7     | . . . . . . . . </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,22" id="srcline22">22</a></span><span class="line"><span class="comment">%  row #8     | . . . . . . . . </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,23" id="srcline23">23</a></span><span class="line"><span class="comment">%  row #9     | . . . . . . . . </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,24" id="srcline24">24</a></span><span class="line"><span class="comment">%         v, y</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,25" id="srcline25">25</a></span><span class="line"><span class="comment">%-------------------------------------------------------------------------      </span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,26" id="srcline26">26</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="85,27" id="srcline27">27</a></span><span class="line"><span class="keyword">if</span>(1 ==coder.target(<span class="string">'MATLAB'</span>) )</span></span>
+<span class="srcline"><span class="lineno"><a href="85,28" id="srcline28">28</a></span><span class="line">    <span class="comment">% make sure fraction is in the range:  0 &lt; fract &lt;= 1</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,29" id="srcline29">29</a></span><span class="line">    validateattributes(<span class="var type0" id="S6T0U23">the_frac</span>,{<span class="string">'double'</span>},{<span class="string">'scalar'</span>, <span class="string">'&lt;='</span>,1, <span class="string">'&gt;'</span>,0})</span></span>
+<span class="srcline"><span class="lineno"><a href="85,30" id="srcline30">30</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="85,31" id="srcline31">31</a></span><span class="line">    <span class="comment">% make sure we have a 2d matrix</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,32" id="srcline32">32</a></span><span class="line">    validateattributes(<span class="var type0" id="S5T0U37">I_BW</span>,{<span class="string">'numeric'</span>,<span class="string">'logical'</span>},{<span class="string">'2d'</span>})</span></span>
+<span class="srcline"><span class="lineno"><a href="85,33" id="srcline33">33</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,34" id="srcline34">34</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="85,35" id="srcline35">35</a></span><span class="line"><span class="comment">% OK: now do your thing</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,36" id="srcline36">36</a></span><span class="line"><span class="mxinfo " id="T5:U6"><span class="var type1" id="S3T5U47">tf_was_applied</span> = <span class="mxinfo " id="T5:U8">false</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,37" id="srcline37">37</a></span><span class="line"><span class="mxinfo " id="T2:U9"><span class="var type1" id="S2T2U52">I</span>              = <span class="var type1" id="S5T2U53">I_BW</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,38" id="srcline38">38</a></span><span class="line"><span class="mxinfo " id="T3:U12"><span class="var type1" id="S10T3U56">NUM_ROWS</span>       = <span class="mxinfo " id="T3:U14">size(<span class="var type1" id="S2T2U59">I</span>,1)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,39" id="srcline39">39</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="85,40" id="srcline40">40</a></span><span class="line"><span class="comment">% Mask the top portion of the image:</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,41" id="srcline41">41</a></span><span class="line"><span class="mxinfo " id="T3:U16"><span class="var type1" id="S4T3U63">R_max</span>            = <span class="mxinfo " id="T3:U18">round(   <span class="mxinfo " id="T3:U19"><span class="var type1" id="S10T3U67">NUM_ROWS</span> * <span class="var type1" id="S6T3U68">the_frac</span></span>   )</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,42" id="srcline42">42</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="85,43" id="srcline43">43</a></span><span class="line"><span class="keyword">if</span>(<span class="mxinfo " id="T5:U22"><span class="var type1" id="S4T3U73">R_max</span> == <span class="var type1" id="S10T3U74">NUM_ROWS</span></span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="85,44" id="srcline44">44</a></span><span class="line">    <span class="comment">% do nothing</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,45" id="srcline45">45</a></span><span class="line"><span class="keyword">else</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,46" id="srcline46">46</a></span><span class="line">    <span class="keyword">if</span>(<span class="mxinfo " id="T5:U25"><span class="var type1" id="S4T3U80">R_max</span> &gt; <span class="mxinfo " id="T3:U27">1</span></span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="85,47" id="srcline47">47</a></span><span class="line">       <span class="mxinfo " id="T125:U28"><span class="mxinfo " id="T125:U29"><span class="var type1" id="S2T2U85">I</span>(<span class="mxinfo " id="T123:U31"><span class="mxinfo " id="T3:U32">1</span>:<span class="var type1" id="S4T3U88">R_max</span></span>, <span class="mxinfo " id="T121:U34">:</span>)</span>    = <span class="mxinfo " id="T3:U35">0</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,48" id="srcline48">48</a></span><span class="line">       <span class="mxinfo " id="T5:U36"><span class="var type1" id="S3T5U93">tf_was_applied</span>   = <span class="mxinfo " id="T5:U38">true</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,49" id="srcline49">49</a></span><span class="line">       <span class="mxinfo " id="T123:U39"><span class="var type1" id="S14T123U98">masked_row_range</span> = <span class="mxinfo " id="T123:U41">1:<span class="var type1" id="S4T3U101">R_max</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="85,50" id="srcline50">50</a></span><span class="line">    <span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,51" id="srcline51">51</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,52" id="srcline52">52</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="85,53" id="srcline53">53</a></span><span class="line"><span class="keyword">end</span> <span class="comment">% bh_ignore_fraction_of_BW_image(I_BW, frac)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="85,54" id="srcline54">54</a></span><span class="line"></span></span>
+</pre>
+</body>
+</html>
